@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alex McKeen | Portfolio</title>
-    <!-- Favicon link (Requirement 2) -->
+    <!-- Favicon link -->
     <link rel="icon" type="image/png" href="favicon.png">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -14,7 +14,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #0b0f19; }
         .video-card:hover .play-overlay { opacity: 1; }
-        /* Hide scrollbar behavior for carousel */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -24,11 +23,9 @@
     <!-- NAVIGATION HEADER -->
     <nav class="sticky top-0 z-40 bg-[#0b0f19]/90 backdrop-blur-md border-b border-gray-800">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-            <!-- Logo Image Replacement (Requirement 3) -->
             <a href="#home" class="flex items-center">
                 <img src="Logo_inactive.png" alt="Alex McKeen Logo" class="h-8 w-auto object-contain">
             </a>
-            <!-- Removed buttons from header navigation (Requirement 5) -->
             <div class="flex space-x-8 text-sm font-medium tracking-wide text-gray-400">
                 <a href="#resume" class="hover:text-white transition">Resume</a>
                 <a href="#videos" class="hover:text-white transition">Videos</a>
@@ -37,17 +34,14 @@
         </div>
     </nav>
 
-    <!-- HERO / CAROUSEL SECTION (Requirement 4) -->
+    <!-- HERO / CAROUSEL SECTION -->
     <header id="home" class="max-w-6xl mx-auto px-4 pt-10 pb-6 w-full">
-        <!-- Photo Carousel Container -->
         <div class="relative w-full overflow-hidden rounded-2xl bg-gray-900 border border-gray-800 h-[300px] md:h-[450px]">
             <div id="carousel-track" class="flex w-full h-full transition-transform duration-700 ease-in-out">
-                <!-- Drop your relative image URLs here once uploaded to GitHub -->
                 <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('images/photo1.jpg');"></div>
                 <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('images/photo2.jpg');"></div>
                 <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('images/photo3.jpg');"></div>
             </div>
-            <!-- Carousel Controls -->
             <button onclick="moveCarousel(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 p-2 rounded-full text-white backdrop-blur-sm transition">
                 <i data-lucide="chevron-left"></i>
             </button>
@@ -57,20 +51,18 @@
         </div>
     </header>
 
-    <!-- SECTION 1: RESUME (Requirement 10 - Re-styled as old portfolio grid layout) -->
+    <!-- SECTION 1: RESUME -->
     <section id="resume" class="max-w-6xl mx-auto px-4 py-16 w-full border-t border-gray-800">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
             <div>
                 <h2 class="text-3xl font-bold text-white tracking-tight">Professional Resume</h2>
                 <p class="text-gray-400 text-sm">Core experience block and skill profile overview</p>
             </div>
-            <!-- Download Button targeting root PDF file (Requirement 12) -->
             <a href="McKeen_Resume.pdf" download="McKeen_Resume.pdf" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition shadow-md">
                 Download PDF <i data-lucide="download" class="w-4 h-4"></i>
             </a>
         </div>
 
-        <!-- Portfolio-styled Grid for Resume Experience Blocks -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div class="bg-gray-900/60 border border-gray-800 p-6 rounded-xl flex flex-col justify-between">
                 <div>
@@ -99,17 +91,14 @@
         </div>
     </section>
 
-    <!-- SECTION 2: VIDEOS CMS (Requirement 6, 7, 8, 9, 10) -->
+    <!-- SECTION 2: VIDEOS CMS -->
     <section id="videos" class="bg-[#111827] py-16 border-t border-gray-800 w-full">
         <div class="max-w-6xl mx-auto px-4">
-            
             <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-8 gap-6">
                 <div>
                     <h2 class="text-3xl font-bold text-white">Video Portfolio</h2>
                     <p class="text-gray-400 text-sm mt-1">Live configuration powered dynamically via production index</p>
                 </div>
-
-                <!-- Live Search UI Option (Requirement 7) -->
                 <div class="w-full lg:max-w-xs relative">
                     <input type="text" id="search-input" oninput="handleSearchFilter()" placeholder="Search project titles..." 
                            class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition">
@@ -117,7 +106,6 @@
                 </div>
             </div>
 
-            <!-- Dynamic Multi-Sorting Filter System UI (Requirement 6) -->
             <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl mb-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div>
                     <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Filter by Company (Row D)</label>
@@ -133,12 +121,10 @@
                 </div>
             </div>
 
-            <!-- Video Grid -->
             <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="col-span-full text-center py-12 text-gray-500">Connecting to Google Sheet data...</div>
+                <div class="col-span-full text-center py-12 text-gray-500">Connecting to video database...</div>
             </div>
 
-            <!-- Pagination Controls (Requirement 8) -->
             <div id="pagination-controls" class="flex justify-center items-center space-x-4 mt-12 hidden">
                 <button onclick="changePage(-1)" id="btn-prev" class="px-4 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition">Previous</button>
                 <span id="page-indicator" class="text-sm text-gray-400 font-medium">Page 1 of 1</span>
@@ -147,22 +133,19 @@
         </div>
     </section>
 
-    <!-- SECTION 3: PREVIOUS EMPLOYERS (Requirement 10) -->
+    <!-- SECTION 3: PREVIOUS EMPLOYERS (Connected Live Spreadsheet) -->
     <section id="employers" class="py-16 border-t border-gray-800 max-w-6xl mx-auto px-4 w-full">
         <h2 class="text-3xl font-bold text-white mb-2">Previous Employers</h2>
-        <p class="text-gray-400 text-sm mb-8">Historical organizational deployment logs</p>
+        <p class="text-gray-400 text-sm mb-8">Historical organizational deployment and brand logs</p>
         
-        <!-- Setup placeholder empty state until you supply the spreadsheet URL -->
-        <div class="bg-gray-900/30 border border-dashed border-gray-800 rounded-xl p-12 text-center text-gray-500">
-            <i data-lucide="database" class="mx-auto mb-3 text-gray-600 w-8 h-8"></i>
-            <p class="text-sm">Dynamic employment list setup active. Paste your secondary Google Sheet CSV endpoint configuration here once generated.</p>
+        <div id="employers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="col-span-full text-center py-12 text-gray-500">Connecting to historical directory records...</div>
         </div>
     </section>
 
-    <!-- FOOTER (Requirement 11 - Formatted precisely from image_5e613f.png) -->
+    <!-- FOOTER -->
     <footer class="w-full bg-[#0b0f19] border-t border-gray-900 py-12 px-4 mt-auto">
         <div class="max-w-6xl mx-auto flex flex-col items-center justify-center text-center">
-            <!-- Icon Row Matching Image Configuration -->
             <div class="flex items-center space-x-6 mb-4">
                 <a href="https://instagram.com/dummy" target="_blank" class="text-gray-500 hover:text-white transition">
                     <i data-lucide="instagram" class="w-6 h-6 stroke-[1.5]"></i>
@@ -171,8 +154,7 @@
                     <i data-lucide="linkedin" class="w-6 h-6 stroke-[1.5]"></i>
                 </a>
             </div>
-            <!-- Clean Typographic Legal Matrix from image_5e613f.png -->
-            <p class="text-gray-400 text-sm md:text-base tracking-wide font-light">
+            <p class="text-gray-400 text-sm tracking-wide font-light">
                 2026 &copy; Alexander McKeen
             </p>
             <p class="text-gray-500 text-xs tracking-wider uppercase font-light mt-1">
@@ -181,7 +163,7 @@
         </div>
     </footer>
 
-    <!-- FULL SCREEN YOUTUBE COVER OVERPLAY MODAL (Requirement 9) -->
+    <!-- FULL SCREEN YOUTUBE COVER OVERLAY MODAL -->
     <div id="video-modal" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-white transition bg-gray-900/50 p-2 rounded-full border border-gray-800">
             <i data-lucide="x" class="w-6 h-6"></i>
@@ -191,102 +173,102 @@
         </div>
     </div>
 
-    <!-- CORE LOGIC / SHEET PROCESSING ENGINES -->
+    <!-- CORE LOGIC / DATA PROCESSING ENGINES -->
     <script>
-        // Connected Live CSV Link provided (Requirement 1)
-        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=1842671833&single=true&output=csv';
+        // Data Feed Ingestion Matrix Links
+        const VIDEO_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=1842671833&single=true&output=csv';
+        const EMPLOYER_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=2101605290&single=true&output=csv';
 
         let rawVideoData = [];
         let filteredVideoData = [];
         let currentCarouselIndex = 0;
-        
-        // Pagination States (Requirement 8)
         let currentPage = 1;
         const itemsPerPage = 25;
 
-        // Fetch CSV from Sheets and clean values securely
-        async function fetchCMSData() {
-            try {
-                const response = await fetch(SHEET_CSV_URL);
-                const dataText = await response.text();
-                processCSV(dataText);
-            } catch (err) {
-                console.error("Data ingestion failure:", err);
-                document.getElementById('video-grid').innerHTML = `<p class="col-span-full text-center text-red-500 py-6">Error processing streaming media assets directly from source records.</p>`;
-            }
-        }
+        // Custom Robust CSV Splitter handling encapsulated string data matrices safely
+        function parseCSVLines(text) {
+            const lines = [];
+            let row = [];
+            let token = '';
+            let inQuotes = false;
 
-        // CSV parsing array pipeline logic 
-        function processCSV(text) {
-            const rows = [];
-            let currentField = '';
-            let insideQuotes = false;
-            let currentRow = [];
-
-            // Character by character array parse safely handling inner quotes or lists
             for (let i = 0; i < text.length; i++) {
-                const char = text[i];
-                const nextChar = text[i+1];
+                const c = text[i];
+                const next = text[i+1];
 
-                if (char === '"') {
-                    if (insideQuotes && nextChar === '"') {
-                        currentField += '"';
+                if (c === '"') {
+                    if (inQuotes && next === '"') {
+                        token += '"';
                         i++;
                     } else {
-                        insideQuotes = !insideQuotes;
+                        inQuotes = !inQuotes;
                     }
-                } else if (char === ',' && !insideQuotes) {
-                    currentRow.push(currentField.trim());
-                    currentField = '';
-                } else if ((char === '\r' || char === '\n') && !insideQuotes) {
-                    if (char === '\r' && nextChar === '\n') i++;
-                    currentRow.push(currentField.trim());
-                    if (currentRow.some(val => val !== '')) rows.push(currentRow);
-                    currentField = '';
-                    currentRow = [];
+                } else if (c === ',' && !inQuotes) {
+                    row.push(token.trim());
+                    token = '';
+                } else if ((c === '\n' || c === '\r') && !inQuotes) {
+                    if (c === '\r' && next === '\n') i++;
+                    row.push(token.trim());
+                    if (row.some(field => field !== '')) lines.push(row);
+                    row = [];
+                    token = '';
                 } else {
-                    currentField += char;
+                    token += c;
                 }
             }
-            if (currentField || currentRow.length > 0) {
-                currentRow.push(currentField.trim());
-                rows.push(currentRow);
+            if (token || row.length > 0) {
+                row.push(token.trim());
+                lines.push(row);
             }
-
-            // Slice out head column naming row indexes safely
-            if(rows.length > 0) rows.shift();
-
-            // Transform matrix lines into normalized reference objects
-            rawVideoData = rows.map(row => {
-                let parsedTags = [];
-                // Dynamic clean mapping configuration for JSON arrays strings inside cells (Row K)
-                if (row[10]) {
-                    try {
-                        let cleanTagString = row[10].replace(/""/g, '"');
-                        parsedTags = JSON.parse(cleanTagString);
-                    } catch(e) {
-                        // Fallback handling standard non-JSON string entries elegantly
-                        parsedTags = row[10].split(',').map(t => t.trim().replace(/[\[\]"']/g, ''));
-                    }
-                }
-
-                return {
-                    title: row[0] || 'Untitled Project',
-                    company: row[3] || 'Independent',
-                    position: row[4] || 'Production Team',
-                    videoUrl: row[7] || '',
-                    tags: parsedTags
-                };
-            }).filter(item => item.title !== 'Untitled Project' || item.videoUrl !== '');
-
-            filteredVideoData = [...rawVideoData];
-            
-            buildFilterOptions();
-            displayPage(1);
+            return lines;
         }
 
-        // Populate dynamic sort/filter values array options uniquely (Requirement 6)
-        function buildFilterOptions() {
+        // Master App Initialization Handler
+        async function initApplication() {
+            try {
+                await Promise.all([fetchVideoCMS(), fetchEmployerCMS()]);
+            } catch (err) {
+                console.error("Master initialization framework pipeline crash:", err);
+            }
+        }
+
+        // --- VIDEOS DATA ENGINE ---
+        async function fetchVideoCMS() {
+            try {
+                const res = await fetch(VIDEO_CSV_URL);
+                const text = await res.text();
+                const rows = parseCSVLines(text);
+                
+                if (rows.length > 0) rows.shift(); // Strip column labels
+
+                rawVideoData = rows.map(row => {
+                    let tagsArray = [];
+                    if (row[10]) {
+                        try {
+                            tagsArray = JSON.parse(row[10].replace(/""/g, '"'));
+                        } catch(e) {
+                            tagsArray = row[10].split(',').map(t => t.trim().replace(/[\[\]"']/g, ''));
+                        }
+                    }
+                    return {
+                        title: row[0] || 'Untitled Project',
+                        company: row[3] || 'Independent',
+                        position: row[4] || 'Production Team',
+                        videoUrl: row[7] || '',
+                        tags: tagsArray
+                    };
+                }).filter(v => v.title !== 'Untitled Project' || v.videoUrl !== '');
+
+                filteredVideoData = [...rawVideoData];
+                buildVideoFilterDropdowns();
+                displayVideoPage(1);
+            } catch (err) {
+                console.error("Video processing thread fault:", err);
+                document.getElementById('video-grid').innerHTML = `<p class="col-span-full text-center text-red-400 py-6">Failed to sync live portfolio data matrices.</p>`;
+            }
+        }
+
+        function buildVideoFilterDropdowns() {
             const companies = new Set(['All Companies']);
             const positions = new Set(['All Positions']);
             const tags = new Set(['All Tags']);
@@ -297,78 +279,67 @@
                 if(item.tags) item.tags.forEach(t => tags.add(t));
             });
 
-            populateSelectElement('filter-company', companies);
-            populateSelectElement('filter-position', positions);
-            populateSelectElement('filter-tag', tags);
+            populateDropdown('filter-company', companies);
+            populateDropdown('filter-position', positions);
+            populateDropdown('filter-tag', tags);
         }
 
-        function populateSelectElement(id, itemsSet) {
-            const el = document.getElementById(id);
-            el.innerHTML = '';
-            itemsSet.forEach(val => {
-                const opt = document.createElement('option');
-                opt.value = val;
-                opt.textContent = val;
-                el.appendChild(opt);
+        function populateDropdown(id, optionSet) {
+            const dropdown = document.getElementById(id);
+            dropdown.innerHTML = '';
+            optionSet.forEach(val => {
+                const el = document.createElement('option');
+                el.value = val;
+                el.textContent = val;
+                dropdown.appendChild(el);
             });
         }
 
-        // Integrated Master Search & Sort Filter Pipeline Engine (Requirement 6 & 7)
         function applyFilters() {
-            const selectedCompany = document.getElementById('filter-company').value;
-            const selectedPosition = document.getElementById('filter-position').value;
-            const selectedTag = document.getElementById('filter-tag').value;
-            const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+            const comp = document.getElementById('filter-company').value;
+            const pos = document.getElementById('filter-position').value;
+            const tag = document.getElementById('filter-tag').value;
+            const search = document.getElementById('search-input').value.toLowerCase().trim();
 
             filteredVideoData = rawVideoData.filter(item => {
-                const matchCompany = (selectedCompany === 'All Companies' || item.company === selectedCompany);
-                const matchPosition = (selectedPosition === 'All Positions' || item.position === selectedPosition);
-                const matchTag = (selectedTag === 'All Tags' || item.tags.includes(selectedTag));
-                const matchSearch = (item.title.toLowerCase().includes(searchVal));
-
-                return matchCompany && matchPosition && matchTag && matchSearch;
+                const matchComp = (comp === 'All Companies' || item.company === comp);
+                const matchPos = (pos === 'All Positions' || item.position === pos);
+                const matchTag = (tag === 'All Tags' || item.tags.includes(tag));
+                const matchSearch = (item.title.toLowerCase().includes(search));
+                return matchComp && matchPos && matchTag && matchSearch;
             });
 
-            displayPage(1);
+            displayVideoPage(1);
         }
 
-        function handleSearchFilter() {
-            applyFilters();
-        }
+        function handleSearchFilter() { applyFilters(); }
 
-        // Logic Rendering Layout and handling Pagination capping content display at 25 (Requirement 8)
-        function displayPage(page) {
+        function displayVideoPage(page) {
             currentPage = page;
             const grid = document.getElementById('video-grid');
             grid.innerHTML = '';
 
-            const totalItems = filteredVideoData.length;
-            const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
+            const total = filteredVideoData.length;
+            const pagesTotal = Math.ceil(total / itemsPerPage) || 1;
 
-            if (totalItems === 0) {
-                grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-12">No matching asset records matching specified search criteria found.</p>`;
+            if (total === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-12">No media assets found matching modern sort matrices.</p>`;
                 document.getElementById('pagination-controls').classList.add('hidden');
                 return;
             }
 
-            // Calculate current windows constraints boundaries
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
-            const pageItems = filteredVideoData.slice(startIndex, endIndex);
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = Math.min(start + itemsPerPage, total);
+            const viewableItems = filteredVideoData.slice(start, end);
 
-            pageItems.forEach(video => {
+            viewableItems.forEach(video => {
                 const card = document.createElement('div');
                 card.className = 'video-card bg-gray-900 border border-gray-800/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col cursor-pointer group';
-                // Trigger overlay handler (Requirement 9)
                 card.onclick = () => openModal(video.videoUrl);
 
-                // Use a high quality workspace placeholder asset vector if custom dynamic links aren't assigned 
-                const fallbackThumb = 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=600&q=80';
-
-                // Render functional responsive elements safely
                 card.innerHTML = `
                     <div class="relative aspect-video bg-gray-950 overflow-hidden">
-                        <img src="${fallbackThumb}" alt="${video.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+                        <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=600&q=80" alt="${video.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
                         <div class="play-overlay absolute inset-0 bg-black/40 opacity-0 transition duration-300 flex items-center justify-center">
                             <div class="bg-blue-600 p-3.5 rounded-full shadow-lg transform group-hover:scale-110 transition duration-300">
                                 <i data-lucide="play" class="w-5 h-5 text-white fill-current"></i>
@@ -391,35 +362,105 @@
                 grid.appendChild(card);
             });
 
-            // Handle functional navigation adjustments visibility metrics dashboard state
-            if(totalPages > 1) {
+            if(pagesTotal > 1) {
                 document.getElementById('pagination-controls').classList.remove('hidden');
-                document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${totalPages}`;
+                document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${pagesTotal}`;
                 document.getElementById('btn-prev').disabled = (currentPage === 1);
-                document.getElementById('btn-next').disabled = (currentPage === totalPages);
+                document.getElementById('btn-next').disabled = (currentPage === pagesTotal);
             } else {
                 document.getElementById('pagination-controls').classList.add('hidden');
             }
-
             lucide.createIcons();
         }
 
-        function changePage(direction) {
-            const nextTarget = currentPage + direction;
-            const totalPages = Math.ceil(filteredVideoData.length / itemsPerPage);
-            if(nextTarget >= 1 && nextTarget <= totalPages) {
-                displayPage(nextTarget);
+        function changePage(dir) {
+            const target = currentPage + dir;
+            const maxPages = Math.ceil(filteredVideoData.length / itemsPerPage);
+            if(target >= 1 && target <= maxPages) {
+                displayVideoPage(target);
                 document.getElementById('videos').scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        // Full Screen Youtube Overplay Popup Config (Requirement 9)
+        // --- PREVIOUS EMPLOYERS ENGINE (New Functionality) ---
+        async function fetchEmployerCMS() {
+            try {
+                const res = await fetch(EMPLOYER_CSV_URL);
+                const text = await res.text();
+                const rows = parseCSVLines(text);
+
+                if (rows.length > 0) rows.shift(); // Pop row config layout headers
+
+                // Map and structurally normalize rows
+                let employers = rows.map(row => {
+                    return {
+                        title: row[0] || '',
+                        imageLink: row[1] || '',
+                        subtitle: row[2] || '',
+                        description: row[3] || '',
+                        altText: row[4] || 'Employer branding icon',
+                        fbLink: row[5] || '',
+                        liLink: row[6] || '',
+                        twLink: row[7] || '',
+                        webLink: row[8] || '',
+                        order: parseInt(row[9]) || 999
+                    };
+                }).filter(emp => emp.title !== '');
+
+                // Sequence sort systematically by Column J index criteria
+                employers.sort((a, b) => a.order - b.order);
+
+                renderEmployersGrid(employers);
+            } catch (err) {
+                console.error("Employers data engine integration crash:", err);
+                document.getElementById('employers-grid').innerHTML = `<p class="col-span-full text-center text-gray-500 py-6">Synchronization failure reading historical employment database links.</p>`;
+            }
+        }
+
+        function renderEmployersGrid(items) {
+            const grid = document.getElementById('employers-grid');
+            grid.innerHTML = '';
+
+            items.forEach(emp => {
+                const block = document.createElement('div');
+                block.className = 'bg-gray-900/40 border border-gray-800 rounded-xl p-6 flex flex-col justify-between items-start transition duration-300 hover:border-gray-700';
+
+                // Evaluate whether any active social asset profiles are configured to render bottom row layout container
+                const hasSocials = (emp.fbLink || emp.liLink || emp.twLink || emp.webLink);
+                let socialHTML = '';
+
+                if (hasSocials) {
+                    socialHTML = `<div class="flex items-center space-x-4 mt-6 pt-4 border-t border-gray-800/60 w-full text-gray-500">`;
+                    if (emp.fbLink) socialHTML += `<a href="${emp.fbLink}" target="_blank" class="hover:text-blue-500 transition"><i data-lucide="facebook" class="w-4 h-4"></i></a>`;
+                    if (emp.liLink) socialHTML += `<a href="${emp.liLink}" target="_blank" class="hover:text-blue-400 transition"><i data-lucide="linkedin" class="w-4 h-4"></i></a>`;
+                    if (emp.twLink) socialHTML += `<a href="${emp.twLink}" target="_blank" class="hover:text-white transition"><i data-lucide="twitter" class="w-4 h-4"></i></a>`;
+                    if (emp.webLink) socialHTML += `<a href="${emp.webLink}" target="_blank" class="hover:text-blue-600 transition"><i data-lucide="globe" class="w-4 h-4"></i></a>`;
+                    socialHTML += `</div>`;
+                }
+
+                block.innerHTML = `
+                    <div class="w-full">
+                        <!-- Branding Asset Frame -->
+                        <div class="w-16 h-16 rounded-xl bg-gray-950 border border-gray-800 flex items-center justify-center p-2 mb-4 overflow-hidden">
+                            <img src="${emp.imageLink || 'images/placeholder-logo.png'}" alt="${emp.altText}" class="max-w-full max-h-full object-contain">
+                        </div>
+                        <h3 class="text-xl font-bold text-white tracking-tight">${emp.title}</h3>
+                        <p class="text-blue-500 text-xs font-semibold uppercase tracking-wider mt-0.5 mb-3">${emp.subtitle}</p>
+                        <p class="text-sm text-gray-400 leading-relaxed">${emp.description}</p>
+                    </div>
+                    ${socialHTML}
+                `;
+                grid.appendChild(block);
+            });
+            lucide.createIcons();
+        }
+
+        // --- SCREEN VIDEO LIGHTBOX MODAL ---
         function openModal(url) {
             const modal = document.getElementById('video-modal');
             const player = document.getElementById('modal-player');
-            
             let embedUrl = url;
-            // Clean dynamic structures to safely translate direct links cleanly inside HTML elements iframe architectures
+            
             if (url.includes('youtube.com/watch?v=')) {
                 embedUrl = url.replace('watch?v=', 'embed/');
             } else if (url.includes('youtu.be/')) {
@@ -439,7 +480,7 @@
             document.body.classList.remove('overflow-hidden');
         }
 
-        // Basic Carousel Slide Translation Config (Requirement 4)
+        // --- CAROUSEL LOOPS ---
         function moveCarousel(dir) {
             const track = document.getElementById('carousel-track');
             const totalSlides = track.children.length;
@@ -447,12 +488,9 @@
             track.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
         }
 
-        // Auto initialization load routines
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            fetchCMSData();
-            
-            // Auto slide carousel behavior every 5 seconds
+            initApplication();
             setInterval(() => moveCarousel(1), 5000);
         });
     </script>
