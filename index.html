@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex McKeen | TV & Broadcast Portfolio</title>
-    <!-- Tailwind CSS for modern styling -->
+    <title>Alex McKeen | Portfolio</title>
+    <!-- Favicon link (Requirement 2) -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -12,268 +14,446 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #0b0f19; }
         .video-card:hover .play-overlay { opacity: 1; }
+        /* Hide scrollbar behavior for carousel */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="text-gray-100 min-h-screen flex flex-col">
+<body class="text-gray-100 min-h-screen flex flex-col justify-between">
 
-    <!-- NAVIGATION -->
+    <!-- NAVIGATION HEADER -->
     <nav class="sticky top-0 z-40 bg-[#0b0f19]/90 backdrop-blur-md border-b border-gray-800">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-            <a href="#home" class="text-xl font-bold tracking-wider text-white">ALEX <span class="text-blue-500">MCKEEN</span></a>
+            <!-- Logo Image Replacement (Requirement 3) -->
+            <a href="#home" class="flex items-center">
+                <img src="Logo_inactive.png" alt="Alex McKeen Logo" class="h-8 w-auto object-contain">
+            </a>
+            <!-- Removed buttons from header navigation (Requirement 5) -->
             <div class="flex space-x-8 text-sm font-medium tracking-wide text-gray-400">
-                <a href="#portfolio" class="hover:text-white transition">Portfolio</a>
                 <a href="#resume" class="hover:text-white transition">Resume</a>
-                <a href="#contact" class="hover:text-white transition">Contact</a>
+                <a href="#videos" class="hover:text-white transition">Videos</a>
+                <a href="#employers" class="hover:text-white transition">Previous Employers</a>
             </div>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
-    <section id="home" class="max-w-6xl mx-auto px-4 pt-20 pb-16 flex flex-col justify-center min-h-[60vh]">
-        <span class="text-blue-500 font-semibold tracking-widest text-sm uppercase mb-3 block">Television Professional</span>
-        <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 max-w-4xl">
-            Bringing impactful stories to life through the lens.
-        </h1>
-        <p class="text-lg md:text-xl text-gray-400 max-w-2xl mb-8 leading-relaxed">
-            Specializing in broadcast production, visual storytelling, and high-stakes media environments. Explore my recent work powered directly by my live production logs.
-        </p>
-        <div class="flex space-x-4">
-            <a href="#portfolio" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition flex items-center gap-2">
-                View Reel <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+    <!-- HERO / CAROUSEL SECTION (Requirement 4) -->
+    <header id="home" class="max-w-6xl mx-auto px-4 pt-10 pb-6 w-full">
+        <!-- Photo Carousel Container -->
+        <div class="relative w-full overflow-hidden rounded-2xl bg-gray-900 border border-gray-800 h-[300px] md:h-[450px]">
+            <div id="carousel-track" class="flex w-full h-full transition-transform duration-700 ease-in-out">
+                <!-- Drop your relative image URLs here once uploaded to GitHub -->
+                <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('images/photo1.jpg');"></div>
+                <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('images/photo2.jpg');"></div>
+                <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('images/photo3.jpg');"></div>
+            </div>
+            <!-- Carousel Controls -->
+            <button onclick="moveCarousel(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 p-2 rounded-full text-white backdrop-blur-sm transition">
+                <i data-lucide="chevron-left"></i>
+            </button>
+            <button onclick="moveCarousel(1)" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 p-2 rounded-full text-white backdrop-blur-sm transition">
+                <i data-lucide="chevron-right"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- SECTION 1: RESUME (Requirement 10 - Re-styled as old portfolio grid layout) -->
+    <section id="resume" class="max-w-6xl mx-auto px-4 py-16 w-full border-t border-gray-800">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+            <div>
+                <h2 class="text-3xl font-bold text-white tracking-tight">Professional Resume</h2>
+                <p class="text-gray-400 text-sm">Core experience block and skill profile overview</p>
+            </div>
+            <!-- Download Button targeting root PDF file (Requirement 12) -->
+            <a href="McKeen_Resume.pdf" download="McKeen_Resume.pdf" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition shadow-md">
+                Download PDF <i data-lucide="download" class="w-4 h-4"></i>
             </a>
-            <a href="#contact" class="border border-gray-700 hover:border-gray-500 text-white px-6 py-3 rounded-lg font-medium transition">
-                Get In Touch
-            </a>
+        </div>
+
+        <!-- Portfolio-styled Grid for Resume Experience Blocks -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-gray-900/60 border border-gray-800 p-6 rounded-xl flex flex-col justify-between">
+                <div>
+                    <span class="text-xs font-semibold text-blue-500 uppercase tracking-widest block mb-2">2024 — Present</span>
+                    <h3 class="text-xl font-bold text-white mb-1">Lead Tech Ops Manager</h3>
+                    <p class="text-gray-400 text-sm font-medium mb-4">Bleacher Report / Soccer Vertical</p>
+                    <p class="text-sm text-gray-400 leading-relaxed">Directing complex multi-platform content ingest engines, engineering workflow optimization pathways, and real-time asset processing pipelines.</p>
+                </div>
+            </div>
+            <div class="bg-gray-900/60 border border-gray-800 p-6 rounded-xl flex flex-col justify-between">
+                <div>
+                    <span class="text-xs font-semibold text-blue-500 uppercase tracking-widest block mb-2">2021 — 2024</span>
+                    <h3 class="text-xl font-bold text-white mb-1">Broadcast Operations Specialist</h3>
+                    <p class="text-gray-400 text-sm font-medium mb-4">Turner Sports Media Network</p>
+                    <p class="text-sm text-gray-400 leading-relaxed">Managed end-to-end studio video configurations across live digital broadcasts and YouTube live integrations. Pioneered cross-departmental delivery guidelines.</p>
+                </div>
+            </div>
+            <div class="bg-gray-900/60 border border-gray-800 p-6 rounded-xl flex flex-col justify-between">
+                <div>
+                    <span class="text-xs font-semibold text-blue-500 uppercase tracking-widest block mb-2">Technical Core</span>
+                    <h3 class="text-xl font-bold text-white mb-1">Production Skills</h3>
+                    <p class="text-gray-400 text-sm font-medium mb-4">Infrastructure & Systems</p>
+                    <p class="text-sm text-gray-400 leading-relaxed">Advanced architecture deployment, live stream encoder arrays, asset data schemas, multi-camera technical switching setups, CMS database control routing.</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- PORTFOLIO SECTION (DYNAMIC CMS) -->
-    <section id="portfolio" class="bg-[#111827] py-20 border-t border-gray-800">
+    <!-- SECTION 2: VIDEOS CMS (Requirement 6, 7, 8, 9, 10) -->
+    <section id="videos" class="bg-[#111827] py-16 border-t border-gray-800 w-full">
         <div class="max-w-6xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-8 gap-6">
                 <div>
-                    <h2 class="text-3xl font-bold text-white mb-2">Featured Work</h2>
-                    <p class="text-gray-400">Dynamically updated via Google Sheets</p>
+                    <h2 class="text-3xl font-bold text-white">Video Portfolio</h2>
+                    <p class="text-gray-400 text-sm mt-1">Live configuration powered dynamically via production index</p>
                 </div>
-                <!-- Category Filters -->
-                <div id="filter-buttons" class="flex flex-wrap gap-2 text-sm">
-                    <button onclick="filterCategory('all')" class="filter-btn px-4 py-2 rounded-full bg-blue-600 text-white font-medium transition">All</button>
-                    <!-- JavaScript will inject dynamic category buttons here -->
+
+                <!-- Live Search UI Option (Requirement 7) -->
+                <div class="w-full lg:max-w-xs relative">
+                    <input type="text" id="search-input" oninput="handleSearchFilter()" placeholder="Search project titles..." 
+                           class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition">
+                    <i data-lucide="search" class="w-4 h-4 text-gray-500 absolute right-3 top-3"></i>
+                </div>
+            </div>
+
+            <!-- Dynamic Multi-Sorting Filter System UI (Requirement 6) -->
+            <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl mb-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Filter by Company (Row D)</label>
+                    <select id="filter-company" onchange="applyFilters()" class="w-full bg-gray-900 border border-gray-800 rounded-lg p-2 text-white focus:outline-none focus:border-blue-500"></select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Filter by Position (Row E)</label>
+                    <select id="filter-position" onchange="applyFilters()" class="w-full bg-gray-900 border border-gray-800 rounded-lg p-2 text-white focus:outline-none focus:border-blue-500"></select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Filter by Tags (Row K)</label>
+                    <select id="filter-tag" onchange="applyFilters()" class="w-full bg-gray-900 border border-gray-800 rounded-lg p-2 text-white focus:outline-none focus:border-blue-500"></select>
                 </div>
             </div>
 
             <!-- Video Grid -->
-            <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Loading State -->
-                <div id="loading-state" class="col-span-full text-center py-12 text-gray-500 flex flex-col items-center gap-3">
-                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-                    <p>Connecting to CMS...</p>
-                </div>
+            <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="col-span-full text-center py-12 text-gray-500">Connecting to Google Sheet data...</div>
+            </div>
+
+            <!-- Pagination Controls (Requirement 8) -->
+            <div id="pagination-controls" class="flex justify-center items-center space-x-4 mt-12 hidden">
+                <button onclick="changePage(-1)" id="btn-prev" class="px-4 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition">Previous</button>
+                <span id="page-indicator" class="text-sm text-gray-400 font-medium">Page 1 of 1</span>
+                <button onclick="changePage(1)" id="btn-next" class="px-4 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition">Next</button>
             </div>
         </div>
     </section>
 
-    <!-- RESUME SECTION -->
-    <section id="resume" class="py-20 border-t border-gray-800 max-w-4xl mx-auto px-4">
-        <h2 class="text-3xl font-bold text-white mb-12 text-center">Professional Experience</h2>
+    <!-- SECTION 3: PREVIOUS EMPLOYERS (Requirement 10) -->
+    <section id="employers" class="py-16 border-t border-gray-800 max-w-6xl mx-auto px-4 w-full">
+        <h2 class="text-3xl font-bold text-white mb-2">Previous Employers</h2>
+        <p class="text-gray-400 text-sm mb-8">Historical organizational deployment logs</p>
         
-        <div class="space-y-12 border-l border-gray-800 pl-6 md:pl-8 relative ml-4">
-            <!-- Experience Item 1 -->
-            <div class="relative">
-                <div class="absolute -left-[37px] md:-left-[45px] top-1.5 bg-blue-600 h-4 w-4 rounded-full border-4 border-[#0b0f19]"></div>
-                <div class="flex flex-col md:flex-row md:justify-between items-start md:items-center mb-2">
-                    <h3 class="text-xl font-bold text-white">Lead Broadcast Producer</h3>
-                    <span class="text-sm text-gray-500 font-medium bg-gray-900 px-3 py-1 rounded-full border border-gray-800 mt-1 md:mt-0">2024 — Present</span>
-                </div>
-                <p class="text-blue-400 font-medium text-sm mb-3">Network News Division</p>
-                <p class="text-gray-400 text-sm leading-relaxed">
-                    Oversee daily live broadcasts, managing control room operations, field reporters, and real-time asset delivery. Coordinated coverage for major breaking global news events.
-                </p>
-            </div>
-
-            <!-- Experience Item 2 -->
-            <div class="relative">
-                <div class="absolute -left-[37px] md:-left-[45px] top-1.5 bg-gray-700 h-4 w-4 rounded-full border-4 border-[#0b0f19]"></div>
-                <div class="flex flex-col md:flex-row md:justify-between items-start md:items-center mb-2">
-                    <h3 class="text-xl font-bold text-white">Associate Producer & Editor</h3>
-                    <span class="text-sm text-gray-500 font-medium bg-gray-900 px-3 py-1 rounded-full border border-gray-800 mt-1 md:mt-0">2021 — 2024</span>
-                </div>
-                <p class="text-blue-400 font-medium text-sm mb-3">Metropolitan Media Group</p>
-                <p class="text-gray-400 text-sm leading-relaxed">
-                    Cut fast-turnaround packages for evening news blocks. Pitching, scripting, and editing long-form mini-documentaries. Managed asset management system ingestion.
-                </p>
-            </div>
-        </div>
-
-        <div class="mt-12 text-center">
-            <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-500 hover:text-blue-400 transition">
-                Download Full CV <i data-lucide="download" class="w-4 h-4"></i>
-            </a>
+        <!-- Setup placeholder empty state until you supply the spreadsheet URL -->
+        <div class="bg-gray-900/30 border border-dashed border-gray-800 rounded-xl p-12 text-center text-gray-500">
+            <i data-lucide="database" class="mx-auto mb-3 text-gray-600 w-8 h-8"></i>
+            <p class="text-sm">Dynamic employment list setup active. Paste your secondary Google Sheet CSV endpoint configuration here once generated.</p>
         </div>
     </section>
 
-    <!-- CONTACT SECTION -->
-    <section id="contact" class="bg-[#111827] py-20 border-t border-gray-800 mt-auto">
-        <div class="max-w-xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Let's Collaborate</h2>
-            <p class="text-gray-400 mb-8">Available for freelance production, consulting, and full-time network bookings.</p>
-            <a href="mailto:alex@alexmckeen.com" class="inline-flex items-center gap-3 bg-gray-900 hover:bg-gray-800 border border-gray-800 text-white font-medium px-8 py-4 rounded-xl transition shadow-lg">
-                <i data-lucide="mail" class="text-blue-500"></i> alex@alexmckeen.com
-            </a>
+    <!-- FOOTER (Requirement 11 - Formatted precisely from image_5e613f.png) -->
+    <footer class="w-full bg-[#0b0f19] border-t border-gray-900 py-12 px-4 mt-auto">
+        <div class="max-w-6xl mx-auto flex flex-col items-center justify-center text-center">
+            <!-- Icon Row Matching Image Configuration -->
+            <div class="flex items-center space-x-6 mb-4">
+                <a href="https://instagram.com/dummy" target="_blank" class="text-gray-500 hover:text-white transition">
+                    <i data-lucide="instagram" class="w-6 h-6 stroke-[1.5]"></i>
+                </a>
+                <a href="https://linkedin.com/in/dummy" target="_blank" class="text-gray-500 hover:text-white transition">
+                    <i data-lucide="linkedin" class="w-6 h-6 stroke-[1.5]"></i>
+                </a>
+            </div>
+            <!-- Clean Typographic Legal Matrix from image_5e613f.png -->
+            <p class="text-gray-400 text-sm md:text-base tracking-wide font-light">
+                2026 &copy; Alexander McKeen
+            </p>
+            <p class="text-gray-500 text-xs tracking-wider uppercase font-light mt-1">
+                All Rights Reserved
+            </p>
         </div>
-    </section>
+    </footer>
 
-    <!-- VIDEO MODAL PLAYER -->
-    <div id="video-modal" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-4">
-        <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-white transition">
-            <i data-lucide="x" class="w-8 h-8"></i>
+    <!-- FULL SCREEN YOUTUBE COVER OVERPLAY MODAL (Requirement 9) -->
+    <div id="video-modal" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-white transition bg-gray-900/50 p-2 rounded-full border border-gray-800">
+            <i data-lucide="x" class="w-6 h-6"></i>
         </button>
-        <div class="w-full max-w-4xl aspect-video bg-black rounded-lg overflow-hidden shadow-2xl">
-            <iframe id="modal-player" class="w-full h-full" src="" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        <div class="w-full max-w-5xl aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-gray-800">
+            <iframe id="modal-player" class="w-full h-full" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
         </div>
     </div>
 
-    <!-- JAVASCRIPT: SHEET FETCH & LOGIC -->
+    <!-- CORE LOGIC / SHEET PROCESSING ENGINES -->
     <script>
-        // REPLACE THIS URL WITH YOUR PUBLISHED GOOGLE SHEET CSV URL
-        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?output=csv';
+        // Connected Live CSV Link provided (Requirement 1)
+        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=1842671833&single=true&output=csv';
 
-        let allVideos = [];
+        let rawVideoData = [];
+        let filteredVideoData = [];
+        let currentCarouselIndex = 0;
+        
+        // Pagination States (Requirement 8)
+        let currentPage = 1;
+        const itemsPerPage = 25;
 
-        // Helper to convert CSV string to Array of Objects
-        function parseCSV(text) {
-            const lines = text.split('\n').map(line => line.trim()).filter(line => line);
-            const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
-            
-            return lines.slice(1).map(line => {
-                // Regex handles commas inside quotes correctly
-                const matches = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
-                const values = matches.map(v => v.replace(/^"|"$/g, '').trim());
-                
-                let obj = {};
-                headers.forEach((header, i) => {
-                    obj[header] = values[i] || '';
-                });
-                return obj;
-            });
-        }
-
-        async function initPortfolio() {
+        // Fetch CSV from Sheets and clean values securely
+        async function fetchCMSData() {
             try {
                 const response = await fetch(SHEET_CSV_URL);
-                const csvData = await response.text();
-                allVideos = parseCSV(csvData);
-                
-                renderFilters();
-                renderVideos(allVideos);
-            } catch (error) {
-                console.error("Error loading CMS data:", error);
-                document.getElementById('video-grid').innerHTML = `
-                    <div class="col-span-full text-center py-12 text-red-400">
-                        <p>Failed to load video assets. Please verify the Google Sheet configuration.</p>
-                    </div>
-                `;
+                const dataText = await response.text();
+                processCSV(dataText);
+            } catch (err) {
+                console.error("Data ingestion failure:", err);
+                document.getElementById('video-grid').innerHTML = `<p class="col-span-full text-center text-red-500 py-6">Error processing streaming media assets directly from source records.</p>`;
             }
         }
 
-        function renderFilters() {
-            const categories = ['all', ...new Set(allVideos.map(v => v.Category).filter(Boolean))];
-            const filterContainer = document.getElementById('filter-buttons');
-            filterContainer.innerHTML = '';
+        // CSV parsing array pipeline logic 
+        function processCSV(text) {
+            const rows = [];
+            let currentField = '';
+            let insideQuotes = false;
+            let currentRow = [];
 
-            categories.forEach(cat => {
-                const isAll = cat === 'all';
-                const btn = document.createElement('button');
-                btn.className = `filter-btn px-4 py-2 rounded-full transition font-medium ${isAll ? 'bg-blue-600 text-white' : 'bg-gray-900 text-gray-400 hover:text-white border border-gray-800'}`;
-                btn.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
-                btn.onclick = () => filterCategory(cat, btn);
-                filterContainer.appendChild(btn);
+            // Character by character array parse safely handling inner quotes or lists
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const nextChar = text[i+1];
+
+                if (char === '"') {
+                    if (insideQuotes && nextChar === '"') {
+                        currentField += '"';
+                        i++;
+                    } else {
+                        insideQuotes = !insideQuotes;
+                    }
+                } else if (char === ',' && !insideQuotes) {
+                    currentRow.push(currentField.trim());
+                    currentField = '';
+                } else if ((char === '\r' || char === '\n') && !insideQuotes) {
+                    if (char === '\r' && nextChar === '\n') i++;
+                    currentRow.push(currentField.trim());
+                    if (currentRow.some(val => val !== '')) rows.push(currentRow);
+                    currentField = '';
+                    currentRow = [];
+                } else {
+                    currentField += char;
+                }
+            }
+            if (currentField || currentRow.length > 0) {
+                currentRow.push(currentField.trim());
+                rows.push(currentRow);
+            }
+
+            // Slice out head column naming row indexes safely
+            if(rows.length > 0) rows.shift();
+
+            // Transform matrix lines into normalized reference objects
+            rawVideoData = rows.map(row => {
+                let parsedTags = [];
+                // Dynamic clean mapping configuration for JSON arrays strings inside cells (Row K)
+                if (row[10]) {
+                    try {
+                        let cleanTagString = row[10].replace(/""/g, '"');
+                        parsedTags = JSON.parse(cleanTagString);
+                    } catch(e) {
+                        // Fallback handling standard non-JSON string entries elegantly
+                        parsedTags = row[10].split(',').map(t => t.trim().replace(/[\[\]"']/g, ''));
+                    }
+                }
+
+                return {
+                    title: row[0] || 'Untitled Project',
+                    company: row[3] || 'Independent',
+                    position: row[4] || 'Production Team',
+                    videoUrl: row[7] || '',
+                    tags: parsedTags
+                };
+            }).filter(item => item.title !== 'Untitled Project' || item.videoUrl !== '');
+
+            filteredVideoData = [...rawVideoData];
+            
+            buildFilterOptions();
+            displayPage(1);
+        }
+
+        // Populate dynamic sort/filter values array options uniquely (Requirement 6)
+        function buildFilterOptions() {
+            const companies = new Set(['All Companies']);
+            const positions = new Set(['All Positions']);
+            const tags = new Set(['All Tags']);
+
+            rawVideoData.forEach(item => {
+                if(item.company) companies.add(item.company);
+                if(item.position) positions.add(item.position);
+                if(item.tags) item.tags.forEach(t => tags.add(t));
+            });
+
+            populateSelectElement('filter-company', companies);
+            populateSelectElement('filter-position', positions);
+            populateSelectElement('filter-tag', tags);
+        }
+
+        function populateSelectElement(id, itemsSet) {
+            const el = document.getElementById(id);
+            el.innerHTML = '';
+            itemsSet.forEach(val => {
+                const opt = document.createElement('option');
+                opt.value = val;
+                opt.textContent = val;
+                el.appendChild(opt);
             });
         }
 
-        function renderVideos(videos) {
+        // Integrated Master Search & Sort Filter Pipeline Engine (Requirement 6 & 7)
+        function applyFilters() {
+            const selectedCompany = document.getElementById('filter-company').value;
+            const selectedPosition = document.getElementById('filter-position').value;
+            const selectedTag = document.getElementById('filter-tag').value;
+            const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+
+            filteredVideoData = rawVideoData.filter(item => {
+                const matchCompany = (selectedCompany === 'All Companies' || item.company === selectedCompany);
+                const matchPosition = (selectedPosition === 'All Positions' || item.position === selectedPosition);
+                const matchTag = (selectedTag === 'All Tags' || item.tags.includes(selectedTag));
+                const matchSearch = (item.title.toLowerCase().includes(searchVal));
+
+                return matchCompany && matchPosition && matchTag && matchSearch;
+            });
+
+            displayPage(1);
+        }
+
+        function handleSearchFilter() {
+            applyFilters();
+        }
+
+        // Logic Rendering Layout and handling Pagination capping content display at 25 (Requirement 8)
+        function displayPage(page) {
+            currentPage = page;
             const grid = document.getElementById('video-grid');
             grid.innerHTML = '';
 
-            if(videos.length === 0) {
-                grid.innerHTML = `<p class="col-span-full text-center py-12 text-gray-500">No projects found in this category.</p>`;
+            const totalItems = filteredVideoData.length;
+            const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
+
+            if (totalItems === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-12">No matching asset records matching specified search criteria found.</p>`;
+                document.getElementById('pagination-controls').classList.add('hidden');
                 return;
             }
 
-            videos.forEach(video => {
-                const card = document.createElement('div');
-                card.className = 'video-card bg-gray-900 border border-gray-800/60 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col group cursor-pointer';
-                card.onclick = () => openModal(video.VideoUrl);
+            // Calculate current windows constraints boundaries
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+            const pageItems = filteredVideoData.slice(startIndex, endIndex);
 
+            pageItems.forEach(video => {
+                const card = document.createElement('div');
+                card.className = 'video-card bg-gray-900 border border-gray-800/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col cursor-pointer group';
+                // Trigger overlay handler (Requirement 9)
+                card.onclick = () => openModal(video.videoUrl);
+
+                // Use a high quality workspace placeholder asset vector if custom dynamic links aren't assigned 
+                const fallbackThumb = 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=600&q=80';
+
+                // Render functional responsive elements safely
                 card.innerHTML = `
                     <div class="relative aspect-video bg-gray-950 overflow-hidden">
-                        <img src="${video.ThumbnailUrl || 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=600&q=80'}" alt="${video.Title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <img src="${fallbackThumb}" alt="${video.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
                         <div class="play-overlay absolute inset-0 bg-black/40 opacity-0 transition duration-300 flex items-center justify-center">
-                            <div class="bg-blue-600 p-4 rounded-full shadow-lg transform group-hover:scale-110 transition duration-300">
-                                <i data-lucide="play" class="w-6 h-6 text-white fill-current"></i>
+                            <div class="bg-blue-600 p-3.5 rounded-full shadow-lg transform group-hover:scale-110 transition duration-300">
+                                <i data-lucide="play" class="w-5 h-5 text-white fill-current"></i>
                             </div>
                         </div>
-                        <span class="absolute bottom-3 right-3 bg-black/80 backdrop-blur-sm text-[11px] font-semibold tracking-wider uppercase px-2 py-1 rounded text-gray-300 border border-gray-800">
-                            ${video.Category}
-                        </span>
                     </div>
-                    <div class="p-5 flex flex-col flex-grow">
-                        <span class="text-xs font-semibold text-blue-500 uppercase tracking-wider mb-1">${video.Role || 'Production'}</span>
-                        <h3 class="text-lg font-bold text-white mb-2 line-clamp-1 group-hover:text-blue-400 transition">${video.Title}</h3>
-                        <p class="text-sm text-gray-400 line-clamp-2 leading-relaxed mt-auto">${video.Description || ''}</p>
+                    <div class="p-5 flex flex-col flex-grow justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+                                <span class="text-[11px] font-bold text-blue-500 uppercase tracking-wider">${video.company}</span>
+                                <span class="text-[10px] text-gray-500 font-medium bg-gray-950 px-2 py-0.5 rounded border border-gray-800/50">${video.position}</span>
+                            </div>
+                            <h3 class="text-base font-bold text-white line-clamp-2 leading-snug group-hover:text-blue-400 transition mb-3">${video.title}</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-1 mt-auto pt-2">
+                            ${video.tags.map(t => `<span class="text-[10px] bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full font-medium">#${t}</span>`).join('')}
+                        </div>
                     </div>
                 `;
                 grid.appendChild(card);
             });
-            lucide.createIcons(); // Refresh icons inside dynamic cards
-        }
 
-        function filterCategory(category, activeBtn) {
-            // Adjust button styling
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.className = "filter-btn px-4 py-2 rounded-full bg-gray-900 text-gray-400 hover:text-white border border-gray-800 transition font-medium";
-            });
-            if (activeBtn) {
-                activeBtn.className = "filter-btn px-4 py-2 rounded-full bg-blue-600 text-white font-medium transition";
-            }
-
-            if (category === 'all') {
-                renderVideos(allVideos);
+            // Handle functional navigation adjustments visibility metrics dashboard state
+            if(totalPages > 1) {
+                document.getElementById('pagination-controls').classList.remove('hidden');
+                document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${totalPages}`;
+                document.getElementById('btn-prev').disabled = (currentPage === 1);
+                document.getElementById('btn-next').disabled = (currentPage === totalPages);
             } else {
-                const filtered = allVideos.filter(v => v.Category === category);
-                renderVideos(filtered);
+                document.getElementById('pagination-controls').classList.add('hidden');
+            }
+
+            lucide.createIcons();
+        }
+
+        function changePage(direction) {
+            const nextTarget = currentPage + direction;
+            const totalPages = Math.ceil(filteredVideoData.length / itemsPerPage);
+            if(nextTarget >= 1 && nextTarget <= totalPages) {
+                displayPage(nextTarget);
+                document.getElementById('videos').scrollIntoView({ behavior: 'smooth' });
             }
         }
 
+        // Full Screen Youtube Overplay Popup Config (Requirement 9)
         function openModal(url) {
             const modal = document.getElementById('video-modal');
             const player = document.getElementById('modal-player');
             
-            // Basic URL clean up to support simple YouTube/Vimeo embeds if full link pasted
             let embedUrl = url;
+            // Clean dynamic structures to safely translate direct links cleanly inside HTML elements iframe architectures
             if (url.includes('youtube.com/watch?v=')) {
                 embedUrl = url.replace('watch?v=', 'embed/');
             } else if (url.includes('youtu.be/')) {
                 embedUrl = url.replace('youtu.be/', 'youtube.com/embed/');
-            } else if (url.includes('vimeo.com/')) {
-                embedUrl = url.replace('vimeo.com/', 'player.vimeo.com/video/');
             }
-
+            
             player.src = embedUrl;
             modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
         }
 
         function closeModal() {
             const modal = document.getElementById('video-modal');
             const player = document.getElementById('modal-player');
             modal.classList.add('hidden');
-            player.src = ''; // Stops video playback on close
+            player.src = '';
+            document.body.classList.remove('overflow-hidden');
         }
 
-        // Initialize on load
+        // Basic Carousel Slide Translation Config (Requirement 4)
+        function moveCarousel(dir) {
+            const track = document.getElementById('carousel-track');
+            const totalSlides = track.children.length;
+            currentCarouselIndex = (currentCarouselIndex + dir + totalSlides) % totalSlides;
+            track.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
+        }
+
+        // Auto initialization load routines
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            initPortfolio();
+            fetchCMSData();
+            
+            // Auto slide carousel behavior every 5 seconds
+            setInterval(() => moveCarousel(1), 5000);
         });
     </script>
 </body>
