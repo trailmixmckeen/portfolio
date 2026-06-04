@@ -281,25 +281,35 @@
         }
 
         function buildVideoFilterDropdowns() {
-            const companies = new Set(['All Companies']);
-            const positions = new Set(['All Positions']);
-            const tags = new Set(['All Tags']);
+            const companiesSet = new Set();
+            const positionsSet = new Set();
+            const tagsSet = new Set();
 
             rawVideoData.forEach(item => {
-                if(item.company) companies.add(item.company);
-                if(item.position) positions.add(item.position);
-                if(item.tags) item.tags.forEach(t => tags.add(t));
+                if (item.company) companiesSet.add(item.company);
+                if (item.position) positionsSet.add(item.position);
+                if (item.tags) item.tags.forEach(t => tagsSet.add(t));
             });
 
-            populateDropdown('filter-company', companies);
-            populateDropdown('filter-position', positions);
-            populateDropdown('filter-tag', tags);
+            // Convert to arrays and sort alphabetically
+            const sortedCompanies = Array.from(companiesSet).sort((a, b) => a.localeCompare(b));
+            const sortedPositions = Array.from(positionsSet).sort((a, b) => a.localeCompare(b));
+            const sortedTags = Array.from(tagsSet).sort((a, b) => a.localeCompare(b));
+
+            // Re-prepend the default baseline master rules
+            sortedCompanies.unshift('All Companies');
+            sortedPositions.unshift('All Positions');
+            sortedTags.unshift('All Tags');
+
+            populateDropdown('filter-company', sortedCompanies);
+            populateDropdown('filter-position', sortedPositions);
+            populateDropdown('filter-tag', sortedTags);
         }
 
-        function populateDropdown(id, optionSet) {
+        function populateDropdown(id, optionArray) {
             const dropdown = document.getElementById(id);
             dropdown.innerHTML = '';
-            optionSet.forEach(val => {
+            optionArray.forEach(val => {
                 const el = document.createElement('option');
                 el.value = val;
                 el.textContent = val;
