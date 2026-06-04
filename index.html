@@ -240,9 +240,7 @@
             } else if (url.includes('youtube.com/embed/')) {
                 videoId = url.split('embed/')[1]?.split('?')[0];
             }
-            
-            // Return high-res thumbnail if found, fallback to standard placeholder if layout url is invalid
-            return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : 'images/placeholder-logo.png';
+            return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
         }
 
         // --- VIDEOS DATA ENGINE ---
@@ -268,7 +266,8 @@
                         company: row[3] || 'Independent',
                         position: row[4] || 'Production Team',
                         videoUrl: row[7] || '',
-                        tags: tagsArray
+                        tags: tagsArray,
+                        customThumbnail: row[11] || '' // Extracting Column L (Index 11)
                     };
                 }).filter(v => v.title !== 'Untitled Project' || v.videoUrl !== '');
 
@@ -308,6 +307,7 @@
             });
         }
 
+        // Dynamic Filtering Core Processing
         function applyFilters() {
             const comp = document.getElementById('filter-company').value;
             const pos = document.getElementById('filter-position').value;
@@ -325,6 +325,7 @@
             displayVideoPage(1);
         }
 
+        // Bind event handler wrapper
         function handleSearchFilter() { applyFilters(); }
 
         function displayVideoPage(page) {
@@ -350,12 +351,15 @@
                 card.className = 'video-card bg-gray-900 border border-gray-800/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col cursor-pointer group';
                 card.onclick = () => openModal(video.videoUrl);
 
-                // Fetch dynamic thumbnail links
-                const thumbnailUrl = getYouTubeThumbnail(video.videoUrl);
+                // Determine image tier hierarchy loop pipeline
+                const ytThumbnail = getYouTubeThumbnail(video.videoUrl);
+                const finalSrc = video.customThumbnail ? video.customThumbnail : ytThumbnail;
 
                 card.innerHTML = `
                     <div class="relative aspect-video bg-gray-950 overflow-hidden">
-                        <img src="${thumbnailUrl}" alt="${video.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80" onerror="this.onerror=null; this.src='images/placeholder-logo.png';">
+                        <img src="${finalSrc}" alt="${video.title}" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80" 
+                             onerror="this.onerror=null; this.src='${ytThumbnail}';">
                         <div class="play-overlay absolute inset-0 bg-black/40 opacity-0 transition duration-300 flex items-center justify-center">
                             <div class="bg-blue-600 p-3.5 rounded-full shadow-lg transform group-hover:scale-110 transition duration-300">
                                 <i data-lucide="play" class="w-5 h-5 text-white fill-current"></i>
