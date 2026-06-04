@@ -108,11 +108,11 @@
         const EMPLOYER_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=2101605290&single=true&output=csv';
         const RESUME_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=10390491&single=true&output=csv';
 
-        let rawVideoData = [];
-        let filteredVideoData = [];
-        let currentCarouselIndex = 0;
-        let currentPage = 1;
-        const itemsPerPage = 25;
+        let rawVideoDataResume = [];
+        let filteredVideoDataResume = [];
+        let currentCarouselIndexResume = 0;
+        let currentPageResume = 1;
+        const itemsPerPageResume = 25;
 
         // [Keep parseCSVLines engine block exactly as it is]
 
@@ -314,8 +314,8 @@
     </div>
 
     <script>
-        // let rawVideoData = []; - Duplicate FOUND
-        // let filteredVideoData = []; - Duplicate FOUND
+        let rawVideoData = [];
+        let filteredVideoData = [];
         let currentCarouselIndex = 0;
         let currentPage = 1;
         const itemsPerPage = 12;
