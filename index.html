@@ -78,13 +78,27 @@
                 <h2 class="text-3xl font-bold text-white tracking-tight">Professional Resume</h2>
                 <p class="text-gray-400 text-sm">Core experience block and skill profile overview via live index</p>
             </div>
-            <a href="McKeen_Resume.pdf" download="McKeen_Resume.pdf" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition shadow-md">
-                Download PDF <i data-lucide="download" class="w-4 h-4"></i>
-            </a>
+            <div class="flex items-center gap-3 self-stretch md:self-auto justify-between md:justify-end">
+                <!-- CAROUSEL NAVIGATION CONTROLS -->
+                <div id="resume-controls" class="flex items-center space-x-2 hidden">
+                    <button onclick="moveResumeCarousel(-1)" class="p-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-white transition">
+                        <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="moveResumeCarousel(1)" class="p-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-white transition">
+                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
+                <a href="McKeen_Resume.pdf" download="McKeen_Resume.pdf" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition shadow-md">
+                    Download PDF <i data-lucide="download" class="w-4 h-4"></i>
+                </a>
+            </div>
         </div>
 
-        <div id="resume-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="col-span-full text-center py-12 text-gray-500">Connecting to experience registry...</div>
+        <!-- OUTSIDE WRAPPER SET TO HIDE OVERFLOWS -->
+        <div class="relative w-full overflow-hidden">
+            <div id="resume-track" class="flex gap-6 transition-transform duration-500 ease-in-out w-full">
+                <div class="w-full text-center py-12 text-gray-500 shrink-0">Connecting to experience registry...</div>
+            </div>
         </div>
     </section>
 
@@ -111,17 +125,20 @@
             }
         }
 
-        // --- ISOLATED RESUME DATA ENGINE ---
+        // --- ISOLATED RESUME CAROUSEL DATA ENGINE ---
+        let currentResumeSlideIndex = 0;
+        let totalResumeSlidesMax = 0;
+
         async function fetchResumeCMS() {
             try {
                 const resumeResponse = await fetch(RESUME_CSV_URL);
                 const resumeRawText = await resumeResponse.text();
                 
-                // Uses your existing parseCSVLines engine but isolates the internal arrays
+                // Employs your existing unique custom splitter matrix safely
                 const parsedResumeLines = parseCSVLines(resumeRawText);
                 
                 if (parsedResumeLines.length > 0) {
-                    parsedResumeLines.shift(); // Strip header labels cleanly
+                    parsedResumeLines.shift(); // Strip columns label cleanly
                 }
 
                 const mappedResumeObjects = parsedResumeLines.map(resumeRow => {
@@ -134,28 +151,32 @@
                     };
                 }).filter(resItem => resItem.resumeTitle !== '' || resItem.resumeCompany !== '');
 
-                renderIsolatedResumeGrid(mappedResumeObjects);
+                renderIsolatedResumeCarousel(mappedResumeObjects);
             } catch (resumeError) {
                 console.error("Resume system scope pipeline fault:", resumeError);
-                document.getElementById('resume-grid').innerHTML = 
-                    `<p class="col-span-full text-center text-red-400 py-6">Failed to sync live resume data matrices.</p>`;
+                document.getElementById('resume-track').innerHTML = 
+                    `<p class="w-full text-center text-red-400 py-6">Failed to sync live resume data matrices.</p>`;
             }
         }
 
-        function renderIsolatedResumeGrid(targetResumeItems) {
-            const resumeDOMContainer = document.getElementById('resume-grid');
-            if (!resumeDOMContainer) return;
+        function renderIsolatedResumeCarousel(targetResumeItems) {
+            const resumeTrackDOM = document.getElementById('resume-track');
+            const controlsContainer = document.getElementById('resume-controls');
+            if (!resumeTrackDOM) return;
             
-            resumeDOMContainer.innerHTML = '';
+            resumeTrackDOM.innerHTML = '';
+            currentResumeSlideIndex = 0; // Initialize base state boundary
 
             if (targetResumeItems.length === 0) {
-                resumeDOMContainer.innerHTML = `<p class="col-span-full text-center text-gray-500 py-6">No resume items currently listed.</p>`;
+                resumeTrackDOM.innerHTML = `<p class="w-full text-center text-gray-500 py-6">No resume items currently listed.</p>`;
+                if (controlsContainer) controlsContainer.classList.add('hidden');
                 return;
             }
 
+            // Dynamically assign card width bases across viewport queries
             targetResumeItems.forEach(singleResumeItem => {
                 const resumeCardElement = document.createElement('div');
-                resumeCardElement.className = 'bg-gray-900/60 border border-gray-800 p-6 rounded-xl flex flex-col justify-between transition duration-300 hover:border-gray-700/60';
+                resumeCardElement.className = 'w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shrink-0 bg-gray-900/60 border border-gray-800 p-6 rounded-xl flex flex-col justify-between transition duration-300 hover:border-gray-700/60';
                 
                 const locationLabelMarkup = singleResumeItem.resumeCity ? ` &bull; ${singleResumeItem.resumeCity}` : '';
 
@@ -167,12 +188,48 @@
                         <p class="text-sm text-gray-400 leading-relaxed">${singleResumeItem.resumeDesc}</p>
                     </div>
                 `;
-                resumeDOMContainer.appendChild(resumeCardElement);
+                resumeTrackDOM.appendChild(resumeCardElement);
             });
+
+            // Evaluate tracking calculations to prevent excessive whitespace scrolling on large screens
+            totalResumeSlidesMax = targetResumeItems.length;
+            if (totalResumeSlidesMax > 1) {
+                if (controlsContainer) controlsContainer.classList.remove('hidden');
+            }
             
             if (window.lucide && typeof window.lucide.createIcons === 'function') {
                 lucide.createIcons();
             }
+        }
+
+        // Logic framework for relative resume carousels tracking layout transforms
+        function moveResumeCarousel(direction) {
+            const track = document.getElementById('resume-track');
+            if (!track || totalResumeSlidesMax === 0) return;
+
+            // Determine visible cards per frame row base step criteria
+            let visibleCards = 1;
+            if (window.innerWidth >= 1024) {
+                visibleCards = 3;
+            } else if (window.innerWidth >= 768) {
+                visibleCards = 2;
+            }
+
+            const maxAvailableScrolls = totalResumeSlidesMax - visibleCards;
+            if (maxAvailableScrolls <= 0) return; // Prevent scrolling if everything fits
+
+            currentResumeSlideIndex += direction;
+
+            // Loop bounds control parameters 
+            if (currentResumeSlideIndex < 0) {
+                currentResumeSlideIndex = maxAvailableScrolls;
+            } else if (currentResumeSlideIndex > maxAvailableScrolls) {
+                currentResumeSlideIndex = 0;
+            }
+
+            // Translate matrix calculates item margins plus container percentage variables smoothly
+            const percentShiftStep = (100 / visibleCards);
+            track.style.transform = `translateX(-${currentResumeSlideIndex * percentShiftStep}%)`;
         }
     </script>
         
