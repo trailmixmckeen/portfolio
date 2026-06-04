@@ -126,10 +126,12 @@
                 <div class="col-span-full text-center py-12 text-gray-500">Connecting to video database...</div>
             </div>
 
-            <div id="pagination-controls" class="flex justify-center items-center space-x-4 mt-12 hidden">
-                <button onclick="changePage(-1)" id="btn-prev" class="px-4 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition">Previous</button>
-                <span id="page-indicator" class="text-sm text-gray-400 font-medium">Page 1 of 1</span>
-                <button onclick="changePage(1)" id="btn-next" class="px-4 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition">Next</button>
+            <div id="pagination-controls" class="flex justify-center items-center space-x-2 md:space-x-4 mt-12 hidden">
+                <button onclick="goToPage(1)" id="btn-first" class="px-3 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition font-medium">First</button>
+                <button onclick="changePage(-1)" id="btn-prev" class="px-4 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition font-medium">Previous</button>
+                <span id="page-indicator" class="text-sm text-gray-400 font-medium px-2">Page 1 of 1</span>
+                <button onclick="changePage(1)" id="btn-next" class="px-4 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition font-medium">Next</button>
+                <button onclick="goToBoundaryLast()" id="btn-last" class="px-3 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition font-medium">Last</button>
             </div>
         </div>
     </section>
@@ -361,7 +363,6 @@
                 card.className = 'video-card bg-gray-900 border border-gray-800/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col cursor-pointer group';
                 card.onclick = () => openModal(video.videoUrl);
 
-                // Determine image tier hierarchy loop pipeline
                 const ytThumbnail = getYouTubeThumbnail(video.videoUrl);
                 const finalSrc = video.customThumbnail ? video.customThumbnail : ytThumbnail;
 
@@ -395,21 +396,36 @@
             if(pagesTotal > 1) {
                 document.getElementById('pagination-controls').classList.remove('hidden');
                 document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${pagesTotal}`;
+                
+                // Toggle status states across all four tracking anchors
+                document.getElementById('btn-first').disabled = (currentPage === 1);
                 document.getElementById('btn-prev').disabled = (currentPage === 1);
                 document.getElementById('btn-next').disabled = (currentPage === pagesTotal);
+                document.getElementById('btn-last').disabled = (currentPage === pagesTotal);
             } else {
                 document.getElementById('pagination-controls').classList.add('hidden');
             }
             lucide.createIcons();
         }
 
+        // Execution path handles relative incremental page steps
         function changePage(dir) {
             const target = currentPage + dir;
             const maxPages = Math.ceil(filteredVideoData.length / itemsPerPage);
             if(target >= 1 && target <= maxPages) {
-                displayVideoPage(target);
-                document.getElementById('videos').scrollIntoView({ behavior: 'smooth' });
+                goToPage(target);
             }
+        }
+
+        // Direct explicit index boundary jumpers
+        function goToPage(pageTarget) {
+            displayVideoPage(pageTarget);
+            document.getElementById('videos').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function goToBoundaryLast() {
+            const maxPages = Math.ceil(filteredVideoData.length / itemsPerPage) || 1;
+            goToPage(maxPages);
         }
 
         // --- PREVIOUS EMPLOYERS ENGINE ---
