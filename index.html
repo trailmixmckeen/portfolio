@@ -166,6 +166,7 @@
             
             resumeTrackDOM.innerHTML = '';
             currentResumeSlideIndex = 0; // Initialize base state boundary
+            resumeTrackDOM.style.transform = 'translateX(0px)';
 
             if (targetResumeItems.length === 0) {
                 resumeTrackDOM.innerHTML = `<p class="w-full text-center text-gray-500 py-6">No resume items currently listed.</p>`;
@@ -227,9 +228,12 @@
                 currentResumeSlideIndex = 0;
             }
 
-            // Translate matrix calculates item margins plus container percentage variables smoothly
-            const percentShiftStep = (100 / visibleCards);
-            track.style.transform = `translateX(-${currentResumeSlideIndex * percentShiftStep}%)`;
+            // Get exact width of a single card plus its 24px (gap-6) margin
+            const firstCard = track.children[0];
+            const cardWidthWithGap = firstCard.getBoundingClientRect().width + 24;
+
+            // Shift explicitly by pixels to completely protect the hidden layout layout bounds
+            track.style.transform = `translateX(-${currentResumeSlideIndex * cardWidthWithGap}px)`;
         }
     </script>
         
