@@ -537,71 +537,77 @@
         function handleSearchFilter() { applyFilters(); }
 
         function displayVideoPage(page) {
-            currentPage = page;
-            const grid = document.getElementById('video-grid');
-            grid.innerHTML = '';
+    currentPage = page;
+    const grid = document.getElementById('video-grid');
+    grid.innerHTML = '';
 
-            const total = filteredVideoData.length;
-            const pagesTotal = Math.ceil(total / itemsPerPage) || 1;
+    const total = filteredVideoData.length;
+    const pagesTotal = Math.ceil(total / itemsPerPage) || 1;
 
-            if (total === 0) {
-                grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-12">No media assets found matching modern sort matrices.</p>`;
-                document.getElementById('pagination-controls').classList.add('hidden');
-                return;
-            }
+    if (total === 0) {
+        grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-12">No media assets found matching modern sort matrices.</p>`;
+        document.getElementById('pagination-controls').classList.add('hidden');
+        return;
+    }
 
-            const start = (currentPage - 1) * itemsPerPage;
-            const end = Math.min(start + itemsPerPage, total);
-            const viewableItems = filteredVideoData.slice(start, end);
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = Math.min(start + itemsPerPage, total);
+    const viewableItems = filteredVideoData.slice(start, end);
 
-            viewableItems.forEach(video => {
-                const card = document.createElement('div');
-                card.className = 'video-card bg-gray-900 border border-gray-800/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col cursor-pointer group';
-                videoCard.setAttribute('onclick', `openModalByIndex(${idx + (currentPageResume - 1) * itemsPerPageResume})`);
+    viewableItems.forEach(video => {
+        const card = document.createElement('div');
+        card.className = 'video-card bg-gray-900 border border-gray-800/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col cursor-pointer group';
+        
+        // FIXED: Changed videoCard to card, and passes the clean videoUrl string 
+        card.setAttribute('onclick', `openModal('${video.videoUrl}')`);
 
-                const ytThumbnail = getYouTubeThumbnail(video.videoUrl);
-                const finalSrc = video.customThumbnail ? video.customThumbnail : ytThumbnail;
+        const ytThumbnail = getYouTubeThumbnail(video.videoUrl);
+        const finalSrc = video.customThumbnail ? video.customThumbnail : ytThumbnail;
 
-                card.innerHTML = `
-                    <div class="relative aspect-video bg-gray-950 overflow-hidden">
-                        <img src="${finalSrc}" alt="${video.title}" 
-                             class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80" 
-                             onerror="this.onerror=null; this.src='${ytThumbnail}';">
-                        <div class="play-overlay absolute inset-0 bg-black/40 opacity-0 transition duration-300 flex items-center justify-center">
-                            <div class="bg-blue-600 p-3.5 rounded-full shadow-lg transform group-hover:scale-110 transition duration-300">
-                                <i data-lucide="play" class="w-5 h-5 text-white fill-current"></i>
-                            </div>
-                        </div>
+        card.innerHTML = `
+            <div class="relative aspect-video bg-gray-950 overflow-hidden">
+                <img src="${finalSrc}" alt="${video.title}" 
+                     class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80" 
+                     onerror="this.onerror=null; this.src='${ytThumbnail}';">
+                <div class="play-overlay absolute inset-0 bg-black/40 opacity-0 transition duration-300 flex items-center justify-center">
+                    <div class="bg-blue-600 p-3.5 rounded-full shadow-lg transform group-hover:scale-110 transition duration-300">
+                        <i data-lucide="play" class="w-5 h-5 text-white fill-current"></i>
                     </div>
-                    <div class="p-5 flex flex-col flex-grow justify-between">
-                        <div>
-                            <div class="flex items-center gap-2 mb-1.5 flex-wrap">
-                                <span class="text-[11px] font-bold text-blue-500 uppercase tracking-wider">${video.company}</span>
-                                <span class="text-[10px] text-gray-500 font-medium bg-gray-950 px-2 py-0.5 rounded border border-gray-800/50">${video.position}</span>
-                            </div>
-                            <h3 class="text-base font-bold text-white line-clamp-2 leading-snug group-hover:text-blue-400 transition mb-3">${video.title}</h3>
-                        </div>
-                        <div class="flex flex-wrap gap-1 mt-auto pt-2">
-                            ${video.tags.map(t => `<span class="text-[10px] bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full font-medium">#${t}</span>`).join('')}
-                        </div>
+                </div>
+            </div>
+            <div class="p-5 flex flex-col flex-grow justify-between">
+                <div>
+                    <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+                        <span class="text-[11px] font-bold text-blue-500 uppercase tracking-wider">${video.company}</span>
+                        <span class="text-[10px] text-gray-500 font-medium bg-gray-950 px-2 py-0.5 rounded border border-gray-800/50">${video.position}</span>
                     </div>
-                `;
-                grid.appendChild(card);
-            });
+                    <h3 class="text-base font-bold text-white line-clamp-2 leading-snug group-hover:text-blue-400 transition mb-3">${video.title}</h3>
+                </div>
+                <div class="flex flex-wrap gap-1 mt-auto pt-2">
+                    ${video.tags.map(t => `<span class="text-[10px] bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full font-medium">#${t}</span>`).join('')}
+                </div>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
 
-            if(pagesTotal > 1) {
-                document.getElementById('pagination-controls').classList.remove('hidden');
-                document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${pagesTotal}`;
-                
-                // Toggle status states across all four tracking anchors
-                document.getElementById('btn-first').disabled = (currentPage === 1);
-                document.getElementById('btn-prev').disabled = (currentPage === 1);
-                document.getElementById('btn-next').disabled = (currentPage === pagesTotal);
-                document.getElementById('btn-last').disabled = (currentPage === pagesTotal);
-            } else {
-                document.getElementById('pagination-controls').classList.add('hidden');
-            }
-        }
+    if(pagesTotal > 1) {
+        document.getElementById('pagination-controls').classList.remove('hidden');
+        document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${pagesTotal}`;
+        
+        document.getElementById('btn-first').disabled = (currentPage === 1);
+        document.getElementById('btn-prev').disabled = (currentPage === 1);
+        document.getElementById('btn-next').disabled = (currentPage === pagesTotal);
+        document.getElementById('btn-last').disabled = (currentPage === pagesTotal);
+    } else {
+        document.getElementById('pagination-controls').classList.add('hidden');
+    }
+
+    // Force Lucide script engine parsing for newly generated card icon states cleanly
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        lucide.createIcons();
+    }
+}
 
         // Execution path handles relative incremental page steps
         function changePage(dir) {
