@@ -554,11 +554,12 @@
     const end = Math.min(start + itemsPerPage, total);
     const viewableItems = filteredVideoData.slice(start, end);
 
-    viewableItems.forEach(video => {
+    // FIXED: Use the local parameter 'video' and match it with the correct element variable 'card'
+    viewableItems.forEach((video) => {
         const card = document.createElement('div');
         card.className = 'video-card bg-gray-900 border border-gray-800/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col cursor-pointer group';
         
-        // FIXED: Changed videoCard to card, and passes the clean videoUrl string 
+        // Correctly points to the instantiated element 'card' and binds the openModal action
         card.setAttribute('onclick', `openModal('${video.videoUrl}')`);
 
         const ytThumbnail = getYouTubeThumbnail(video.videoUrl);
@@ -601,11 +602,6 @@
         document.getElementById('btn-last').disabled = (currentPage === pagesTotal);
     } else {
         document.getElementById('pagination-controls').classList.add('hidden');
-    }
-
-    // Force Lucide script engine parsing for newly generated card icon states cleanly
-    if (window.lucide && typeof window.lucide.createIcons === 'function') {
-        lucide.createIcons();
     }
 }
 
