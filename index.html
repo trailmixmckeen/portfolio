@@ -607,50 +607,58 @@
         }
 
         function renderEmployersGrid(items) {
-            const grid = document.getElementById('employers-grid');
-            if (!grid) return;
-            grid.innerHTML = '';
+    const grid = document.getElementById('employers-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
 
-            items.forEach(emp => {
-                const block = document.createElement('div');
-                // Updated to text-center to align all card content cleanly
-                block.className = 'bg-gray-900/40 border border-gray-800 rounded-xl p-5 flex flex-col justify-between items-center text-center transition duration-300 hover:border-gray-700';
+    items.forEach(emp => {
+        const block = document.createElement('div');
+        block.className = 'bg-gray-900/40 border border-gray-800 rounded-xl p-5 flex flex-col justify-between items-center text-center transition duration-300 hover:border-gray-700';
 
-                const hasSocials = (emp.fbLink || emp.liLink || emp.twLink || emp.webLink);
-                let socialHTML = '';
+        const hasSocials = (emp.fbLink || emp.liLink || emp.twLink || emp.webLink);
+        let socialHTML = '';
 
-                if (hasSocials) {
-                    // Centered social tray alignment matching the card orientation
-                    socialHTML = `<div class="flex items-center justify-center space-x-4 mt-5 pt-4 border-t border-gray-800/60 w-full text-gray-500">`;
-                    if (emp.fbLink) socialHTML += `<a href="${emp.fbLink}" target="_blank" class="hover:text-blue-500 transition"><i data-lucide="facebook" class="w-4 h-4"></i></a>`;
-                    if (emp.liLink) socialHTML += `<a href="${emp.liLink}" target="_blank" class="hover:text-blue-400 transition"><i data-lucide="linkedin" class="w-4 h-4"></i></a>`;
-                    if (emp.twLink) socialHTML += `<a href="${emp.twLink}" target="_blank" class="hover:text-white transition"><i data-lucide="twitter" class="w-4 h-4"></i></a>`;
-                    if (emp.webLink) socialHTML += `<a href="${emp.webLink}" target="_blank" class="hover:text-blue-600 transition"><i data-lucide="globe" class="w-4 h-4"></i></a>`;
-                    socialHTML += `</div>`;
-                }
-
-                // Removed the small bounding box wrapper; logo is now large, center-aligned, and matches text width constraints
-                block.innerHTML = `
-                    <div class="w-full flex flex-col items-center">
-                        <div class="w-full aspect-[3/1] max-w-[180px] flex items-center justify-center mb-4 overflow-hidden">
-                            <img src="${emp.imageLink || 'images/placeholder-logo.png'}" alt="${emp.altText}" class="w-full h-full object-contain filter brightness-110">
-                        </div>
-                        <h3 class="text-lg font-bold text-white tracking-tight line-clamp-1 w-full">${emp.title}</h3>
-                        <p class="text-blue-500 text-[11px] font-semibold uppercase tracking-wider mt-0.5 mb-2 line-clamp-1 w-full">${emp.subtitle}</p>
-                        <p class="text-xs text-gray-400 leading-relaxed line-clamp-4 w-full">${emp.description}</p>
-                    </div>
-                    ${socialHTML}
-                `;
-                grid.appendChild(block);
-            });
-
-            // Isolate Lucide compilation into a single local frame request to safely mount icons
-            requestAnimationFrame(() => {
-                if (window.lucide && typeof window.lucide.createIcons === 'function') {
-                    window.lucide.createIcons();
-                }
-            });
+        // Universal SVG injection ensuring perfect execution without relying on unstable Lucide imports
+        if (hasSocials) {
+            socialHTML = `<div class="flex items-center justify-center space-x-4 mt-5 pt-4 border-t border-gray-800/60 w-full text-gray-500">`;
+            if (emp.fbLink) socialHTML += `
+                <a href="${emp.fbLink}" target="_blank" class="hover:text-blue-500 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                </a>`;
+            if (emp.liLink) socialHTML += `
+                <a href="${emp.liLink}" target="_blank" class="hover:text-blue-400 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>`;
+            if (emp.twLink) socialHTML += `
+                <a href="${emp.twLink}" target="_blank" class="hover:text-white transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                </a>`;
+            if (emp.webLink) socialHTML += `
+                <a href="${emp.webLink}" target="_blank" class="hover:text-blue-600 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </a>`;
+            socialHTML += `</div>`;
         }
+
+        // DESIGN CHANGES IMPLEMENTED BELOW:
+        // 1. Made logos larger by bumping layout constraints to max-w-[210px] and aspect-[16/7]
+        // 2. Row 1 (Title): Font reduced from text-lg to text-base (~2pt drop)
+        // 3. Row 2 (Subtitle): Font reduced from text-[11px] to text-[10px] (~1pt drop)
+        // 4. Row 3 (Description): Font reduced from text-xs to text-[11px] (~1pt drop)
+        block.innerHTML = `
+            <div class="w-full flex flex-col items-center">
+                <div class="w-full aspect-[16/7] max-w-[210px] flex items-center justify-center mb-5 overflow-hidden">
+                    <img src="${emp.imageLink || 'images/placeholder-logo.png'}" alt="${emp.altText}" class="w-full h-full object-contain filter brightness-110">
+                </div>
+                <h3 class="text-base font-bold text-white tracking-tight line-clamp-1 w-full">${emp.title}</h3>
+                <p class="text-blue-500 text-[10px] font-semibold uppercase tracking-wider mt-0.5 mb-2 line-clamp-1 w-full">${emp.subtitle}</p>
+                <p class="text-[11px] text-gray-400 leading-relaxed line-clamp-4 w-full">${emp.description}</p>
+            </div>
+            ${socialHTML}
+        `;
+        grid.appendChild(block);
+    });
+}
 
         // --- SCREEN VIDEO LIGHTBOX MODAL ---
         function openModal(url) {
