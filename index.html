@@ -349,10 +349,15 @@
                     </div>
                     
                     <h3 id="modal-title" class="text-lg md:text-xl font-bold text-white mb-3 tracking-tight leading-snug"></h3>
-                    <p id="modal-desc" class="text-[12px] text-gray-400 leading-relaxed font-normal"></p>
+                    <div id="modal-desc-container">
+                        <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-2">Project Tags</p>
+                        <div id="modal-tags" class="flex flex-wrap gap-1.5"></div>
+                    </div>
                 </div>
 
-                <div id="modal-tags" class="flex flex-wrap gap-1.5 mt-6 pt-4 border-t border-gray-900"></div>
+                <div class="text-[11px] text-gray-500 font-mono mt-6 pt-4 border-t border-gray-900">
+                    Broadcast Production Asset
+                </div>
             </div>
 
         </div>
@@ -826,44 +831,46 @@ function renderAwardsList(awardsItems) {
             
             player.src = embedUrl;
 
-            // Look up the matching object inside your global data arrays using the URL string match
+            // CORRECTED: Matches 'videoUrl' exactly as defined in your fetchVideoCMS mapping loop
             const videoItem = (typeof filteredVideoData !== 'undefined' ? filteredVideoData : []).find(
                 item => item.videoUrl === url
             );
 
-            // Populate text blocks dynamically if a matching registry is found
             if (videoItem) {
                 document.getElementById('modal-title').innerText = videoItem.title || 'Untitled Project';
                 document.getElementById('modal-company').innerText = videoItem.company || 'Independent Production';
                 document.getElementById('modal-position').innerText = videoItem.position || 'Production Team';
-                
-                // Set text data block (with fallback description rule if columns are empty)
-                document.getElementById('modal-desc').innerText = videoItem.description || 'Live production data mapped cleanly through network matrices.';
 
-                // Clear and render dynamic tag chips inside the panel layout
+                // Safely render the tags array without undefined property crashes
                 const tagContainer = document.getElementById('modal-tags');
                 tagContainer.innerHTML = '';
                 if (videoItem.tags && videoItem.tags.length > 0) {
                     videoItem.tags.forEach(t => {
                         if (t && t.trim()) {
                             const chip = document.createElement('span');
-                            chip.className = 'text-[9px] font-semibold text-gray-500 bg-gray-900/60 px-2 py-0.5 border border-gray-800/40 rounded';
+                            chip.className = 'text-[10px] font-medium text-gray-300 bg-gray-900 px-2.5 py-1 border border-gray-800 rounded-md';
                             chip.innerText = `#${t.trim()}`;
                             tagContainer.appendChild(chip);
                         }
                     });
+                } else {
+                    tagContainer.innerHTML = `<span class="text-xs text-gray-600 italic">No tags logged</span>`;
                 }
             } else {
-                // Safe structural blank fallback
+                // Fallback state if no URL match is found in the array cache
                 document.getElementById('modal-title').innerText = "Video Production";
-                document.getElementById('modal-company').innerText = "";
-                document.getElementById('modal-position').innerText = "";
-                document.getElementById('modal-desc').innerText = "";
+                document.getElementById('modal-company').innerText = "Broadcast Log";
+                document.getElementById('modal-position').innerText = "Production Asset";
                 document.getElementById('modal-tags').innerHTML = "";
             }
 
             modal.classList.remove('hidden');
             document.body.classList.add('overflow-hidden');
+            
+            // Re-trigger Lucide icons inside the modal overlay if needed
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                lucide.createIcons();
+            }
         }
 
         function closeModal() {
