@@ -361,7 +361,10 @@
                     </div>
                 </div>
 
-                <div id="modal-tags" class="flex flex-wrap gap-1.5 mt-8 pt-4 border-t border-gray-900"></div>
+                <div>
+                    <p class="text-[10px] text-gray-500 font-mono uppercase tracking-wider mb-2">Project Tags</p>
+                    <div id="modal-tags" class="flex flex-wrap gap-1.5"></div>
+                </div>
             </div>
 
         </div>
@@ -818,7 +821,6 @@ function renderAwardsList(awardsItems) {
 }
 
         // --- SCREEN VIDEO LIGHTBOX MODAL ---
-        // --- EXPANDED METADATA LIGHTBOX MODAL ---
         function openModal(url) {
             const modal = document.getElementById('video-modal');
             const player = document.getElementById('modal-player');
@@ -843,10 +845,10 @@ function renderAwardsList(awardsItems) {
                 document.getElementById('modal-company').innerText = videoItem.company || 'Independent Production';
                 document.getElementById('modal-position').innerText = videoItem.position || 'Production Asset';
                 
-                // FIXED: Maps to .desc (Column F) exactly as defined in your fetchVideoCMS loop
+                // FIXED: Maps directly to .desc to pull your spreadsheet data
                 document.getElementById('modal-desc').innerText = videoItem.desc || 'No project logging description available.';
 
-                // FIXED: Maps to .awardsAndMentions (Column J) exactly as defined in your fetchVideoCMS loop
+                // FIXED: Maps directly to .awardsAndMentions to display your accolades block
                 const awardsContainer = document.getElementById('modal-awards-container');
                 if (videoItem.awardsAndMentions && videoItem.awardsAndMentions.trim() !== '') {
                     document.getElementById('modal-awards').innerText = videoItem.awardsAndMentions.trim();
@@ -872,7 +874,7 @@ function renderAwardsList(awardsItems) {
                     tagContainer.innerHTML = `<span class="text-xs text-gray-600 italic">No searchable categories attached.</span>`;
                 }
             } else {
-                // Default fallback structural layout safety settings
+                // Fallback structural layout safety settings
                 document.getElementById('modal-title').innerText = "Video Production";
                 document.getElementById('modal-company').innerText = "Broadcast Record";
                 document.getElementById('modal-position').innerText = "Production Crew";
