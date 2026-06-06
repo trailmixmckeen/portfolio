@@ -474,35 +474,30 @@
         }
 
         function buildVideoFilterDropdowns() {
-    const companiesSet = new Set();
-    const positionsSet = new Set();
-    const tagsSet = new Set();
+            const companies = new Set();
+            const positions = new Set();
+            const tags = new Set();
 
-    rawVideoDataResume.forEach(item => {
-        // Only add values if they exist and aren't just empty spaces
-        if (item.company && item.company.trim()) companiesSet.add(item.company.trim());
-        if (item.position && item.position.trim()) positionsSet.add(item.position.trim());
-        if (item.tags) {
-            item.tags.forEach(t => {
-                if (t && t.trim()) tagsSet.add(t.trim());
+            rawVideoData.forEach(item => {
+                if (item.company) companies.add(item.company.trim());
+                if (item.position) positions.add(item.position.trim());
+                if (item.tags) {
+                    item.tags.forEach(t => tags.add(t.trim()));
+                }
             });
+
+            const sortedCompanies = Array.from(companies).sort();
+            const sortedPositions = Array.from(positions).sort();
+            const sortedTags = Array.from(tags).sort();
+
+            sortedCompanies.unshift('All Companies');
+            sortedPositions.unshift('All Positions');
+            sortedTags.unshift('All Tags');
+
+            populateDropdown('filter-company', sortedCompanies);
+            populateDropdown('filter-position', sortedPositions);
+            populateDropdown('filter-tag', sortedTags);
         }
-    });
-
-    // Convert to arrays and safely sort alphabetically using clean string validation fallbacks
-    const sortedCompanies = Array.from(companiesSet).sort((a, b) => (a || '').localeCompare(b || ''));
-    const sortedPositions = Array.from(positionsSet).sort((a, b) => (a || '').localeCompare(b || ''));
-    const sortedTags = Array.from(tagsSet).sort((a, b) => (a || '').localeCompare(b || ''));
-
-    // Re-prepend the default placeholder options
-    sortedCompanies.unshift('All Companies');
-    sortedPositions.unshift('All Positions');
-    sortedTags.unshift('All Tags');
-
-    populateDropdown('filter-company', sortedCompanies);
-    populateDropdown('filter-position', sortedPositions);
-    populateDropdown('filter-tag', sortedTags);
-}
 
         function populateDropdown(id, optionArray) {
             const dropdown = document.getElementById(id);
