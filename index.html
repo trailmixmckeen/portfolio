@@ -1,951 +1,920 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex McKeen | Portfolio</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0b0f19; }
-        .video-card:hover .play-overlay { opacity: 1; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    </style>
-</head>
-<body class="text-gray-100 min-h-screen flex flex-col justify-between">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Alex McKeen | Portfolio</title>
+        <link rel="icon" type="image/png" href="favicon.png">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+            body { font-family: 'Inter', sans-serif; background-color: #0b0f19; }
+            .video-card:hover .play-overlay { opacity: 1; }
+            .no-scrollbar::-webkit-scrollbar { display: none; }
+            .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        </style>
+    </head>
+    <body class="text-gray-100 min-h-screen flex flex-col justify-between">
 
-    <nav class="sticky top-0 z-40 bg-[#0b0f19]/90 backdrop-blur-md border-b border-gray-800">
-        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-            <a href="#home" class="flex items-center">
-                <img src="Logo_inactive.png" alt="Alex McKeen Logo" class="h-8 w-auto object-contain">
-            </a>
-            <div class="flex space-x-8 text-sm font-medium tracking-wide text-gray-400">
-                <a href="#resume" class="hover:text-white transition">Resume</a>
-                <a href="#videos" class="hover:text-white transition">Videos</a>
-                <a href="#employers" class="hover:text-white transition">Previous Employers</a>
-                <a href="https://www.linkedin.com/in/alexmckeen/" class="hover:text-white transition">Contact</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- HERO / CAROUSEL SECTION -->
-    <header id="home" class="max-w-6xl mx-auto px-4 pt-10 pb-6 w-full">
-        <div class="relative w-full overflow-hidden rounded-2xl bg-gray-900 border border-gray-800 h-[300px] md:h-[450px]">
-            
-            <!-- BACKGROUND CAROUSEL TRACK -->
-            <div id="carousel-track" class="flex w-full h-full transition-transform duration-700 ease-in-out">
-                <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('01_KyleField.jpg');"></div>
-                <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('02_SuperBowl_NOLA.jpg');"></div>
-                <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('03_MLBonTBS.jpg');"></div>
-                <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('04_SuperBowl.jpg');"></div>
-                <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('05_Yankees.jpg');"></div>
-                <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('07_Verzuz.jpg');"></div>
-                <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('08_ALCS.jpg');"></div>
-                <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('09_Betting.jpg');"></div>
-                <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('10_Chicago.jpg');"></div>
-                <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('11_NBAonTNT.jpg');"></div>
-            </div>
-
-            <!-- STATIC OVERLAY LAYER (Lower alignment + Dark drop shadow profiles) -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end px-8 md:px-16 pb-8 md:pb-12 pointer-events-none">
-                <div class="max-w-2xl">
-                    <h1 class="text-2xl md:text-5xl font-black text-white tracking-tight leading-tight mb-3 drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]">
-                        Engineering High-Impact Sports Broadcasts
-                    </h1>
-                    <p class="text-gray-200 text-xs md:text-base font-medium max-w-lg leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-                        From major league stadiums to synchronized network control arrays, building reliable cloud routing infrastructures and ingest engine configurations.
-                    </p>
-                </div>
-            </div>
-
-            <!-- INTERACTIVE CAROUSEL CONTROLS -->
-            <button onclick="moveCarousel(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 p-2 rounded-full text-white backdrop-blur-sm transition z-10">
-                <i data-lucide="chevron-left"></i>
-            </button>
-            <button onclick="moveCarousel(1)" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 p-2 rounded-full text-white backdrop-blur-sm transition z-10">
-                <i data-lucide="chevron-right"></i>
-            </button>
-        </div>
-    </header>
-
-    <!-- RESUME SECTION -->
-    <section id="resume" class="max-w-6xl mx-auto px-4 py-16 w-full border-t border-gray-800">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
-            <div>
-                <h2 class="text-3xl font-bold text-white tracking-tight">Professional Resume</h2>
-                <p class="text-gray-400 text-sm">Core experience block and skill profile overview via live index</p>
-            </div>
-            <div class="flex items-center gap-3 self-stretch md:self-auto justify-between md:justify-end">
-                <!-- CAROUSEL NAVIGATION CONTROLS -->
-                <div id="resume-controls" class="flex items-center space-x-2 hidden">
-                    <button onclick="moveResumeCarousel(-1)" class="p-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-white transition">
-                        <i data-lucide="chevron-left" class="w-5 h-5"></i>
-                    </button>
-                    <button onclick="moveResumeCarousel(1)" class="p-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-white transition">
-                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
-                    </button>
-                </div>
-                <a href="McKeen_Resume.pdf" download="McKeen_Resume.pdf" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition shadow-md">
-                    Download PDF <i data-lucide="download" class="w-4 h-4"></i>
+        <nav class="sticky top-0 z-40 bg-[#0b0f19]/90 backdrop-blur-md border-b border-gray-800">
+            <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+                <a href="#home" class="flex items-center">
+                    <img src="Logo_inactive.png" alt="Alex McKeen Logo" class="h-8 w-auto object-contain">
                 </a>
+                <div class="flex space-x-8 text-sm font-medium tracking-wide text-gray-400">
+                    <a href="#resume" class="hover:text-white transition">Resume</a>
+                    <a href="#videos" class="hover:text-white transition">Videos</a>
+                    <a href="#employers" class="hover:text-white transition">Previous Employers</a>
+                    <a href="https://www.linkedin.com/in/alexmckeen/" class="hover:text-white transition">Contact</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- HEADER / CAROUSEL SECTION -->
+        <header id="home" class="max-w-6xl mx-auto px-4 pt-10 pb-6 w-full">
+            <div class="relative w-full overflow-hidden rounded-2xl bg-gray-900 border border-gray-800 h-[300px] md:h-[450px]">
+
+                <!-- BACKGROUND CAROUSEL -->
+                <div id="carousel-track" class="flex w-full h-full transition-transform duration-700 ease-in-out">
+                    <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('01_KyleField.jpg');"></div>
+                    <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('02_SuperBowl_NOLA.jpg');"></div>
+                    <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('03_MLBonTBS.jpg');"></div>
+                    <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('04_SuperBowl.jpg');"></div>
+                    <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('05_Yankees.jpg');"></div>
+                    <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('07_Verzuz.jpg');"></div>
+                    <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('08_ALCS.jpg');"></div>
+                    <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('09_Betting.jpg');"></div>
+                    <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('10_Chicago.jpg');"></div>
+                    <div class="w-full h-full flex-shrink-0 bg-cover bg-center" style="background-image: url('11_NBAonTNT.jpg');"></div>
+                </div>
+
+                <!-- STATIC TEXT OVERLAY LAYER -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end px-8 md:px-16 pb-8 md:pb-12 pointer-events-none">
+                    <div class="max-w-2xl">
+                        <h1 class="text-2xl md:text-5xl font-black text-white tracking-tight leading-tight mb-3 drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]">
+                            Tech Management and Production Planning 
+                        </h1>
+                        <p class="text-gray-200 text-xs md:text-base font-medium max-w-lg leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+                            Demonstrated history of live sports broadcasts, experiential marketing events, and project management across the sports, news, and entertainment broadcasting industry 
+                        </p>
+                    </div>
+                </div>
+
+                <!-- INTERACTIVE CAROUSEL CONTROLS -->
+                <button onclick="moveCarousel(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 p-2 rounded-full text-white backdrop-blur-sm transition z-10">
+                    <i data-lucide="chevron-left"></i>
+                </button>
+                
+                <button onclick="moveCarousel(1)" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 p-2 rounded-full text-white backdrop-blur-sm transition z-10">
+                    <i data-lucide="chevron-right"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- RESUME SECTION -->
+        <section id="resume" class="max-w-6xl mx-auto px-4 py-16 w-full border-t border-gray-800">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+                <div>
+                    <h2 class="text-3xl font-bold text-white tracking-tight">Professional Experience</h2>
+                </div>
+                <div class="flex items-center gap-3 self-stretch md:self-auto justify-between md:justify-end">
+
+                    <!-- RESUME NAVIGATION CONTROLS -->
+                    <div id="resume-controls" class="flex items-center space-x-2 hidden">
+                        <button onclick="moveResumeCarousel(-1)" class="p-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-white transition">
+                            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="moveResumeCarousel(1)" class="p-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-white transition">
+                            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                    <a href="McKeen_Resume.pdf" download="McKeen_Resume.pdf" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition shadow-md">
+                        Download PDF <i data-lucide="download" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- OUTSIDE RESUME WRAPPER -->
+            <div class="relative w-full overflow-hidden">
+                <div id="resume-track" class="flex gap-6 transition-transform duration-500 ease-in-out w-full">
+                    <div class="w-full text-center py-12 text-gray-500 shrink-0">Connecting to experience database...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIDEO SECTION -->
+        <section id="videos" class="bg-[#111827] py-16 border-t border-gray-800 w-full">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-8 gap-6">
+                    <div>
+                        <h2 class="text-3xl font-bold text-white">Portfolio</h2>
+                    </div>
+                    <div class="w-full lg:max-w-xs relative">
+                        <input type="text" id="search-input" oninput="handleSearchFilter()" placeholder="Search project titles..." 
+                               class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition">
+                        <i data-lucide="search" class="w-4 h-4 text-gray-500 absolute right-3 top-3"></i>
+                    </div>
+                </div>
+
+                <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl mb-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Filter by Company</label>
+                        <select id="filter-company" onchange="applyFilters()" class="w-full bg-gray-900 border border-gray-800 rounded-lg p-2 text-white focus:outline-none focus:border-blue-500"></select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Filter by Position</label>
+                        <select id="filter-position" onchange="applyFilters()" class="w-full bg-gray-900 border border-gray-800 rounded-lg p-2 text-white focus:outline-none focus:border-blue-500"></select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Filter by Tags</label>
+                        <select id="filter-tag" onchange="applyFilters()" class="w-full bg-gray-900 border border-gray-800 rounded-lg p-2 text-white focus:outline-none focus:border-blue-500"></select>
+                    </div>
+                </div>
+
+                <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="col-span-full text-center py-12 text-gray-500">Connecting to video database...</div>
+                </div>
+
+                <div id="pagination-controls" class="flex justify-center items-center space-x-2 md:space-x-4 mt-12 hidden">
+                    <button onclick="goToPage(1)" id="btn-first" class="px-3 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition font-medium">Newest</button>
+                    <button onclick="changePage(-1)" id="btn-prev" class="px-4 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition font-medium">Previous</button>
+                    <span id="page-indicator" class="text-sm text-gray-400 font-medium px-2">Page 1 of 1</span>
+                    <button onclick="changePage(1)" id="btn-next" class="px-4 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition font-medium">Next</button>
+                    <button onclick="goToBoundaryLast()" id="btn-last" class="px-3 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition font-medium">Oldest</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- EMPLOYERS SECTION -->
+        <section id="employers" class="py-16 border-t border-gray-800 max-w-6xl mx-auto px-4 w-full">
+            <h2 class="text-3xl font-bold text-white mb-2">Previous Employers</h2>
+
+            <div id="employers-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="col-span-full text-center py-12 text-gray-500">Connecting to historical directory records...</div>
+            </div>
+        </section>
+
+        <!-- AWARDS AND MENTIONS SECTION -->
+        <section id="awards-section" class="py-16 border-t border-gray-800 max-w-6xl mx-auto px-4 w-full">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                <div>
+                    <h2 class="text-3xl font-bold text-white mb-2">Awards & Mentions</h2>
+                    <p class="text-gray-400 text-sm">Industry recognitions, formal nominations, and press highlights</p>
+                </div>
+                <div class="flex space-x-2 mt-4 md:mt-0 text-xs font-semibold">
+                    <span class="px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">All Accolades</span>
+                </div>
+            </div>
+
+            <div id="awards-list" class="space-y-4">
+                <div class="text-center py-8 text-gray-500 text-sm">Connecting to awards database...</div>
+            </div>
+        </section>
+
+        <!-- FOOTER SECTION -->
+        <footer class="w-full bg-[#0b0f19] border-t border-gray-900 py-12 px-4 mt-auto">
+            <div class="max-w-6xl mx-auto flex flex-col items-center justify-center text-center">
+                <div class="flex items-center space-x-6 mb-4">
+                    <a href="https://instagram.com/trailmixmckeen" target="_blank" class="text-gray-500 hover:text-white transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                    </a>
+                    <a href="https://linkedin.com/in/alexmckeen/" target="_blank" class="text-gray-500 hover:text-white transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    </a>
+                </div>
+                <p class="text-gray-400 text-sm tracking-wide font-light">
+                    <script>document.write(new Date().getFullYear());</script> &copy; Alexander McKeen
+                </p>
+                <p class="text-gray-500 text-xs tracking-wider uppercase font-light mt-1">
+                    All Rights Reserved
+                </p>
+            </div>
+        </footer>
+
+        <!-- POP-OUT VIDEO MODAL SECTION -->
+        <div id="video-modal" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+            <div class="relative w-full max-w-6xl bg-gray-950 border border-gray-800 rounded-xl overflow-hidden shadow-2xl flex flex-col lg:flex-row max-h-[90vh]">
+
+                <button onclick="closeModal()" class="absolute top-4 right-4 z-50 text-gray-400 hover:text-white transition bg-gray-900/80 p-2 rounded-full border border-gray-800 shadow-md">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+
+                <div class="w-full lg:w-[62%] bg-black flex items-center justify-center aspect-video lg:aspect-auto">
+                    <iframe id="modal-player" class="w-full h-full min-h-[260px] md:min-h-[380px] lg:min-h-[520px]" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                </div>
+
+                <div class="w-full lg:w-[38%] p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-gray-800/80 overflow-y-auto flex flex-col justify-between max-h-[45vh] lg:max-h-[520px] no-scrollbar">
+                    <div class="space-y-4">
+                        <div>
+                            <span id="modal-company" class="text-[10px] font-bold text-blue-500 uppercase tracking-wider block mb-1"></span>
+                            <h3 id="modal-title" class="text-xl lg:text-2xl font-bold text-white tracking-tight leading-tight"></h3>
+                        </div>
+
+                        <div id="modal-position" class="text-sm font-semibold text-gray-300 tracking-wide"></div>
+
+                        <p id="modal-desc" class="text-[13px] text-gray-400 leading-relaxed font-normal pt-2 border-t border-gray-900"></p>
+
+                        <div id="modal-awards-container" class="hidden pt-3 border-t border-gray-900">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-amber-500 mb-1.5 flex items-center gap-1.5">
+                                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l2.4 7.4h7.6l-6.2 4.5 2.4 7.4-6.2-4.5-6.2 4.5 2.4-7.4-6.2-4.5h7.6z"/></svg>
+                                Awards & Nominations
+                            </h4>
+                            <p id="modal-awards" class="text-[12px] text-gray-300 italic leading-relaxed"></p>
+                        </div>
+                    </div>
+
+                    <div id="modal-tags" class="flex flex-wrap gap-1.5 mt-8 pt-4 border-t border-gray-900"></div>
+                </div>
+
             </div>
         </div>
 
-        <!-- OUTSIDE WRAPPER SET TO HIDE OVERFLOWS -->
-        <div class="relative w-full overflow-hidden">
-            <div id="resume-track" class="flex gap-6 transition-transform duration-500 ease-in-out w-full">
-                <div class="w-full text-center py-12 text-gray-500 shrink-0">Connecting to experience registry...</div>
-            </div>
-        </div>
-    </section>
+        <script>
+            
+            // Data Feed Ingestion Links
+            const VIDEO_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=1842671833&single=true&output=csv';
+            const EMPLOYER_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=2101605290&single=true&output=csv';
+            const RESUME_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=10390491&single=true&output=csv';
+            const AWARDS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=829253189&single=true&output=csv';
 
-    <script>
-        // Data Feed Ingestion Matrix Links
-        const VIDEO_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=1842671833&single=true&output=csv';
-        const EMPLOYER_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=2101605290&single=true&output=csv';
-        const RESUME_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=10390491&single=true&output=csv';
-        const AWARDS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=829253189&single=true&output=csv';
-        
-        let rawVideoDataResume = [];
-        let filteredVideoDataResume = [];
-        let currentCarouselIndexResume = 0;
-        let currentPageResume = 1;
-        const itemsPerPageResume = 25;
+            let rawVideoDataResume = [];
+            let filteredVideoDataResume = [];
+            let currentCarouselIndexResume = 0;
+            let currentPageResume = 1;
+            const itemsPerPageResume = 25;
 
-        // [Keep parseCSVLines engine block exactly as it is]
-
-        // Master App Initialization Handler
-        async function initApplication() {
-            try {
-                await Promise.all([fetchResumeCMS(), fetchVideoCMS(), fetchEmployerCMS()]);
-            } catch (err) {
-                console.error("Master initialization framework pipeline crash:", err);
-            }
-        }
-
-        // --- ISOLATED RESUME CAROUSEL DATA ENGINE ---
-        let currentResumeSlideIndex = 0;
-        let totalResumeSlidesMax = 0;
-
-        async function fetchResumeCMS() {
-            try {
-                const resumeResponse = await fetch(RESUME_CSV_URL);
-                const resumeRawText = await resumeResponse.text();
-                
-                // Employs your existing unique custom splitter matrix safely
-                const parsedResumeLines = parseCSVLines(resumeRawText);
-                
-                if (parsedResumeLines.length > 0) {
-                    parsedResumeLines.shift(); // Strip columns label cleanly
+            // Master App Initialization Handler
+            async function initApplication() {
+                try {
+                    await Promise.all([fetchResumeCMS(), fetchVideoCMS(), fetchEmployerCMS()]);
+                } catch (err) {
+                    console.error("Master initialization framework pipeline crash:", err);
                 }
-
-                const mappedResumeObjects = parsedResumeLines.map(resumeRow => {
-                    return {
-                        resumeCompany: resumeRow[0] ? resumeRow[0].trim() : '',
-                        resumeCity:    resumeRow[1] ? resumeRow[1].trim() : '',
-                        resumeTitle:   resumeRow[2] ? resumeRow[2].trim() : '',
-                        resumeDates:   resumeRow[3] ? resumeRow[3].trim() : '',
-                        resumeDesc:    resumeRow[4] ? resumeRow[4].trim() : ''
-                    };
-                }).filter(resItem => resItem.resumeTitle !== '' || resItem.resumeCompany !== '');
-
-                renderIsolatedResumeCarousel(mappedResumeObjects);
-            } catch (resumeError) {
-                console.error("Resume system scope pipeline fault:", resumeError);
-                document.getElementById('resume-track').innerHTML = 
-                    `<p class="w-full text-center text-red-400 py-6">Failed to sync live resume data matrices.</p>`;
-            }
-        }
-
-        function renderIsolatedResumeCarousel(targetResumeItems) {
-            const resumeTrackDOM = document.getElementById('resume-track');
-            const controlsContainer = document.getElementById('resume-controls');
-            if (!resumeTrackDOM) return;
-            
-            resumeTrackDOM.innerHTML = '';
-            currentResumeSlideIndex = 0; // Initialize base state boundary
-            resumeTrackDOM.style.transform = 'translateX(0px)';
-
-            if (targetResumeItems.length === 0) {
-                resumeTrackDOM.innerHTML = `<p class="w-full text-center text-gray-500 py-6">No resume items currently listed.</p>`;
-                if (controlsContainer) controlsContainer.classList.add('hidden');
-                return;
             }
 
-            // Dynamically assign card width bases across viewport queries
-            targetResumeItems.forEach(singleResumeItem => {
-                const resumeCardElement = document.createElement('div');
-                resumeCardElement.className = 'w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shrink-0 bg-gray-900/60 border border-gray-800 p-6 rounded-xl flex flex-col justify-between transition duration-300 hover:border-gray-700/60';
-                
-                const locationLabelMarkup = singleResumeItem.resumeCity ? ` &bull; ${singleResumeItem.resumeCity}` : '';
+            // Isolated Resume Carousel Engine
+            let currentResumeSlideIndex = 0;
+            let totalResumeSlidesMax = 0;
 
-                resumeCardElement.innerHTML = `
-                    <div>
-                        <span class="text-xs font-semibold text-blue-500 uppercase tracking-widest block mb-2">${singleResumeItem.resumeDates}</span>
-                        <h3 class="text-xl font-bold text-white mb-1">${singleResumeItem.resumeTitle}</h3>
-                        <p class="text-gray-400 text-sm font-medium mb-4">${singleResumeItem.resumeCompany}${locationLabelMarkup}</p>
-                        <p class="text-sm text-gray-400 leading-relaxed">${singleResumeItem.resumeDesc}</p>
-                    </div>
-                `;
-                resumeTrackDOM.appendChild(resumeCardElement);
-            });
+            async function fetchResumeCMS() {
+                try {
+                    const resumeResponse = await fetch(RESUME_CSV_URL);
+                    const resumeRawText = await resumeResponse.text();
+                    const parsedResumeLines = parseCSVLines(resumeRawText);
 
-            // Evaluate tracking calculations to prevent excessive whitespace scrolling on large screens
-            totalResumeSlidesMax = targetResumeItems.length;
-            if (totalResumeSlidesMax > 1) {
-                if (controlsContainer) controlsContainer.classList.remove('hidden');
-            }
-            
-            if (window.lucide && typeof window.lucide.createIcons === 'function') {
-                lucide.createIcons();
-            }
-        }
-
-        // Logic framework for relative resume carousels tracking layout transforms
-        function moveResumeCarousel(direction) {
-            const track = document.getElementById('resume-track');
-            if (!track || totalResumeSlidesMax === 0) return;
-
-            // Determine visible cards per frame row base step criteria
-            let visibleCards = 1;
-            if (window.innerWidth >= 1024) {
-                visibleCards = 3;
-            } else if (window.innerWidth >= 768) {
-                visibleCards = 2;
-            }
-
-            const maxAvailableScrolls = totalResumeSlidesMax - visibleCards;
-            if (maxAvailableScrolls <= 0) return; // Prevent scrolling if everything fits
-
-            currentResumeSlideIndex += direction;
-
-            // Loop bounds control parameters 
-            if (currentResumeSlideIndex < 0) {
-                currentResumeSlideIndex = maxAvailableScrolls;
-            } else if (currentResumeSlideIndex > maxAvailableScrolls) {
-                currentResumeSlideIndex = 0;
-            }
-
-            // Get exact width of a single card plus its 24px (gap-6) margin
-            const firstCard = track.children[0];
-            const cardWidthWithGap = firstCard.getBoundingClientRect().width + 24;
-
-            // Shift explicitly by pixels to completely protect the hidden layout layout bounds
-            track.style.transform = `translateX(-${currentResumeSlideIndex * cardWidthWithGap}px)`;
-        }
-    </script>
-        
-    <section id="videos" class="bg-[#111827] py-16 border-t border-gray-800 w-full">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-8 gap-6">
-                <div>
-                    <h2 class="text-3xl font-bold text-white">Video Portfolio</h2>
-                    <p class="text-gray-400 text-sm mt-1">Live configuration powered dynamically via production index</p>
-                </div>
-                <div class="w-full lg:max-w-xs relative">
-                    <input type="text" id="search-input" oninput="handleSearchFilter()" placeholder="Search project titles..." 
-                           class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition">
-                    <i data-lucide="search" class="w-4 h-4 text-gray-500 absolute right-3 top-3"></i>
-                </div>
-            </div>
-
-            <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl mb-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                <div>
-                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Filter by Company (Row D)</label>
-                    <select id="filter-company" onchange="applyFilters()" class="w-full bg-gray-900 border border-gray-800 rounded-lg p-2 text-white focus:outline-none focus:border-blue-500"></select>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Filter by Position (Row E)</label>
-                    <select id="filter-position" onchange="applyFilters()" class="w-full bg-gray-900 border border-gray-800 rounded-lg p-2 text-white focus:outline-none focus:border-blue-500"></select>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Filter by Tags (Row K)</label>
-                    <select id="filter-tag" onchange="applyFilters()" class="w-full bg-gray-900 border border-gray-800 rounded-lg p-2 text-white focus:outline-none focus:border-blue-500"></select>
-                </div>
-            </div>
-
-            <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="col-span-full text-center py-12 text-gray-500">Connecting to video database...</div>
-            </div>
-
-            <div id="pagination-controls" class="flex justify-center items-center space-x-2 md:space-x-4 mt-12 hidden">
-                <button onclick="goToPage(1)" id="btn-first" class="px-3 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition font-medium">First</button>
-                <button onclick="changePage(-1)" id="btn-prev" class="px-4 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition font-medium">Previous</button>
-                <span id="page-indicator" class="text-sm text-gray-400 font-medium px-2">Page 1 of 1</span>
-                <button onclick="changePage(1)" id="btn-next" class="px-4 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition font-medium">Next</button>
-                <button onclick="goToBoundaryLast()" id="btn-last" class="px-3 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition font-medium">Last</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- EMPLOYERS SECTION -->
-    <section id="employers" class="py-16 border-t border-gray-800 max-w-6xl mx-auto px-4 w-full">
-        <h2 class="text-3xl font-bold text-white mb-2">Previous Employers</h2>
-        <p class="text-gray-400 text-sm mb-8">Historical organizational deployment and brand logs</p>
-         
-        <!-- UPDATE GRID TO 4 COLUMNS ON LARGE SCREENS -->
-        <div id="employers-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <div class="col-span-full text-center py-12 text-gray-500">Connecting to historical directory records...</div>
-        </div>
-    </section>
-
-<!-- AWARDS AND MENTIONS SECTION -->
-<section id="awards-section" class="py-16 border-t border-gray-800 max-w-6xl mx-auto px-4 w-full">
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
-        <div>
-            <h2 class="text-3xl font-bold text-white mb-2">Awards & Mentions</h2>
-            <p class="text-gray-400 text-sm">Industry recognitions, formal decorations, and press highlights</p>
-        </div>
-        <!-- Optional Interactive Category Filter Toggles -->
-        <div class="flex space-x-2 mt-4 md:mt-0 text-xs font-semibold">
-            <span class="px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">All Accolades</span>
-        </div>
-    </div>
-
-    <!-- Target container for Javascript Engine -->
-    <div id="awards-list" class="space-y-4">
-        <div class="text-center py-8 text-gray-500 text-sm">Accessing awards directory...</div>
-    </div>
-</section>
-    
-    <footer class="w-full bg-[#0b0f19] border-t border-gray-900 py-12 px-4 mt-auto">
-        <div class="max-w-6xl mx-auto flex flex-col items-center justify-center text-center">
-            <div class="flex items-center space-x-6 mb-4">
-                <a href="https://instagram.com/trailmixmckeen" target="_blank" class="text-gray-500 hover:text-white transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
-                </a>
-                <a href="https://linkedin.com/in/alexmckeen/" target="_blank" class="text-gray-500 hover:text-white transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                </a>
-            </div>
-            <p class="text-gray-400 text-sm tracking-wide font-light">
-                2026 &copy; Alexander McKeen
-            </p>
-            <p class="text-gray-500 text-xs tracking-wider uppercase font-light mt-1">
-                All Rights Reserved
-            </p>
-        </div>
-    </footer>
-
-    <div id="video-modal" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="relative w-full max-w-6xl bg-gray-950 border border-gray-800 rounded-xl overflow-hidden shadow-2xl flex flex-col lg:flex-row max-h-[90vh]">
-            
-            <button onclick="closeModal()" class="absolute top-4 right-4 z-50 text-gray-400 hover:text-white transition bg-gray-900/80 p-2 rounded-full border border-gray-800 shadow-md">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-
-            <div class="w-full lg:w-[62%] bg-black flex items-center justify-center aspect-video lg:aspect-auto">
-                <iframe id="modal-player" class="w-full h-full min-h-[260px] md:min-h-[380px] lg:min-h-[520px]" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-            </div>
-
-            <div class="w-full lg:w-[38%] p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-gray-800/80 overflow-y-auto flex flex-col justify-between max-h-[45vh] lg:max-h-[520px] no-scrollbar">
-                <div class="space-y-4">
-                    <div>
-                        <span id="modal-company" class="text-[10px] font-bold text-blue-500 uppercase tracking-wider block mb-1"></span>
-                        <h3 id="modal-title" class="text-xl lg:text-2xl font-bold text-white tracking-tight leading-tight"></h3>
-                    </div>
-                    
-                    <div id="modal-position" class="text-sm font-semibold text-gray-300 tracking-wide"></div>
-                    
-                    <p id="modal-desc" class="text-[13px] text-gray-400 leading-relaxed font-normal pt-2 border-t border-gray-900"></p>
-                    
-                    <div id="modal-awards-container" class="hidden pt-3 border-t border-gray-900">
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-amber-500 mb-1.5 flex items-center gap-1.5">
-                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l2.4 7.4h7.6l-6.2 4.5 2.4 7.4-6.2-4.5-6.2 4.5 2.4-7.4-6.2-4.5h7.6z"/></svg>
-                            Awards & Nominations
-                        </h4>
-                        <p id="modal-awards" class="text-[12px] text-gray-300 italic leading-relaxed"></p>
-                    </div>
-                </div>
-
-                <div id="modal-tags" class="flex flex-wrap gap-1.5 mt-8 pt-4 border-t border-gray-900"></div>
-            </div>
-
-        </div>
-    </div>
-    
-    <script>
-        let rawVideoData = [];
-        let filteredVideoData = [];
-        let currentCarouselIndex = 0;
-        let currentPage = 1;
-        const itemsPerPage = 12;
-
-        // Custom Robust CSV Splitter handling encapsulated string data matrices safely
-        function parseCSVLines(text) {
-            const lines = [];
-            let row = [];
-            let token = '';
-            let inQuotes = false;
-
-            for (let i = 0; i < text.length; i++) {
-                const c = text[i];
-                const next = text[i+1];
-
-                if (c === '"') {
-                    if (inQuotes && next === '"') {
-                        token += '"';
-                        i++;
-                    } else {
-                        inQuotes = !inQuotes;
+                    if (parsedResumeLines.length > 0) {
+                        parsedResumeLines.shift();
                     }
-                } else if (c === ',' && !inQuotes) {
-                    row.push(token.trim());
-                    token = '';
-                } else if ((c === '\n' || c === '\r') && !inQuotes) {
-                    if (c === '\r' && next === '\n') i++;
-                    row.push(token.trim());
-                    if (row.some(field => field !== '')) lines.push(row);
-                    row = [];
-                    token = '';
-                } else {
-                    token += c;
+
+                    const mappedResumeObjects = parsedResumeLines.map(resumeRow => {
+                        return {
+                            resumeCompany: resumeRow[0] ? resumeRow[0].trim() : '',
+                            resumeCity:    resumeRow[1] ? resumeRow[1].trim() : '',
+                            resumeTitle:   resumeRow[2] ? resumeRow[2].trim() : '',
+                            resumeDates:   resumeRow[3] ? resumeRow[3].trim() : '',
+                            resumeDesc:    resumeRow[4] ? resumeRow[4].trim() : ''
+                        };
+                    }).filter(resItem => resItem.resumeTitle !== '' || resItem.resumeCompany !== '');
+
+                    renderIsolatedResumeCarousel(mappedResumeObjects);
+                } catch (resumeError) {
+                    console.error("Resume system scope pipeline fault:", resumeError);
+                    document.getElementById('resume-track').innerHTML = 
+                        `<p class="w-full text-center text-red-400 py-6">Failed to sync live resume data.</p>`;
                 }
             }
-            if (token || row.length > 0) {
-                row.push(token.trim());
-                lines.push(row);
+
+            function renderIsolatedResumeCarousel(targetResumeItems) {
+                const resumeTrackDOM = document.getElementById('resume-track');
+                const controlsContainer = document.getElementById('resume-controls');
+                if (!resumeTrackDOM) return;
+
+                resumeTrackDOM.innerHTML = '';
+                currentResumeSlideIndex = 0;
+                resumeTrackDOM.style.transform = 'translateX(0px)';
+
+                if (targetResumeItems.length === 0) {
+                    resumeTrackDOM.innerHTML = `<p class="w-full text-center text-gray-500 py-6">No experience items currently listed.</p>`;
+                    if (controlsContainer) controlsContainer.classList.add('hidden');
+                    return;
+                }
+
+                targetResumeItems.forEach(singleResumeItem => {
+                    const resumeCardElement = document.createElement('div');
+                    resumeCardElement.className = 'w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shrink-0 bg-gray-900/60 border border-gray-800 p-6 rounded-xl flex flex-col justify-between transition duration-300 hover:border-gray-700/60';
+
+                    const locationLabelMarkup = singleResumeItem.resumeCity ? ` &bull; ${singleResumeItem.resumeCity}` : '';
+
+                    resumeCardElement.innerHTML = `
+<div>
+<span class="text-xs font-semibold text-blue-500 uppercase tracking-widest block mb-2">${singleResumeItem.resumeDates}</span>
+<h3 class="text-xl font-bold text-white mb-1">${singleResumeItem.resumeTitle}</h3>
+<p class="text-gray-400 text-sm font-medium mb-4">${singleResumeItem.resumeCompany}${locationLabelMarkup}</p>
+<p class="text-sm text-gray-400 leading-relaxed">${singleResumeItem.resumeDesc}</p>
+            </div>
+`;
+                    resumeTrackDOM.appendChild(resumeCardElement);
+                });
+
+                totalResumeSlidesMax = targetResumeItems.length;
+                if (totalResumeSlidesMax > 1) {
+                    if (controlsContainer) controlsContainer.classList.remove('hidden');
+                }
+
+                if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                    lucide.createIcons();
+                }
             }
-            return lines;
-        }
 
-        // Master App Initialization Handler
-        async function initApplication() {
-    try {
-        await Promise.all([
-            fetchResumeCMS(), 
-            fetchVideoCMS(), 
-            fetchEmployerCMS(),
-            fetchAwardsCMS() // <-- Add this here inside the Promise.all array
-        ]);
-    } catch (err) {
-        console.error("Master initialization framework pipeline crash:", err);
-    }
-}
+            // Resume carousel tracking layout
+            function moveResumeCarousel(direction) {
+                const track = document.getElementById('resume-track');
+                if (!track || totalResumeSlidesMax === 0) return;
 
-        // Helper engine to extract YouTube ID and assemble High-Res Thumbnail link
-        function getYouTubeThumbnail(url) {
-            let videoId = null;
-            if (url.includes('youtube.com/watch?v=')) {
-                const urlParams = new URLSearchParams(url.split('?')[1]);
-                videoId = urlParams.get('v');
-            } else if (url.includes('youtu.be/')) {
-                videoId = url.split('youtu.be/')[1]?.split('?')[0];
-            } else if (url.includes('youtube.com/embed/')) {
-                videoId = url.split('embed/')[1]?.split('?')[0];
+                let visibleCards = 1;
+                if (window.innerWidth >= 1024) {
+                    visibleCards = 3;
+                } else if (window.innerWidth >= 768) {
+                    visibleCards = 2;
+                }
+
+                const maxAvailableScrolls = totalResumeSlidesMax - visibleCards;
+                if (maxAvailableScrolls <= 0) return;
+
+                currentResumeSlideIndex += direction;
+
+                if (currentResumeSlideIndex < 0) {
+                    currentResumeSlideIndex = maxAvailableScrolls;
+                } else if (currentResumeSlideIndex > maxAvailableScrolls) {
+                    currentResumeSlideIndex = 0;
+                }
+
+                const firstCard = track.children[0];
+                const cardWidthWithGap = firstCard.getBoundingClientRect().width + 24;
+
+                track.style.transform = `translateX(-${currentResumeSlideIndex * cardWidthWithGap}px)`;
             }
-            return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
-        }
 
-        // --- VIDEOS DATA ENGINE ---
-        async function fetchVideoCMS() {
-            try {
-                const res = await fetch(VIDEO_CSV_URL);
-                const text = await res.text();
-                const rows = parseCSVLines(text);
-                
-                if (rows.length > 0) rows.shift(); // Strip column labels
+            let rawVideoData = [];
+            let filteredVideoData = [];
+            let currentCarouselIndex = 0;
+            let currentPage = 1;
+            const itemsPerPage = 12;
 
-                rawVideoData = rows.map(row => {
+            // Custom Robust CSV Splitter handling encapsulated string data
+            function parseCSVLines(text) {
+                const lines = [];
+                let row = [];
+                let token = '';
+                let inQuotes = false;
+
+                for (let i = 0; i < text.length; i++) {
+                    const c = text[i];
+                    const next = text[i+1];
+
+                    if (c === '"') {
+                        if (inQuotes && next === '"') {
+                            token += '"';
+                            i++;
+                        } else {
+                            inQuotes = !inQuotes;
+                        }
+                    } else if (c === ',' && !inQuotes) {
+                        row.push(token.trim());
+                        token = '';
+                    } else if ((c === '\n' || c === '\r') && !inQuotes) {
+                        if (c === '\r' && next === '\n') i++;
+                        row.push(token.trim());
+                        if (row.some(field => field !== '')) lines.push(row);
+                        row = [];
+                        token = '';
+                    } else {
+                        token += c;
+                    }
+                }
+                if (token || row.length > 0) {
+                    row.push(token.trim());
+                    lines.push(row);
+                }
+                return lines;
+            }
+
+            // Master App Initialization Handler
+            async function initApplication() {
+                try {
+                    await Promise.all([
+                        fetchResumeCMS(), 
+                        fetchVideoCMS(), 
+                        fetchEmployerCMS(),
+                        fetchAwardsCMS()
+                    ]);
+                } catch (err) {
+                    console.error("Master initialization framework pipeline crash:", err);
+                }
+            }
+
+            // Helper engine to extract YouTube ID and assemble High-Res Thumbnail link
+            function getYouTubeThumbnail(url) {
+                let videoId = null;
+                if (url.includes('youtube.com/watch?v=')) {
+                    const urlParams = new URLSearchParams(url.split('?')[1]);
+                    videoId = urlParams.get('v');
+                } else if (url.includes('youtu.be/')) {
+                    videoId = url.split('youtu.be/')[1]?.split('?')[0];
+                } else if (url.includes('youtube.com/embed/')) {
+                    videoId = url.split('embed/')[1]?.split('?')[0];
+                }
+                    return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
+                }
+
+                    // --- VIDEOS DATA ENGINE ---
+                    async function fetchVideoCMS() {
+                    try {
+                    const res = await fetch(VIDEO_CSV_URL);
+                    const text = await res.text();
+                    const rows = parseCSVLines(text);
+
+                    if (rows.length > 0) rows.shift();
+
+                    rawVideoData = rows.map(row => {
                     let tagsArray = [];
                     if (row[10]) {
-                        try {
-                            tagsArray = JSON.parse(row[10].replace(/""/g, '"'));
-                        } catch(e) {
-                            tagsArray = row[10].split(',').map(t => t.trim().replace(/[\[\]"']/g, ''));
-                        }
-                    }
+                    try {
+                    tagsArray = JSON.parse(row[10].replace(/""/g, '"'));
+                } catch(e) {
+                    tagsArray = row[10].split(',').map(t => t.trim().replace(/[\[\]"']/g, ''));
+                }
+                }
                     return {
-                        title: row[0] || 'Untitled Project',
-                        company: row[3] || 'Independent',
-                        position: row[4] || 'Production Team',
-                        videoUrl: row[7] || '',
-                        tags: tagsArray,
-                        customThumbnail: row[11] || '', // Column L
-                        description: row[5] || '',     // Mapped Column F (Index 5)
-                        awards: row[9] || ''           // Mapped Column J (Index 9)
-                    };
-                }).filter(v => v.title !== 'Untitled Project' || v.videoUrl !== '');
+                    title: row[0] || 'Untitled Project', // Column A
+                        company: row[3] || 'Independent', // Column D
+                            position: row[4] || 'Production Team', // Column E
+                                videoUrl: row[7] || '', // Column H
+                                    tags: tagsArray, // Column K
+                                        customThumbnail: row[11] || '', // Column L
+                                            description: row[5] || '',     // Column F
+                                                awards: row[9] || ''           // Column J
+                };
+            }).filter(v => v.title !== 'Untitled Project' || v.videoUrl !== '');
 
-                filteredVideoData = [...rawVideoData];
-                buildVideoFilterDropdowns();
-                displayVideoPage(1);
+            filteredVideoData = [...rawVideoData];
+            buildVideoFilterDropdowns();
+            displayVideoPage(1);
             } catch (err) {
                 console.error("Video processing thread fault:", err);
-                document.getElementById('video-grid').innerHTML = `<p class="col-span-full text-center text-red-400 py-6">Failed to sync live portfolio data matrices.</p>`;
+                document.getElementById('video-grid').innerHTML = `<p class="col-span-full text-center text-red-400 py-6">Failed to sync live portfolio database.</p>`;
             }
-        }
+            }
 
-        function buildVideoFilterDropdowns() {
-            const companies = new Set();
-            const positions = new Set();
-            const tags = new Set();
+            function buildVideoFilterDropdowns() {
+                const companies = new Set();
+                const positions = new Set();
+                const tags = new Set();
 
-            rawVideoData.forEach(item => {
-                if (item.company) companies.add(item.company.trim());
-                if (item.position) positions.add(item.position.trim());
-                if (item.tags) {
-                    item.tags.forEach(t => tags.add(t.trim()));
+                rawVideoData.forEach(item => {
+                    if (item.company) companies.add(item.company.trim());
+                    if (item.position) positions.add(item.position.trim());
+                    if (item.tags) {
+                        item.tags.forEach(t => tags.add(t.trim()));
+                    }
+                });
+
+                const sortedCompanies = Array.from(companies).sort();
+                const sortedPositions = Array.from(positions).sort();
+                const sortedTags = Array.from(tags).sort();
+
+                sortedCompanies.unshift('All Companies');
+                sortedPositions.unshift('All Positions');
+                sortedTags.unshift('All Tags');
+
+                populateDropdown('filter-company', sortedCompanies);
+                populateDropdown('filter-position', sortedPositions);
+                populateDropdown('filter-tag', sortedTags);
+            }
+
+            function populateDropdown(id, optionArray) {
+                const dropdown = document.getElementById(id);
+                dropdown.innerHTML = '';
+                optionArray.forEach(val => {
+                    const el = document.createElement('option');
+                    el.value = val;
+                    el.textContent = val;
+                    dropdown.appendChild(el);
+                });
+            }
+
+            function applyFilters() {
+                const comp = document.getElementById('filter-company').value;
+                const pos = document.getElementById('filter-position').value;
+                const tag = document.getElementById('filter-tag').value;
+                const search = document.getElementById('search-input').value.toLowerCase().trim();
+
+                filteredVideoData = rawVideoData.filter(item => {
+                    const matchComp = (comp === 'All Companies' || item.company === comp);
+                    const matchPos = (pos === 'All Positions' || item.position === pos);
+                    const matchTag = (tag === 'All Tags' || item.tags.includes(tag));
+                    const matchSearch = (item.title.toLowerCase().includes(search));
+                    return matchComp && matchPos && matchTag && matchSearch;
+                });
+
+                displayVideoPage(1);
+            }
+
+            function handleSearchFilter() { applyFilters(); }
+
+            function displayVideoPage(page) {
+                currentPage = page;
+                const grid = document.getElementById('video-grid');
+                grid.innerHTML = '';
+
+                const total = filteredVideoData.length;
+                const pagesTotal = Math.ceil(total / itemsPerPage) || 1;
+
+                if (total === 0) {
+                    grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-12">No media assets found.</p>`;
+                    document.getElementById('pagination-controls').classList.add('hidden');
+                    return;
                 }
-            });
 
-            const sortedCompanies = Array.from(companies).sort();
-            const sortedPositions = Array.from(positions).sort();
-            const sortedTags = Array.from(tags).sort();
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = Math.min(start + itemsPerPage, total);
+                const viewableItems = filteredVideoData.slice(start, end);
 
-            sortedCompanies.unshift('All Companies');
-            sortedPositions.unshift('All Positions');
-            sortedTags.unshift('All Tags');
+                viewableItems.forEach((video) => {
+                    const card = document.createElement('div');
+                    card.className = 'video-card bg-gray-900 border border-gray-800/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col cursor-pointer group';
 
-            populateDropdown('filter-company', sortedCompanies);
-            populateDropdown('filter-position', sortedPositions);
-            populateDropdown('filter-tag', sortedTags);
-        }
+                    card.setAttribute('onclick', `openModal('${video.videoUrl}')`);
 
-        function populateDropdown(id, optionArray) {
-            const dropdown = document.getElementById(id);
-            dropdown.innerHTML = '';
-            optionArray.forEach(val => {
-                const el = document.createElement('option');
-                el.value = val;
-                el.textContent = val;
-                dropdown.appendChild(el);
-            });
-        }
+                    const ytThumbnail = getYouTubeThumbnail(video.videoUrl);
+                    const finalSrc = video.customThumbnail ? video.customThumbnail : ytThumbnail;
 
-        // Dynamic Filtering Core Processing
-        function applyFilters() {
-            const comp = document.getElementById('filter-company').value;
-            const pos = document.getElementById('filter-position').value;
-            const tag = document.getElementById('filter-tag').value;
-            const search = document.getElementById('search-input').value.toLowerCase().trim();
-
-            filteredVideoData = rawVideoData.filter(item => {
-                const matchComp = (comp === 'All Companies' || item.company === comp);
-                const matchPos = (pos === 'All Positions' || item.position === pos);
-                const matchTag = (tag === 'All Tags' || item.tags.includes(tag));
-                const matchSearch = (item.title.toLowerCase().includes(search));
-                return matchComp && matchPos && matchTag && matchSearch;
-            });
-
-            displayVideoPage(1);
-        }
-
-        // Bind event handler wrapper
-        function handleSearchFilter() { applyFilters(); }
-
-        function displayVideoPage(page) {
-    currentPage = page;
-    const grid = document.getElementById('video-grid');
-    grid.innerHTML = '';
-
-    const total = filteredVideoData.length;
-    const pagesTotal = Math.ceil(total / itemsPerPage) || 1;
-
-    if (total === 0) {
-        grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-12">No media assets found matching modern sort matrices.</p>`;
-        document.getElementById('pagination-controls').classList.add('hidden');
-        return;
-    }
-
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = Math.min(start + itemsPerPage, total);
-    const viewableItems = filteredVideoData.slice(start, end);
-
-    // FIXED: Use the local parameter 'video' and match it with the correct element variable 'card'
-    viewableItems.forEach((video) => {
-        const card = document.createElement('div');
-        card.className = 'video-card bg-gray-900 border border-gray-800/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col cursor-pointer group';
-        
-        // Correctly points to the instantiated element 'card' and binds the openModal action
-        card.setAttribute('onclick', `openModal('${video.videoUrl}')`);
-
-        const ytThumbnail = getYouTubeThumbnail(video.videoUrl);
-        const finalSrc = video.customThumbnail ? video.customThumbnail : ytThumbnail;
-
-        card.innerHTML = `
-            <div class="relative aspect-video bg-gray-950 overflow-hidden">
-                <img src="${finalSrc}" alt="${video.title}" 
-                     class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80" 
-                     onerror="this.onerror=null; this.src='${ytThumbnail}';">
-                <div class="play-overlay absolute inset-0 bg-black/40 opacity-0 transition duration-300 flex items-center justify-center">
-                    <div class="bg-blue-600 p-3.5 rounded-full shadow-lg transform group-hover:scale-110 transition duration-300">
-                        <i data-lucide="play" class="w-5 h-5 text-white fill-current"></i>
-                    </div>
-                </div>
+                    card.innerHTML = `
+<div class="relative aspect-video bg-gray-950 overflow-hidden">
+<img src="${finalSrc}" alt="${video.title}" 
+class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80" 
+onerror="this.onerror=null; this.src='${ytThumbnail}';">
+<div class="play-overlay absolute inset-0 bg-black/40 opacity-0 transition duration-300 flex items-center justify-center">
+<div class="bg-blue-600 p-3.5 rounded-full shadow-lg transform group-hover:scale-110 transition duration-300">
+<i data-lucide="play" class="w-5 h-5 text-white fill-current"></i>
             </div>
-            <div class="p-5 flex flex-col flex-grow justify-between">
-                <div>
-                    <div class="flex items-center gap-2 mb-1.5 flex-wrap">
-                        <span class="text-[11px] font-bold text-blue-500 uppercase tracking-wider">${video.company}</span>
-                        <span class="text-[10px] text-gray-500 font-medium bg-gray-950 px-2 py-0.5 rounded border border-gray-800/50">${video.position}</span>
-                    </div>
-                    <h3 class="text-base font-bold text-white line-clamp-2 leading-snug group-hover:text-blue-400 transition mb-3">${video.title}</h3>
-                </div>
-                <div class="flex flex-wrap gap-1 mt-auto pt-2">
-                    ${video.tags.map(t => `<span class="text-[10px] bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full font-medium">#${t}</span>`).join('')}
-                </div>
             </div>
-        `;
-        grid.appendChild(card);
-    });
-
-    if(pagesTotal > 1) {
-        document.getElementById('pagination-controls').classList.remove('hidden');
-        document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${pagesTotal}`;
-        
-        document.getElementById('btn-first').disabled = (currentPage === 1);
-        document.getElementById('btn-prev').disabled = (currentPage === 1);
-        document.getElementById('btn-next').disabled = (currentPage === pagesTotal);
-        document.getElementById('btn-last').disabled = (currentPage === pagesTotal);
-    } else {
-        document.getElementById('pagination-controls').classList.add('hidden');
-    }
-}
-
-        // Execution path handles relative incremental page steps
-        function changePage(dir) {
-            const target = currentPage + dir;
-            const maxPages = Math.ceil(filteredVideoData.length / itemsPerPage);
-            if(target >= 1 && target <= maxPages) {
-                goToPage(target);
-            }
-        }
-
-        // Direct explicit index boundary jumpers
-        function goToPage(pageTarget) {
-            displayVideoPage(pageTarget);
-            document.getElementById('videos').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function goToBoundaryLast() {
-            const maxPages = Math.ceil(filteredVideoData.length / itemsPerPage) || 1;
-            goToPage(maxPages);
-        }
-
-        // --- PREVIOUS EMPLOYERS ENGINE ---
-        async function fetchEmployerCMS() {
-            try {
-                const res = await fetch(EMPLOYER_CSV_URL);
-                const text = await res.text();
-                const rows = parseCSVLines(text);
-
-                if (rows.length > 0) rows.shift();
-
-                let employers = rows.map(row => {
-                    return {
-                        title: row[0] || '',
-                        imageLink: row[1] || '',
-                        subtitle: row[2] || '',
-                        description: row[3] || '',
-                        altText: row[4] || 'Employer branding icon',
-                        fbLink: row[5] || '',
-                        liLink: row[6] || '',
-                        twLink: row[7] || '',
-                        webLink: row[8] || '',
-                        order: parseInt(row[9]) || 999
-                    };
-                }).filter(emp => emp.title !== '');
-
-                employers.sort((a, b) => a.order - b.order);
-                renderEmployersGrid(employers);
-            } catch (err) {
-                console.error("Employers data engine integration crash:", err);
-                document.getElementById('employers-grid').innerHTML = `<p class="col-span-full text-center text-gray-500 py-6">Synchronization failure reading historical employment database links.</p>`;
-            }
-        }
-
-        function renderEmployersGrid(items) {
-    const grid = document.getElementById('employers-grid');
-    if (!grid) return;
-    grid.innerHTML = '';
-
-    items.forEach(emp => {
-        const block = document.createElement('div');
-        block.className = 'bg-gray-900/40 border border-gray-800 rounded-xl p-5 flex flex-col justify-between items-center text-center transition duration-300 hover:border-gray-700';
-
-        const hasSocials = (emp.fbLink || emp.liLink || emp.twLink || emp.webLink);
-        let socialHTML = '';
-
-        // Universal SVG injection ensuring perfect execution without relying on unstable Lucide imports
-        if (hasSocials) {
-            socialHTML = `<div class="flex items-center justify-center space-x-4 mt-5 pt-4 border-t border-gray-800/60 w-full text-gray-500">`;
-            if (emp.fbLink) socialHTML += `
-                <a href="${emp.fbLink}" target="_blank" class="hover:text-blue-500 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                </a>`;
-            if (emp.liLink) socialHTML += `
-                <a href="${emp.liLink}" target="_blank" class="hover:text-blue-400 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                </a>`;
-            if (emp.twLink) socialHTML += `
-                <a href="${emp.twLink}" target="_blank" class="hover:text-white transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
-                </a>`;
-            if (emp.webLink) socialHTML += `
-                <a href="${emp.webLink}" target="_blank" class="hover:text-blue-600 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                </a>`;
-            socialHTML += `</div>`;
-        }
-        
-        block.innerHTML = `
-            <div class="w-full flex flex-col items-center">
-                <div class="w-full aspect-[16/7] max-w-[210px] flex items-center justify-center mb-5 overflow-hidden">
-                    <img src="${emp.imageLink || 'images/placeholder-logo.png'}" alt="${emp.altText}" class="w-full h-full object-contain filter brightness-110">
-                </div>
-                <h3 class="text-base font-bold text-white tracking-tight line-clamp-1 w-full">${emp.title}</h3>
-                <p class="text-blue-500 text-[10px] font-semibold uppercase tracking-wider mt-0.5 mb-2 line-clamp-1 w-full">${emp.subtitle}</p>
-                <p class="text-[11px] text-gray-400 leading-relaxed line-clamp-4 w-full">${emp.description}</p>
             </div>
-            ${socialHTML}
-        `;
-        grid.appendChild(block);
-    });
-}
-
-        function renderAwardsList(awardsItems) {
-    const container = document.getElementById('awards-list');
-    if (!container) return;
-    container.innerHTML = '';
-
-    if (!awardsItems || awardsItems.length === 0) {
-        container.innerHTML = `<p class="text-gray-500 text-sm italic py-4">No logged honors available.</p>`;
-        return;
-    }
-
-    awardsItems.forEach(item => {
-        const row = document.createElement('div');
-        // Clean, subtle horizontal strip that responds beautifully on hover
-        row.className = 'group flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-gray-900/20 border border-gray-800/60 hover:border-gray-700/80 hover:bg-gray-900/40 transition duration-200 gap-2';
-
-        // Check if a contextual URL link exists for the item
-        const hasLink = item.link && item.link.trim() !== '';
-        
-        // Structure the Content Layout
-        const detailContent = item.detail ? `<span class="text-gray-400"> - "${item.detail}"</span>` : '';
-        
-        // Apply 1-2 pt downscale optimization matching previous section updates
-        row.innerHTML = `
-            <div class="flex items-start space-x-3 max-w-4xl">
-                <!-- Tiny visual marker badge -->
-                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 group-hover:scale-125 transition duration-200 shrink-0"></span>
-                <div class="text-[13px] leading-relaxed text-gray-300">
-                    <strong class="text-white font-semibold tracking-wide">${item.organization}</strong> 
-                    <span class="text-gray-400">—</span> 
-                    ${hasLink ? 
-                        `<a href="${item.link.trim()}" target="_blank" class="text-blue-400 hover:text-blue-300 hover:underline inline-flex items-center gap-0.5 transition font-medium">${item.accolade} <svg class="w-3 h-3 inline opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>` : 
-                        `<span class="text-gray-300">${item.accolade}</span>`
-                    }
-                    ${detailContent}
-                </div>
+<div class="p-5 flex flex-col flex-grow justify-between">
+<div>
+<div class="flex items-center gap-2 mb-1.5 flex-wrap">
+<span class="text-[11px] font-bold text-blue-500 uppercase tracking-wider">${video.company}</span>
+<span class="text-[10px] text-gray-500 font-medium bg-gray-950 px-2 py-0.5 rounded border border-gray-800/50">${video.position}</span>
             </div>
-            <!-- Standardized Right-Aligned Date Stamp Component -->
-            <div class="text-[11px] font-mono tracking-wider text-gray-500 sm:text-right shrink-0 pl-4 sm:pl-0">
-                ${item.date || '—'}
+<h3 class="text-base font-bold text-white line-clamp-2 leading-snug group-hover:text-blue-400 transition mb-3">${video.title}</h3>
             </div>
-        `;
-        
-        container.appendChild(row);
-    });
-}
-    async function fetchAwardsCMS() {
-    try {
-        const awardsResponse = await fetch(AWARDS_CSV_URL);
-        const awardsRawText = await awardsResponse.text();
-        const parsedAwardsLines = parseCSVLines(awardsRawText);
-        
-        if (parsedAwardsLines.length > 0) {
-            parsedAwardsLines.shift(); // Strip columns header row
-        }
-
-        const mappedAwardsObjects = parsedAwardsLines.map(awardsRow => {
-            return {
-                organization: awardsRow[0] ? awardsRow[0].trim() : '',
-                accolade:     awardsRow[1] ? awardsRow[1].trim() : '',
-                detail:       awardsRow[2] ? awardsRow[2].trim() : '',
-                date:         awardsRow[3] ? awardsRow[3].trim() : '',
-                link:         awardsRow[4] ? awardsRow[4].trim() : ''
-            };
-        }).filter(awItem => awItem.accolade !== '' || awItem.organization !== '');
-
-        renderAwardsList(mappedAwardsObjects);
-    } catch (awardsError) {
-        console.error("Awards system scope pipeline fault:", awardsError);
-        document.getElementById('awards-list').innerHTML = 
-            `<p class="w-full text-center text-red-400 py-6 text-sm">Failed to sync live awards data matrices.</p>`;
-    }
-}
-
-// 4. YOUR RENDER FUNCTION SITS RIGHT NEXT TO IT
-function renderAwardsList(awardsItems) {
-    const container = document.getElementById('awards-list');
-    if (!container) return;
-    container.innerHTML = '';
-
-    if (!awardsItems || awardsItems.length === 0) {
-        container.innerHTML = `<p class="text-gray-500 text-sm italic py-4">No logged honors available.</p>`;
-        return;
-    }
-
-    awardsItems.forEach(item => {
-        const row = document.createElement('div');
-        row.className = 'group flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-gray-900/20 border border-gray-800/60 hover:border-gray-700/80 hover:bg-gray-900/40 transition duration-200 gap-2';
-
-        const hasLink = item.link && item.link.trim() !== '';
-        const detailContent = item.detail ? `<span class="text-gray-400"> - "${item.detail}"</span>` : '';
-        
-        row.innerHTML = `
-            <div class="flex items-start space-x-3 max-w-4xl">
-                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 group-hover:scale-125 transition duration-200 shrink-0"></span>
-                <div class="text-[13px] leading-relaxed text-gray-300">
-                    <strong class="text-white font-semibold tracking-wide">${item.organization}</strong> 
-                    <span class="text-gray-400">—</span> 
-                    ${hasLink ? 
-                        `<a href="${item.link.trim()}" target="_blank" class="text-blue-400 hover:text-blue-300 hover:underline inline-flex items-center gap-0.5 transition font-medium">${item.accolade} <svg class="w-3 h-3 inline opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>` : 
-                        `<span class="text-gray-300">${item.accolade}</span>`
-                    }
-                    ${detailContent}
-                </div>
+<div class="flex flex-wrap gap-1 mt-auto pt-2">
+${video.tags.map(t => `<span class="text-[10px] bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full font-medium">#${t}</span>`).join('')}
             </div>
-            <div class="text-[11px] font-mono tracking-wider text-gray-500 sm:text-right shrink-0 pl-4 sm:pl-0">
-                ${item.date || '—'}
             </div>
-        `;
-        container.appendChild(row);
-    });
-}
+`;
+                    grid.appendChild(card);
+                });
 
-        // --- METADATA LIGHTBOX MODAL ---
-        function openModal(url) {
-            const modal = document.getElementById('video-modal');
-            const player = document.getElementById('modal-player');
-            let embedUrl = url;
-            
-            if (url.includes('youtube.com/watch?v=')) {
-                embedUrl = url.replace('watch?v=', 'embed/');
-            } else if (url.includes('youtu.be/')) {
-                embedUrl = url.replace('youtu.be/', 'youtube.com/embed/');
-            }
-            
-            player.src = embedUrl;
+                if(pagesTotal > 1) {
+                    document.getElementById('pagination-controls').classList.remove('hidden');
+                    document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${pagesTotal}`;
 
-            const videoItem = (typeof filteredVideoData !== 'undefined' ? filteredVideoData : []).find(
-                item => item.videoUrl === url
-            );
-
-            if (videoItem) {
-                document.getElementById('modal-title').innerText = videoItem.title || '';
-                document.getElementById('modal-company').innerText = videoItem.company || '';
-                document.getElementById('modal-position').innerText = videoItem.position || '';
-                document.getElementById('modal-desc').innerText = videoItem.description || '';
-
-                // Conditional Awards & Nominations rendering
-                const awardsContainer = document.getElementById('modal-awards-container');
-                if (videoItem.awards && videoItem.awards.trim() !== '') {
-                    document.getElementById('modal-awards').innerText = videoItem.awards.trim();
-                    awardsContainer.classList.remove('hidden');
+                    document.getElementById('btn-first').disabled = (currentPage === 1);
+                    document.getElementById('btn-prev').disabled = (currentPage === 1);
+                    document.getElementById('btn-next').disabled = (currentPage === pagesTotal);
+                    document.getElementById('btn-last').disabled = (currentPage === pagesTotal);
                 } else {
-                    document.getElementById('modal-awards').innerText = '';
-                    awardsContainer.classList.add('hidden');
+                    document.getElementById('pagination-controls').classList.add('hidden');
+                }
+            }
+
+            function changePage(dir) {
+                const target = currentPage + dir;
+                const maxPages = Math.ceil(filteredVideoData.length / itemsPerPage);
+                if(target >= 1 && target <= maxPages) {
+                    goToPage(target);
+                }
+            }
+
+            function goToPage(pageTarget) {
+                displayVideoPage(pageTarget);
+                document.getElementById('videos').scrollIntoView({ behavior: 'smooth' });
+            }
+
+            function goToBoundaryLast() {
+                const maxPages = Math.ceil(filteredVideoData.length / itemsPerPage) || 1;
+                goToPage(maxPages);
+            }
+
+            // --- PREVIOUS EMPLOYERS ENGINE ---
+            async function fetchEmployerCMS() {
+                try {
+                    const res = await fetch(EMPLOYER_CSV_URL);
+                    const text = await res.text();
+                    const rows = parseCSVLines(text);
+
+                    if (rows.length > 0) rows.shift();
+
+                    let employers = rows.map(row => {
+                        return {
+                            title: row[0] || '',
+                            imageLink: row[1] || '',
+                            subtitle: row[2] || '',
+                            description: row[3] || '',
+                            altText: row[4] || 'Employer branding icon',
+                            fbLink: row[5] || '',
+                            liLink: row[6] || '',
+                            twLink: row[7] || '',
+                            webLink: row[8] || '',
+                            order: parseInt(row[9]) || 999
+                        };
+                    }).filter(emp => emp.title !== '');
+
+                    employers.sort((a, b) => a.order - b.order);
+                    renderEmployersGrid(employers);
+                } catch (err) {
+                    console.error("Employers data engine integration crash:", err);
+                    document.getElementById('employers-grid').innerHTML = `<p class="col-span-full text-center text-gray-500 py-6">Synchronization failure reading historical employment database links.</p>`;
+                }
+            }
+
+            function renderEmployersGrid(items) {
+                const grid = document.getElementById('employers-grid');
+                if (!grid) return;
+                grid.innerHTML = '';
+
+                items.forEach(emp => {
+                    const block = document.createElement('div');
+                    block.className = 'bg-gray-900/40 border border-gray-800 rounded-xl p-5 flex flex-col justify-between items-center text-center transition duration-300 hover:border-gray-700';
+
+                    const hasSocials = (emp.fbLink || emp.liLink || emp.twLink || emp.webLink);
+                    let socialHTML = '';
+
+                    if (hasSocials) {
+                        socialHTML = `<div class="flex items-center justify-center space-x-4 mt-5 pt-4 border-t border-gray-800/60 w-full text-gray-500">`;
+                        if (emp.fbLink) socialHTML += `
+<a href="${emp.fbLink}" target="_blank" class="hover:text-blue-500 transition">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>`;
+                        if (emp.liLink) socialHTML += `
+<a href="${emp.liLink}" target="_blank" class="hover:text-blue-400 transition">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>`;
+                        if (emp.twLink) socialHTML += `
+<a href="${emp.twLink}" target="_blank" class="hover:text-white transition">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+            </a>`;
+                        if (emp.webLink) socialHTML += `
+<a href="${emp.webLink}" target="_blank" class="hover:text-blue-600 transition">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            </a>`;
+                        socialHTML += `</div>`;
+                    }
+
+                    block.innerHTML = `
+<div class="w-full flex flex-col items-center">
+<div class="w-full aspect-[16/7] max-w-[210px] flex items-center justify-center mb-5 overflow-hidden">
+<img src="${emp.imageLink || 'images/placeholder-logo.png'}" alt="${emp.altText}" class="w-full h-full object-contain filter brightness-110">
+            </div>
+<h3 class="text-base font-bold text-white tracking-tight line-clamp-1 w-full">${emp.title}</h3>
+<p class="text-blue-500 text-[10px] font-semibold uppercase tracking-wider mt-0.5 mb-2 line-clamp-1 w-full">${emp.subtitle}</p>
+<p class="text-[11px] text-gray-400 leading-relaxed line-clamp-4 w-full">${emp.description}</p>
+            </div>
+${socialHTML}
+`;
+                    grid.appendChild(block);
+                });
+            }
+
+            function renderAwardsList(awardsItems) {
+                const container = document.getElementById('awards-list');
+                if (!container) return;
+                container.innerHTML = '';
+
+                if (!awardsItems || awardsItems.length === 0) {
+                    container.innerHTML = `<p class="text-gray-500 text-sm italic py-4">No logged honors available.</p>`;
+                    return;
                 }
 
-                // Clean rendering of Tags at the very bottom
+                awardsItems.forEach(item => {
+                    const row = document.createElement('div');
+                    row.className = 'group flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-gray-900/20 border border-gray-800/60 hover:border-gray-700/80 hover:bg-gray-900/40 transition duration-200 gap-2';
+
+                    const hasLink = item.link && item.link.trim() !== '';
+
+                    const detailContent = item.detail ? `<span class="text-gray-400"> - "${item.detail}"</span>` : '';
+
+                    row.innerHTML = `
+<div class="flex items-start space-x-3 max-w-4xl">
+<!-- Tiny visual marker badge -->
+<span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 group-hover:scale-125 transition duration-200 shrink-0"></span>
+<div class="text-[13px] leading-relaxed text-gray-300">
+<strong class="text-white font-semibold tracking-wide">${item.organization}</strong> 
+<span class="text-gray-400">—</span> 
+${hasLink ? 
+                        `<a href="${item.link.trim()}" target="_blank" class="text-blue-400 hover:text-blue-300 hover:underline inline-flex items-center gap-0.5 transition font-medium">${item.accolade} <svg class="w-3 h-3 inline opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>` : 
+                    `<span class="text-gray-300">${item.accolade}</span>`
+                }
+${detailContent}
+            </div>
+            </div>
+<!-- Standardized Right-Aligned Date Stamp Component -->
+<div class="text-[11px] font-mono tracking-wider text-gray-500 sm:text-right shrink-0 pl-4 sm:pl-0">
+${item.date || '—'}
+            </div>
+`;
+
+                    container.appendChild(row);
+                });
+            }
+            async function fetchAwardsCMS() {
+                try {
+                    const awardsResponse = await fetch(AWARDS_CSV_URL);
+                    const awardsRawText = await awardsResponse.text();
+                    const parsedAwardsLines = parseCSVLines(awardsRawText);
+
+                    if (parsedAwardsLines.length > 0) {
+                        parsedAwardsLines.shift();
+                    }
+
+                    const mappedAwardsObjects = parsedAwardsLines.map(awardsRow => {
+                        return {
+                            organization: awardsRow[0] ? awardsRow[0].trim() : '',
+                            accolade:     awardsRow[1] ? awardsRow[1].trim() : '',
+                            detail:       awardsRow[2] ? awardsRow[2].trim() : '',
+                            date:         awardsRow[3] ? awardsRow[3].trim() : '',
+                            link:         awardsRow[4] ? awardsRow[4].trim() : ''
+                        };
+                    }).filter(awItem => awItem.accolade !== '' || awItem.organization !== '');
+
+                    renderAwardsList(mappedAwardsObjects);
+                } catch (awardsError) {
+                    console.error("Awards system scope pipeline fault:", awardsError);
+                    document.getElementById('awards-list').innerHTML = 
+                        `<p class="w-full text-center text-red-400 py-6 text-sm">Failed to sync live awards data matrices.</p>`;
+                }
+            }
+
+            function renderAwardsList(awardsItems) {
+                const container = document.getElementById('awards-list');
+                if (!container) return;
+                container.innerHTML = '';
+
+                if (!awardsItems || awardsItems.length === 0) {
+                    container.innerHTML = `<p class="text-gray-500 text-sm italic py-4">No logged honors available.</p>`;
+                    return;
+                }
+
+                awardsItems.forEach(item => {
+                    const row = document.createElement('div');
+                    row.className = 'group flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-gray-900/20 border border-gray-800/60 hover:border-gray-700/80 hover:bg-gray-900/40 transition duration-200 gap-2';
+
+                    const hasLink = item.link && item.link.trim() !== '';
+                    const detailContent = item.detail ? `<span class="text-gray-400"> - "${item.detail}"</span>` : '';
+
+                    row.innerHTML = `
+<div class="flex items-start space-x-3 max-w-4xl">
+<span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 group-hover:scale-125 transition duration-200 shrink-0"></span>
+<div class="text-[13px] leading-relaxed text-gray-300">
+<strong class="text-white font-semibold tracking-wide">${item.organization}</strong> 
+<span class="text-gray-400">—</span> 
+${hasLink ? 
+                        `<a href="${item.link.trim()}" target="_blank" class="text-blue-400 hover:text-blue-300 hover:underline inline-flex items-center gap-0.5 transition font-medium">${item.accolade} <svg class="w-3 h-3 inline opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>` : 
+                    `<span class="text-gray-300">${item.accolade}</span>`
+                }
+${detailContent}
+            </div>
+            </div>
+<div class="text-[11px] font-mono tracking-wider text-gray-500 sm:text-right shrink-0 pl-4 sm:pl-0">
+${item.date || '—'}
+            </div>
+`;
+                    container.appendChild(row);
+                });
+            }
+
+            // --- METADATA LIGHTBOX MODAL ---
+            function openModal(url) {
+                const modal = document.getElementById('video-modal');
+                const player = document.getElementById('modal-player');
+                let embedUrl = url;
+
+                if (url.includes('youtube.com/watch?v=')) {
+                    embedUrl = url.replace('watch?v=', 'embed/');
+                } else if (url.includes('youtu.be/')) {
+                    embedUrl = url.replace('youtu.be/', 'youtube.com/embed/');
+                }
+
+                player.src = embedUrl;
+
+                const videoItem = (typeof filteredVideoData !== 'undefined' ? filteredVideoData : []).find(
+                    item => item.videoUrl === url
+                );
+
+                if (videoItem) {
+                    document.getElementById('modal-title').innerText = videoItem.title || '';
+                    document.getElementById('modal-company').innerText = videoItem.company || '';
+                    document.getElementById('modal-position').innerText = videoItem.position || '';
+                    document.getElementById('modal-desc').innerText = videoItem.description || '';
+
+                    const awardsContainer = document.getElementById('modal-awards-container');
+                    if (videoItem.awards && videoItem.awards.trim() !== '') {
+                        document.getElementById('modal-awards').innerText = videoItem.awards.trim();
+                        awardsContainer.classList.remove('hidden');
+                    } else {
+                        document.getElementById('modal-awards').innerText = '';
+                        awardsContainer.classList.add('hidden');
+                    }
+
+                    const tagContainer = document.getElementById('modal-tags');
+                    tagContainer.innerHTML = '';
+                    if (videoItem.tags && videoItem.tags.length > 0) {
+                        videoItem.tags.forEach(t => {
+                            if (t && t.trim()) {
+                                const chip = document.createElement('span');
+                                chip.className = 'text-[10px] font-medium text-gray-400 bg-gray-900 px-2.5 py-1 border border-gray-800 rounded-md';
+                                chip.innerText = `#${t.trim()}`;
+                                tagContainer.appendChild(chip);
+                            }
+                        });
+                    }
+                } else {
+                    document.getElementById('modal-title').innerText = "";
+                    document.getElementById('modal-company').innerText = "";
+                    document.getElementById('modal-position').innerText = "";
+                    document.getElementById('modal-desc').innerText = "";
+                    document.getElementById('modal-awards-container').classList.add('hidden');
+                    document.getElementById('modal-tags').innerHTML = "";
+                }
+
+                modal.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+
+                if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                    lucide.createIcons();
+                }
+            }
+
+            function closeModal() {
+                const modal = document.getElementById('video-modal');
+                const player = document.getElementById('modal-player');
+                modal.classList.add('hidden');
+                player.src = '';
+                document.body.classList.remove('overflow-hidden');
+            }
+
+            function openModalByIndex(globalIndex) {
+                const videoItem = filteredVideoDataResume[globalIndex];
+                if (!videoItem) return;
+
+                const modal = document.getElementById('video-modal');
+                const player = document.getElementById('modal-player');
+
+                let embedUrl = videoItem.url;
+                if (embedUrl.includes('youtube.com/watch?v=')) {
+                    embedUrl = embedUrl.replace('watch?v=', 'embed/');
+                } else if (embedUrl.includes('youtu.be/')) {
+                    embedUrl = embedUrl.replace('youtu.be/', 'youtube.com/embed/');
+                }
+
+                player.src = embedUrl;
+                document.getElementById('modal-title').innerText = videoItem.title || 'Untitled Project';
+                document.getElementById('modal-company').innerText = videoItem.company || 'Independent Production';
+                document.getElementById('modal-position').innerText = videoItem.position || 'Production Staff';
+                document.getElementById('modal-desc').innerText = videoItem.description || 'No project logging description available for this segment index record.';
+
                 const tagContainer = document.getElementById('modal-tags');
                 tagContainer.innerHTML = '';
                 if (videoItem.tags && videoItem.tags.length > 0) {
                     videoItem.tags.forEach(t => {
                         if (t && t.trim()) {
                             const chip = document.createElement('span');
-                            chip.className = 'text-[10px] font-medium text-gray-400 bg-gray-900 px-2.5 py-1 border border-gray-800 rounded-md';
+                            chip.className = 'text-[9px] font-semibold text-gray-500 bg-gray-900/60 px-2 py-0.5 border border-gray-800/40 rounded';
                             chip.innerText = `#${t.trim()}`;
                             tagContainer.appendChild(chip);
                         }
                     });
                 }
-            } else {
-                document.getElementById('modal-title').innerText = "";
-                document.getElementById('modal-company').innerText = "";
-                document.getElementById('modal-position').innerText = "";
-                document.getElementById('modal-desc').innerText = "";
-                document.getElementById('modal-awards-container').classList.add('hidden');
-                document.getElementById('modal-tags').innerHTML = "";
+
+                modal.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
             }
 
-            modal.classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
-            
-            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            // --- CAROUSEL LOOPS ---
+            function moveCarousel(dir) {
+                const track = document.getElementById('carousel-track');
+                const totalSlides = track.children.length;
+                currentCarouselIndex = (currentCarouselIndex + dir + totalSlides) % totalSlides;
+                track.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
+            }
+
+            window.addEventListener('DOMContentLoaded', () => {
                 lucide.createIcons();
-            }
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('video-modal');
-            const player = document.getElementById('modal-player');
-            modal.classList.add('hidden');
-            player.src = '';
-            document.body.classList.remove('overflow-hidden');
-        }
-
-        // Target dynamic modal binding using mapped database entries
-        function openModalByIndex(globalIndex) {
-            const videoItem = filteredVideoDataResume[globalIndex];
-            if (!videoItem) return;
-
-            const modal = document.getElementById('video-modal');
-            const player = document.getElementById('modal-player');
-            
-            // Format original embedding URL rules safely
-            let embedUrl = videoItem.url;
-            if (embedUrl.includes('youtube.com/watch?v=')) {
-                embedUrl = embedUrl.replace('watch?v=', 'embed/');
-            } else if (embedUrl.includes('youtu.be/')) {
-                embedUrl = embedUrl.replace('youtu.be/', 'youtube.com/embed/');
-            }
-            
-            // Inject values cleanly into the newly targeted side panel DOM nodes
-            player.src = embedUrl;
-            document.getElementById('modal-title').innerText = videoItem.title || 'Untitled Project';
-            document.getElementById('modal-company').innerText = videoItem.company || 'Independent Production';
-            document.getElementById('modal-position').innerText = videoItem.position || 'Production Staff';
-            document.getElementById('modal-desc').innerText = videoItem.description || 'No project logging description available for this segment index record.';
-
-            // Render dynamic tag chip matrix inside the panel
-            const tagContainer = document.getElementById('modal-tags');
-            tagContainer.innerHTML = '';
-            if (videoItem.tags && videoItem.tags.length > 0) {
-                videoItem.tags.forEach(t => {
-                    if (t && t.trim()) {
-                        const chip = document.createElement('span');
-                        chip.className = 'text-[9px] font-semibold text-gray-500 bg-gray-900/60 px-2 py-0.5 border border-gray-800/40 rounded';
-                        chip.innerText = `#${t.trim()}`;
-                        tagContainer.appendChild(chip);
-                    }
-                });
-            }
-
-            // Bring modal framing up into viewport visibility
-            modal.classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
-        }
-        
-        // --- CAROUSEL LOOPS ---
-        function moveCarousel(dir) {
-            const track = document.getElementById('carousel-track');
-            const totalSlides = track.children.length;
-            currentCarouselIndex = (currentCarouselIndex + dir + totalSlides) % totalSlides;
-            track.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            initApplication();
-            setInterval(() => moveCarousel(1), 5000);
-        });
-    </script>
-</body>
+                initApplication();
+                setInterval(() => moveCarousel(1), 5000);
+            });
+        </script>
+    </body>
 </html>
