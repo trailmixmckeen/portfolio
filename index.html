@@ -838,16 +838,18 @@ function renderAwardsList(awardsItems) {
             );
 
             if (videoItem) {
-                // Populate Title, Company, Position, and Description fields
+                // Populate Title, Company, and Position
                 document.getElementById('modal-title').innerText = videoItem.title || 'Untitled Project';
                 document.getElementById('modal-company').innerText = videoItem.company || 'Independent Production';
                 document.getElementById('modal-position').innerText = videoItem.position || 'Production Asset';
-                document.getElementById('modal-desc').innerText = videoItem.description || 'Project logging details are being finalized for this dynamic asset segment.';
+                
+                // FIXED: Maps to .desc (Column F) exactly as defined in your fetchVideoCMS loop
+                document.getElementById('modal-desc').innerText = videoItem.desc || 'No project logging description available.';
 
-                // Handle Awards & Nominations logic conditionally (Column J verification)
+                // FIXED: Maps to .awardsAndMentions (Column J) exactly as defined in your fetchVideoCMS loop
                 const awardsContainer = document.getElementById('modal-awards-container');
-                if (videoItem.awards && videoItem.awards.trim() !== '') {
-                    document.getElementById('modal-awards').innerText = videoItem.awards.trim();
+                if (videoItem.awardsAndMentions && videoItem.awardsAndMentions.trim() !== '') {
+                    document.getElementById('modal-awards').innerText = videoItem.awardsAndMentions.trim();
                     awardsContainer.classList.remove('hidden');
                 } else {
                     document.getElementById('modal-awards').innerText = '';
