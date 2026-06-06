@@ -361,10 +361,7 @@
                     </div>
                 </div>
 
-                <div>
-                    <p class="text-[10px] text-gray-500 font-mono uppercase tracking-wider mb-2">Project Tags</p>
-                    <div id="modal-tags" class="flex flex-wrap gap-1.5"></div>
-                </div>
+                <div id="modal-tags" class="flex flex-wrap gap-1.5 mt-8 pt-4 border-t border-gray-900"></div>
             </div>
 
         </div>
@@ -467,7 +464,9 @@
                         position: row[4] || 'Production Team',
                         videoUrl: row[7] || '',
                         tags: tagsArray,
-                        customThumbnail: row[11] || '' // Extracting Column L (Index 11)
+                        customThumbnail: row[11] || '', // Column L
+                        description: row[5] || '',     // Mapped Column F (Index 5)
+                        awards: row[9] || ''           // Mapped Column J (Index 9)
                     };
                 }).filter(v => v.title !== 'Untitled Project' || v.videoUrl !== '');
 
@@ -820,7 +819,7 @@ function renderAwardsList(awardsItems) {
     });
 }
 
-        // --- SCREEN VIDEO LIGHTBOX MODAL ---
+        // --- METADATA LIGHTBOX MODAL ---
         function openModal(url) {
             const modal = document.getElementById('video-modal');
             const player = document.getElementById('modal-player');
@@ -834,31 +833,27 @@ function renderAwardsList(awardsItems) {
             
             player.src = embedUrl;
 
-            // Target the item cache using the matching videoUrl parameter row
             const videoItem = (typeof filteredVideoData !== 'undefined' ? filteredVideoData : []).find(
                 item => item.videoUrl === url
             );
 
             if (videoItem) {
-                // Populate Title, Company, and Position
-                document.getElementById('modal-title').innerText = videoItem.title || 'Untitled Project';
-                document.getElementById('modal-company').innerText = videoItem.company || 'Independent Production';
-                document.getElementById('modal-position').innerText = videoItem.position || 'Production Asset';
-                
-                // FIXED: Maps directly to .desc to pull your spreadsheet data
-                document.getElementById('modal-desc').innerText = videoItem.desc || 'No project logging description available.';
+                document.getElementById('modal-title').innerText = videoItem.title || '';
+                document.getElementById('modal-company').innerText = videoItem.company || '';
+                document.getElementById('modal-position').innerText = videoItem.position || '';
+                document.getElementById('modal-desc').innerText = videoItem.description || '';
 
-                // FIXED: Maps directly to .awardsAndMentions to display your accolades block
+                // Conditional Awards & Nominations rendering
                 const awardsContainer = document.getElementById('modal-awards-container');
-                if (videoItem.awardsAndMentions && videoItem.awardsAndMentions.trim() !== '') {
-                    document.getElementById('modal-awards').innerText = videoItem.awardsAndMentions.trim();
+                if (videoItem.awards && videoItem.awards.trim() !== '') {
+                    document.getElementById('modal-awards').innerText = videoItem.awards.trim();
                     awardsContainer.classList.remove('hidden');
                 } else {
                     document.getElementById('modal-awards').innerText = '';
                     awardsContainer.classList.add('hidden');
                 }
 
-                // Render out Project Tags directly inside the footer container layout slot
+                // Clean rendering of Tags at the very bottom
                 const tagContainer = document.getElementById('modal-tags');
                 tagContainer.innerHTML = '';
                 if (videoItem.tags && videoItem.tags.length > 0) {
@@ -870,15 +865,12 @@ function renderAwardsList(awardsItems) {
                             tagContainer.appendChild(chip);
                         }
                     });
-                } else {
-                    tagContainer.innerHTML = `<span class="text-xs text-gray-600 italic">No searchable categories attached.</span>`;
                 }
             } else {
-                // Fallback structural layout safety settings
-                document.getElementById('modal-title').innerText = "Video Production";
-                document.getElementById('modal-company').innerText = "Broadcast Record";
-                document.getElementById('modal-position').innerText = "Production Crew";
-                document.getElementById('modal-desc').innerText = "Production parameters streaming online.";
+                document.getElementById('modal-title').innerText = "";
+                document.getElementById('modal-company').innerText = "";
+                document.getElementById('modal-position').innerText = "";
+                document.getElementById('modal-desc').innerText = "";
                 document.getElementById('modal-awards-container').classList.add('hidden');
                 document.getElementById('modal-tags').innerHTML = "";
             }
