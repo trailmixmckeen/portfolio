@@ -53,10 +53,10 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end px-8 md:px-16 pb-8 md:pb-12 pointer-events-none">
                     <div class="max-w-2xl">
                         <h1 class="text-2xl md:text-5xl font-black text-white tracking-tight leading-tight mb-3 drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]">
-                            Tech Management and Production Planning 
+                            Tech Management, Production, and Planning 
                         </h1>
                         <p class="text-gray-200 text-xs md:text-base font-medium max-w-lg leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-                            Demonstrated history of live sports broadcasts, experiential marketing events, and project management across the sports, news, and entertainment broadcasting industry 
+                            Proven track record in live sports broadcasting, experiential marketing events, and project management across sports, news, and entertainment in both digital and traditional broadcast media
                         </p>
                     </div>
                 </div>
@@ -76,7 +76,8 @@
         <section id="resume" class="max-w-6xl mx-auto px-4 py-16 w-full border-t border-gray-800">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
                 <div>
-                    <h2 class="text-3xl font-bold text-white tracking-tight">Professional Experience</h2>
+                    <h2 class="text-3xl font-bold text-white tracking-tight">Experience</h2>
+                    <p class="text-gray-400 text-sm">Professional and personal employment history</p>
                 </div>
                 <div class="flex items-center gap-3 self-stretch md:self-auto justify-between md:justify-end">
 
@@ -109,6 +110,7 @@
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-8 gap-6">
                     <div>
                         <h2 class="text-3xl font-bold text-white">Portfolio</h2>
+                        <p class="text-gray-400 text-sm">Projects and productions worked</p>
                     </div>
                     <div class="w-full lg:max-w-xs relative">
                         <input type="text" id="search-input" oninput="handleSearchFilter()" placeholder="Search project titles..." 
@@ -148,7 +150,9 @@
 
         <!-- EMPLOYERS SECTION -->
         <section id="employers" class="py-16 border-t border-gray-800 max-w-6xl mx-auto px-4 w-full">
-            <h2 class="text-3xl font-bold text-white mb-2">Previous Employers</h2>
+            <h2 class="text-3xl font-bold text-white mb-2">Employers Links</h2>
+            <p class="text-gray-400 text-sm">Social platforms and website for employed companies and productions</p>
+
 
             <div id="employers-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 <div class="col-span-full text-center py-12 text-gray-500">Connecting to historical directory records...</div>
@@ -269,11 +273,11 @@
 
                     const mappedResumeObjects = parsedResumeLines.map(resumeRow => {
                         return {
-                            resumeCompany: resumeRow[0] ? resumeRow[0].trim() : '',
-                            resumeCity:    resumeRow[1] ? resumeRow[1].trim() : '',
-                            resumeTitle:   resumeRow[2] ? resumeRow[2].trim() : '',
-                            resumeDates:   resumeRow[3] ? resumeRow[3].trim() : '',
-                            resumeDesc:    resumeRow[4] ? resumeRow[4].trim() : ''
+                            resumeCompany: resumeRow[0] ? resumeRow[0].trim() : '', // Column A
+                            resumeCity:    resumeRow[1] ? resumeRow[1].trim() : '', // Column B
+                            resumeTitle:   resumeRow[2] ? resumeRow[2].trim() : '', // Column C
+                            resumeDates:   resumeRow[3] ? resumeRow[3].trim() : '', // Column D
+                            resumeDesc:    resumeRow[4] ? resumeRow[4].trim() : '' // Column E
                         };
                     }).filter(resItem => resItem.resumeTitle !== '' || resItem.resumeCompany !== '');
 
@@ -447,14 +451,14 @@
                 }
                 }
                     return {
-                    title: row[0] || 'Untitled Project', // Column A
+                        title: row[0] || 'Untitled Project', // Column A
                         company: row[3] || 'Independent', // Column D
-                            position: row[4] || 'Production Team', // Column E
-                                videoUrl: row[7] || '', // Column H
-                                    tags: tagsArray, // Column K
-                                        customThumbnail: row[11] || '', // Column L
-                                            description: row[5] || '',     // Column F
-                                                awards: row[9] || ''           // Column J
+                        position: row[4] || 'Production Team', // Column E
+                        videoUrl: row[7] || '', // Column H
+                        tags: tagsArray, // Column K
+                        customThumbnail: row[11] || '', // Column L
+                        description: row[5] || '',     // Column F
+                        awards: row[9] || ''           // Column J
                 };
             }).filter(v => v.title !== 'Untitled Project' || v.videoUrl !== '');
 
@@ -619,15 +623,15 @@ ${video.tags.map(t => `<span class="text-[10px] bg-gray-800 text-gray-300 px-2 p
 
                     let employers = rows.map(row => {
                         return {
-                            title: row[0] || '',
-                            imageLink: row[1] || '',
-                            subtitle: row[2] || '',
-                            description: row[3] || '',
-                            altText: row[4] || 'Employer branding icon',
-                            fbLink: row[5] || '',
-                            liLink: row[6] || '',
-                            twLink: row[7] || '',
-                            webLink: row[8] || '',
+                            title: row[0] || '', // Column A
+                            imageLink: row[1] || '', // Column B
+                            subtitle: row[2] || '', // Column C
+                            description: row[3] || '', // Column D
+                            altText: row[4] || 'Employer branding icon', // Column E
+                            fbLink: row[5] || '', // Column F
+                            liLink: row[6] || '', // Column G
+                            twLink: row[7] || '', // Column H
+                            webLink: row[8] || '', // Column I
                             order: parseInt(row[9]) || 999
                         };
                     }).filter(emp => emp.title !== '');
@@ -720,7 +724,6 @@ ${hasLink ?
 ${detailContent}
             </div>
             </div>
-<!-- Standardized Right-Aligned Date Stamp Component -->
 <div class="text-[11px] font-mono tracking-wider text-gray-500 sm:text-right shrink-0 pl-4 sm:pl-0">
 ${item.date || '—'}
             </div>
@@ -741,11 +744,11 @@ ${item.date || '—'}
 
                     const mappedAwardsObjects = parsedAwardsLines.map(awardsRow => {
                         return {
-                            organization: awardsRow[0] ? awardsRow[0].trim() : '',
-                            accolade:     awardsRow[1] ? awardsRow[1].trim() : '',
-                            detail:       awardsRow[2] ? awardsRow[2].trim() : '',
-                            date:         awardsRow[3] ? awardsRow[3].trim() : '',
-                            link:         awardsRow[4] ? awardsRow[4].trim() : ''
+                            organization: awardsRow[0] ? awardsRow[0].trim() : '', // Column A
+                            accolade:     awardsRow[1] ? awardsRow[1].trim() : '', // Column B
+                            detail:       awardsRow[2] ? awardsRow[2].trim() : '', // Column C
+                            date:         awardsRow[3] ? awardsRow[3].trim() : '', // Column D
+                            link:         awardsRow[4] ? awardsRow[4].trim() : '' // Column E
                         };
                     }).filter(awItem => awItem.accolade !== '' || awItem.organization !== '');
 
@@ -753,7 +756,7 @@ ${item.date || '—'}
                 } catch (awardsError) {
                     console.error("Awards system scope pipeline fault:", awardsError);
                     document.getElementById('awards-list').innerHTML = 
-                        `<p class="w-full text-center text-red-400 py-6 text-sm">Failed to sync live awards data matrices.</p>`;
+                        `<p class="w-full text-center text-red-400 py-6 text-sm">Failed to sync live awards database.</p>`;
                 }
             }
 
@@ -763,7 +766,7 @@ ${item.date || '—'}
                 container.innerHTML = '';
 
                 if (!awardsItems || awardsItems.length === 0) {
-                    container.innerHTML = `<p class="text-gray-500 text-sm italic py-4">No logged honors available.</p>`;
+                    container.innerHTML = `<p class="text-gray-500 text-sm italic py-4">No accolades displayed.</p>`;
                     return;
                 }
 
@@ -880,10 +883,10 @@ ${item.date || '—'}
                 }
 
                 player.src = embedUrl;
-                document.getElementById('modal-title').innerText = videoItem.title || 'Untitled Project';
-                document.getElementById('modal-company').innerText = videoItem.company || 'Independent Production';
-                document.getElementById('modal-position').innerText = videoItem.position || 'Production Staff';
-                document.getElementById('modal-desc').innerText = videoItem.description || 'No project logging description available for this segment index record.';
+                document.getElementById('modal-title').innerText = videoItem.title || 'Insert Project Name';
+                document.getElementById('modal-company').innerText = videoItem.company || 'Production Company';
+                document.getElementById('modal-position').innerText = videoItem.position || 'Production Position';
+                document.getElementById('modal-desc').innerText = videoItem.description || 'Project Description';
 
                 const tagContainer = document.getElementById('modal-tags');
                 tagContainer.innerHTML = '';
