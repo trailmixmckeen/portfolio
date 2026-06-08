@@ -250,7 +250,6 @@
             let currentPageResume = 1;
             const itemsPerPageResume = 25;
 
-            // Master App Initialization Handler
             async function initApplication() {
                 try {
                     await Promise.all([fetchResumeCMS(), fetchVideoCMS(), fetchEmployerCMS()]);
@@ -259,7 +258,6 @@
                 }
             }
 
-            // Isolated Resume Carousel Engine
             let currentResumeSlideIndex = 0;
             let totalResumeSlidesMax = 0;
 
@@ -333,7 +331,6 @@
                 }
             }
 
-            // Resume carousel tracking layout
             function moveResumeCarousel(direction) {
                 const track = document.getElementById('resume-track');
                 if (!track || totalResumeSlidesMax === 0) return;
@@ -368,7 +365,6 @@
             let currentPage = 1;
             const itemsPerPage = 12;
 
-            // Custom Robust CSV Splitter handling encapsulated string data
             function parseCSVLines(text) {
                 const lines = [];
                 let row = [];
@@ -420,7 +416,7 @@
                 }
             }
 
-            // Helper engine to extract YouTube ID and assemble High-Res Thumbnail link
+            // Extract YouTube ID and assemble High-Res Thumbnail link
             function getYouTubeThumbnail(url) {
                 let videoId = null;
                 if (url.includes('youtube.com/watch?v=')) {
@@ -434,7 +430,7 @@
                     return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
                 }
 
-            // --- VIDEOS DATA ENGINE ---
+            // --- VIDEOS ENGINE ---
             async function fetchVideoCMS() {
                 try {
                     const res = await fetch(VIDEO_CSV_URL);
@@ -452,11 +448,18 @@
                                 tagsArray = row[8].split(',').map(t => t.trim().replace(/[\[\]"']/g, ''));
                             }
                         }
+                        if (row[4]) {
+                            try {
+                                jobArray = JSON.parse(row[4].replace(/""/g, '"'));
+                            } catch(e) {
+                                jobArray = row[4].split(',').map(t => t.trim().replace(/[\[\]"']/g, ''));
+                            }
+                        }
                         return {
                             title: row[0] || 'Untitled Project', // Column A
                             longDate: row[1] || '', // Column B
                             company: row[3] || 'Independent', // Column D
-                            position: row[4] || 'Production Team', // Column E
+                            position: jobArray, // Column E
                             videoUrl: row[6] || '', // Column G
                             tags: tagsArray, // Column I
                             customThumbnail: row[9] || '', // Column J
@@ -530,6 +533,7 @@
 
             function handleSearchFilter() { applyFilters(); }
 
+            //-- VIDEO PAGE --
             function displayVideoPage(page) {
                 currentPage = page;
                 const grid = document.getElementById('video-grid');
@@ -621,7 +625,7 @@
                 goToPage(maxPages);
             }
 
-            // --- PREVIOUS EMPLOYERS ENGINE ---
+            // --- EMPLOYERS ENGINE ---
             async function fetchEmployerCMS() {
                 try {
                     const res = await fetch(EMPLOYER_CSV_URL);
@@ -741,6 +745,8 @@ ${item.date || '—'}
                     container.appendChild(row);
                 });
             }
+
+            // --- ACCOLADE ENGINE ---
             async function fetchAwardsCMS() {
                 try {
                     const awardsResponse = await fetch(AWARDS_CSV_URL);
@@ -807,7 +813,6 @@ ${item.date || '—'}
                 });
             }
 
-            // --- METADATA LIGHTBOX MODAL ---
             function openModal(url) {
                 const modal = document.getElementById('video-modal');
                 const player = document.getElementById('modal-player');
@@ -878,6 +883,12 @@ ${item.date || '—'}
                 player.src = '';
                 document.body.classList.remove('overflow-hidden');
             }
+            
+            document.getElementById('video-modal').addEventListener('click', function(event) {
+                if (event.target === this) {
+                    closeModal();
+                }
+            });
 
             function openModalByIndex(globalIndex) {
                 const videoItem = filteredVideoDataResume[globalIndex];
