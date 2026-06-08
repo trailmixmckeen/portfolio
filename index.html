@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,8 +16,10 @@
             .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         </style>
     </head>
+    
     <body class="text-gray-100 min-h-screen flex flex-col justify-between">
 
+        <!-- NAVIGATION SECTION -->
         <nav class="sticky top-0 z-40 bg-[#0b0f19]/90 backdrop-blur-md border-b border-gray-800">
             <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
                 <a href="#home" class="flex items-center">
@@ -112,6 +115,8 @@
                         <h2 class="text-3xl font-bold text-white">Portfolio</h2>
                         <p class="text-gray-400 text-sm">Project and production history</p>
                     </div>
+
+                    <!-- SEARCH BAR -->
                     <div class="w-full lg:max-w-xs relative">
                         <input type="text" id="search-input" oninput="handleSearchFilter()" placeholder="Search titles..." 
                                class="w-full bg-[#0b0f19] border border-gray-800 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition">
@@ -119,6 +124,7 @@
                     </div>
                 </div>
 
+                <!-- FILTERS -->
                 <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl mb-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                     <div>
                         <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Filter by Company</label>
@@ -138,6 +144,7 @@
                     <div class="col-span-full text-center py-12 text-gray-500">Connecting to video database...</div>
                 </div>
 
+                <!-- VIDEO PAGE CONTROLS -->
                 <div id="pagination-controls" class="flex justify-center items-center space-x-2 md:space-x-4 mt-12 hidden">
                     <button onclick="goToPage(1)" id="btn-first" class="px-3 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition font-medium">Newest</button>
                     <button onclick="changePage(-1)" id="btn-prev" class="px-4 py-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-sm disabled:opacity-30 transition font-medium">Previous</button>
@@ -196,7 +203,7 @@
             </div>
         </footer>
 
-        <!-- POP-OUT VIDEO MODAL SECTION -->
+        <!-- POP-OUT VIDEO MODAL -->
         <div id="video-modal" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
             <div class="relative w-full max-w-6xl bg-gray-950 border border-gray-800 rounded-xl overflow-hidden shadow-2xl flex flex-col lg:flex-row max-h-[90vh]">
 
@@ -238,29 +245,73 @@
 
         <script>
             
-            // Data Feed Ingestion Links
+            // DATA INGESTION LINKS
             const VIDEO_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=1842671833&single=true&output=csv';
             const EMPLOYER_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=2101605290&single=true&output=csv';
             const RESUME_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=10390491&single=true&output=csv';
             const AWARDS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=829253189&single=true&output=csv';
 
-            let rawVideoDataResume = [];
-            let filteredVideoDataResume = [];
-            let currentCarouselIndexResume = 0;
-            let currentPageResume = 1;
-            const itemsPerPageResume = 25;
-
+            // MASTER APP INITIALIZER
             async function initApplication() {
                 try {
-                    await Promise.all([fetchResumeCMS(), fetchVideoCMS(), fetchEmployerCMS()]);
+                    await Promise.all([
+                        fetchResumeCMS(), 
+                        fetchVideoCMS(), 
+                        fetchEmployerCMS(),
+                        fetchAwardsCMS()
+                    ]);
                 } catch (err) {
                     console.error("Master initialization framework pipeline crash:", err);
                 }
             }
 
+            // CSV PARSE
+            function parseCSVLines(text) {
+                const lines = [];
+                let row = [];
+                let token = '';
+                let inQuotes = false;
+
+                for (let i = 0; i < text.length; i++) {
+                    const c = text[i];
+                    const next = text[i+1];
+
+                    if (c === '"') {
+                        if (inQuotes && next === '"') {
+                            token += '"';
+                            i++;
+                        } else {
+                            inQuotes = !inQuotes;
+                        }
+                    } else if (c === ',' && !inQuotes) {
+                        row.push(token.trim());
+                        token = '';
+                    } else if ((c === '\n' || c === '\r') && !inQuotes) {
+                        if (c === '\r' && next === '\n') i++;
+                        row.push(token.trim());
+                        if (row.some(field => field !== '')) lines.push(row);
+                        row = [];
+                        token = '';
+                    } else {
+                        token += c;
+                    }
+                }
+                if (token || row.length > 0) {
+                    row.push(token.trim());
+                    lines.push(row);
+                }
+                return lines;
+            }
+
+            // RESUME CONSTANTS
+            let currentCarouselIndexResume = 0;
+            let currentPageResume = 1;
+            const itemsPerPageResume = 25;
+            
             let currentResumeSlideIndex = 0;
             let totalResumeSlidesMax = 0;
 
+            // RESUME DATA ENGINE
             async function fetchResumeCMS() {
                 try {
                     const resumeResponse = await fetch(RESUME_CSV_URL);
@@ -289,6 +340,7 @@
                 }
             }
 
+            // RESUME ITEM GENERATOR
             function renderIsolatedResumeCarousel(targetResumeItems) {
                 const resumeTrackDOM = document.getElementById('resume-track');
                 const controlsContainer = document.getElementById('resume-controls');
@@ -331,6 +383,7 @@
                 }
             }
 
+            // RESUME NAVIGATION 
             function moveResumeCarousel(direction) {
                 const track = document.getElementById('resume-track');
                 if (!track || totalResumeSlidesMax === 0) return;
@@ -359,78 +412,14 @@
                 track.style.transform = `translateX(-${currentResumeSlideIndex * cardWidthWithGap}px)`;
             }
 
+            // VIDEO CONSTANTS
             let rawVideoData = [];
             let filteredVideoData = [];
             let currentCarouselIndex = 0;
             let currentPage = 1;
             const itemsPerPage = 12;
-
-            function parseCSVLines(text) {
-                const lines = [];
-                let row = [];
-                let token = '';
-                let inQuotes = false;
-
-                for (let i = 0; i < text.length; i++) {
-                    const c = text[i];
-                    const next = text[i+1];
-
-                    if (c === '"') {
-                        if (inQuotes && next === '"') {
-                            token += '"';
-                            i++;
-                        } else {
-                            inQuotes = !inQuotes;
-                        }
-                    } else if (c === ',' && !inQuotes) {
-                        row.push(token.trim());
-                        token = '';
-                    } else if ((c === '\n' || c === '\r') && !inQuotes) {
-                        if (c === '\r' && next === '\n') i++;
-                        row.push(token.trim());
-                        if (row.some(field => field !== '')) lines.push(row);
-                        row = [];
-                        token = '';
-                    } else {
-                        token += c;
-                    }
-                }
-                if (token || row.length > 0) {
-                    row.push(token.trim());
-                    lines.push(row);
-                }
-                return lines;
-            }
-
-            // Master App Initialization Handler
-            async function initApplication() {
-                try {
-                    await Promise.all([
-                        fetchResumeCMS(), 
-                        fetchVideoCMS(), 
-                        fetchEmployerCMS(),
-                        fetchAwardsCMS()
-                    ]);
-                } catch (err) {
-                    console.error("Master initialization framework pipeline crash:", err);
-                }
-            }
-
-            // Extract YouTube ID and assemble High-Res Thumbnail link
-            function getYouTubeThumbnail(url) {
-                let videoId = null;
-                if (url.includes('youtube.com/watch?v=')) {
-                    const urlParams = new URLSearchParams(url.split('?')[1]);
-                    videoId = urlParams.get('v');
-                } else if (url.includes('youtu.be/')) {
-                    videoId = url.split('youtu.be/')[1]?.split('?')[0];
-                } else if (url.includes('youtube.com/embed/')) {
-                    videoId = url.split('embed/')[1]?.split('?')[0];
-                }
-                    return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
-                }
-
-            // --- VIDEOS ENGINE ---
+            
+            // --- VIDEOS DATA ENGINE ---
             async function fetchVideoCMS() {
                 try {
                     const res = await fetch(VIDEO_CSV_URL);
@@ -478,6 +467,21 @@
                 }
             }
 
+            // EXTRACT VIDEO YOUTUBE ID
+            function getYouTubeThumbnail(url) {
+                let videoId = null;
+                if (url.includes('youtube.com/watch?v=')) {
+                    const urlParams = new URLSearchParams(url.split('?')[1]);
+                    videoId = urlParams.get('v');
+                } else if (url.includes('youtu.be/')) {
+                    videoId = url.split('youtu.be/')[1]?.split('?')[0];
+                } else if (url.includes('youtube.com/embed/')) {
+                    videoId = url.split('embed/')[1]?.split('?')[0];
+                }
+                    return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
+            }
+
+            // BUILD VIDEO FILTER DROPDOWNS
             function buildVideoFilterDropdowns() {
                 const companies = new Set();
                 const positions = new Set();
@@ -510,6 +514,7 @@
                 populateDropdown('filter-tag', sortedTags);
             }
 
+            // POPULATE VIDEO DROPDOWNS
             function populateDropdown(id, optionArray) {
                 const dropdown = document.getElementById(id);
                 dropdown.innerHTML = '';
@@ -521,6 +526,7 @@
                 });
             }
 
+            // FILTER VIDEO BASED ON DROPDOWNS
             function filterVideos() {
                 const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
                 const selectedCompany = document.getElementById('filter-company').value;
@@ -546,7 +552,7 @@
 
             function handleSearchFilter() { applyFilters(); }
 
-            //-- VIDEO PAGE --
+            // VIDEO ITEM GENERATOR
             function displayVideoPage(page) {
                 currentPage = page;
                 const grid = document.getElementById('video-grid');
@@ -590,7 +596,7 @@
                             <div>
                                 <div class="flex items-center gap-2 mb-2 flex-wrap">
                                     <span class="text-[10px] font-bold text-blue-500 uppercase tracking-wider">${video.company}</span>
-                                    <span class="text-[9px] text-gray-400 font-medium bg-gray-950 px-1.5 py-0.5 rounded border border-gray-800/50">
+                                    <span class="text-[9px] text-gray-500 font-medium bg-gray-950 px-1.5 py-0.5 rounded border border-gray-800/50">
                                         ${Array.isArray(video.position) ? video.position.join(' / ') : video.position}
                                     </span>
                                 </div>
@@ -622,6 +628,7 @@
                 }
             }
 
+            // VIDEO PAGE NAVIGATION
             function changePage(dir) {
                 const target = currentPage + dir;
                 const maxPages = Math.ceil(filteredVideoData.length / itemsPerPage);
@@ -630,17 +637,19 @@
                 }
             }
 
+            // VIDEO PAGE NAVIGATION
             function goToPage(pageTarget) {
                 displayVideoPage(pageTarget);
                 document.getElementById('videos').scrollIntoView({ behavior: 'smooth' });
             }
 
+            // VIDEO PAGE NAVIGATION
             function goToBoundaryLast() {
                 const maxPages = Math.ceil(filteredVideoData.length / itemsPerPage) || 1;
                 goToPage(maxPages);
             }
 
-            // --- EMPLOYERS ENGINE ---
+            // --- EMPLOYERS DATA ENGINE ---
             async function fetchEmployerCMS() {
                 try {
                     const res = await fetch(EMPLOYER_CSV_URL);
@@ -672,6 +681,7 @@
                 }
             }
 
+            // EMPLOYER ITEM GENERATOR
             function renderEmployersGrid(items) {
                 const grid = document.getElementById('employers-grid');
                 if (!grid) return;
@@ -720,47 +730,6 @@ ${socialHTML}
                 });
             }
 
-            function renderAwardsList(awardsItems) {
-                const container = document.getElementById('awards-list');
-                if (!container) return;
-                container.innerHTML = '';
-
-                if (!awardsItems || awardsItems.length === 0) {
-                    container.innerHTML = `<p class="text-gray-500 text-sm italic py-4">No logged honors available.</p>`;
-                    return;
-                }
-
-                awardsItems.forEach(item => {
-                    const row = document.createElement('div');
-                    row.className = 'group flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-gray-900/20 border border-gray-800/60 hover:border-gray-700/80 hover:bg-gray-900/40 transition duration-200 gap-2';
-
-                    const hasLink = item.link && item.link.trim() !== '';
-
-                    const detailContent = item.detail ? `<span class="text-gray-400"> - "${item.detail}"</span>` : '';
-
-                    row.innerHTML = `
-<div class="flex items-start space-x-3 max-w-4xl">
-<!-- Tiny visual marker badge -->
-<span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 group-hover:scale-125 transition duration-200 shrink-0"></span>
-<div class="text-[13px] leading-relaxed text-gray-300">
-<strong class="text-white font-semibold tracking-wide">${item.organization}</strong> 
-<span class="text-gray-400">—</span> 
-${hasLink ? 
-                        `<a href="${item.link.trim()}" target="_blank" class="text-blue-400 hover:text-blue-300 hover:underline inline-flex items-center gap-0.5 transition font-medium">${item.accolade} <svg class="w-3 h-3 inline opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>` : 
-                    `<span class="text-gray-300">${item.accolade}</span>`
-                }
-${detailContent}
-            </div>
-            </div>
-<div class="text-[11px] font-mono tracking-wider text-gray-500 sm:text-right shrink-0 pl-4 sm:pl-0">
-${item.date || '—'}
-            </div>
-`;
-
-                    container.appendChild(row);
-                });
-            }
-
             // --- ACCOLADE ENGINE ---
             async function fetchAwardsCMS() {
                 try {
@@ -789,7 +758,8 @@ ${item.date || '—'}
                         `<p class="w-full text-center text-red-400 py-6 text-sm">Failed to sync accolade database.</p>`;
                 }
             }
-
+            
+            // ACCOLADE ITEM GENERATOR
             function renderAwardsList(awardsItems) {
                 const container = document.getElementById('awards-list');
                 if (!container) return;
@@ -828,6 +798,7 @@ ${item.date || '—'}
                 });
             }
 
+            // POP-OUT VIDEO MODAL - OPEN
             function openModal(url) {
                 const modal = document.getElementById('video-modal');
                 const player = document.getElementById('modal-player');
@@ -852,9 +823,9 @@ ${item.date || '—'}
                     document.getElementById('modal-position').innerText = Array.isArray(videoItem.position) 
                         ? videoItem.position.join(' / ') 
                         : (videoItem.position || '');
-                        
-                    document.getElementById('modal-date').innerText = videoItem.longDate || ''; // Column B
-                    document.getElementById('modal-desc').innerText = videoItem.description || ''; // Column F
+
+                    document.getElementById('modal-date').innerText = videoItem.longDate || '';
+                    document.getElementById('modal-desc').innerText = videoItem.description || '';
 
                     const awardsContainer = document.getElementById('modal-awards-container');
                     if (videoItem.awards && videoItem.awards.trim() !== '') {
@@ -895,6 +866,7 @@ ${item.date || '—'}
                 }
             }
 
+            // POP-OUT VIDEO MODAL - CLOSE
             function closeModal() {
                 const modal = document.getElementById('video-modal');
                 const player = document.getElementById('modal-player');
@@ -908,55 +880,6 @@ ${item.date || '—'}
                     closeModal();
                 }
             });
-
-            function openModalByIndex(globalIndex) {
-                const videoItem = filteredVideoDataResume[globalIndex];
-                if (!videoItem) return;
-
-                const modal = document.getElementById('video-modal');
-                const player = document.getElementById('modal-player');
-
-                let embedUrl = videoItem.url;
-                if (embedUrl.includes('youtube.com/watch?v=')) {
-                    embedUrl = embedUrl.replace('watch?v=', 'embed/');
-                } else if (embedUrl.includes('youtu.be/')) {
-                    embedUrl = embedUrl.replace('youtu.be/', 'youtube.com/embed/');
-                }
-
-                player.src = embedUrl;
-                document.getElementById('modal-title').innerText = videoItem.title || 'Insert Project Name';
-                document.getElementById('modal-company').innerText = videoItem.company || 'Production Company';
-
-                const posContainer = document.getElementById('modal-position');
-                posContainer.innerHTML = '';
-                if (videoItem.positions && videoItem.positions.length > 0) {
-                    videoItem.positions.forEach(t => {
-                        if (t && t.trim()) {
-                            const chip = document.createElement('span');
-                            chip.className = 'font-semibold text-gray-500 border border-gray-800/40 rounded-md';
-                            tagContainer.appendChild(chip);
-                        }
-                    });
-                }
-                
-                document.getElementById('modal-desc').innerText = videoItem.description || 'Project Description';
-
-                const tagContainer = document.getElementById('modal-tags');
-                tagContainer.innerHTML = '';
-                if (videoItem.tags && videoItem.tags.length > 0) {
-                    videoItem.tags.forEach(t => {
-                        if (t && t.trim()) {
-                            const chip = document.createElement('span');
-                            chip.className = 'text-[9px] font-semibold text-gray-500 bg-gray-900/60 px-2 py-0.5 border border-gray-800/40 rounded';
-                            chip.innerText = `#${t.trim()}`;
-                            tagContainer.appendChild(chip);
-                        }
-                    });
-                }
-
-                modal.classList.remove('hidden');
-                document.body.classList.add('overflow-hidden');
-            }
 
             // --- CAROUSEL LOOPS ---
             function moveCarousel(dir) {
