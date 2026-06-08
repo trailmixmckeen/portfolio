@@ -467,18 +467,27 @@
                 }
             }
 
-            // EXTRACT VIDEO YOUTUBE ID
-            function getYouTubeThumbnail(url) {
-                let videoId = null;
+            // MULTI-PLATFORM THUMBNAIL EXTRACT
+            function getMediaThumbnail(url) {
+                if (!url) return '';
+                
+                // YOUTUBE TRACKER
+                let youtubeId = null;
                 if (url.includes('youtube.com/watch?v=')) {
                     const urlParams = new URLSearchParams(url.split('?')[1]);
-                    videoId = urlParams.get('v');
+                    youtubeId = urlParams.get('v');
                 } else if (url.includes('youtu.be/')) {
-                    videoId = url.split('youtu.be/')[1]?.split('?')[0];
+                    youtubeId = url.split('youtu.be/')[1]?.split('?')[0];
                 } else if (url.includes('youtube.com/embed/')) {
-                    videoId = url.split('embed/')[1]?.split('?')[0];
+                    youtubeId = url.split('embed/')[1]?.split('?')[0];
                 }
-                    return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
+                
+                if (youtubeId) {
+                    return `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
+                }
+                
+                // VIMEO FALLBACK
+                return '';
             }
 
             // BUILD VIDEO FILTER DROPDOWNS
@@ -571,19 +580,19 @@
 
                 viewableItems.forEach((video) => {
                     const card = document.createElement('div');
-
                     card.className = 'video-card bg-gray-900 border border-gray-800/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col cursor-pointer group';
-
                     card.setAttribute('onclick', `openModal('${video.videoUrl}')`);
 
-                    const ytThumbnail = getYouTubeThumbnail(video.videoUrl);
-                    const finalSrc = video.customThumbnail ? video.customThumbnail : ytThumbnail;
+                    const defaultThumbnail = getMediaThumbnail(video.videoUrl);
+                    
+                    const hasCustomImg = video.customThumbnail && video.customThumbnail.trim() !== '';
+                    const finalSrc = hasCustomImg ? video.customThumbnail : (defaultThumbnail || 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="%234b5563" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="15" x="2" y="3" rx="2"/><path d="m10 11 5 3-5 3v-6Z"/></svg>');
 
                     card.innerHTML = `
-                        <div class="relative aspect-video bg-gray-950 overflow-hidden shrink-0">
+                        <div class="relative aspect-video bg-[#060911] overflow-hidden shrink-0 flex items-center justify-center">
                             <img src="${finalSrc}" alt="${video.title}" 
-                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80" 
-                                 onerror="this.onerror=null; this.src='${ytThumbnail}';">
+                                 class="w-full h-full ${hasCustomImg || defaultThumbnail ? 'object-cover' : 'object-center w-16 h-16 opacity-40'} group-hover:scale-105 transition duration-500 opacity-80" 
+                                 onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="%234b5563" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="15" x="2" y="3" rx="2"/><path d="m10 11 5 3-5 3v-6Z"/></svg>';">
                             <div class="play-overlay absolute inset-0 bg-black/40 opacity-0 transition duration-300 flex items-center justify-center">
                                 <div class="bg-blue-600 p-3.5 rounded-full shadow-lg transform group-hover:scale-110 transition duration-300">
                                     <i data-lucide="play" class="w-5 h-5 text-white fill-current"></i>
@@ -796,7 +805,7 @@ ${item.date || '—'}
                 });
             }
 
-            // POP-OUT VIDEO MODAL - OPEN
+            // POP-OUT VIDEO MODAL - OPEN (YOUTUBE & VIMEO HYBRID)
             function openModal(url) {
                 const modal = document.getElementById('video-modal');
                 const player = document.getElementById('modal-player');
@@ -806,6 +815,12 @@ ${item.date || '—'}
                     embedUrl = url.replace('watch?v=', 'embed/');
                 } else if (url.includes('youtu.be/')) {
                     embedUrl = url.replace('youtu.be/', 'youtube.com/embed/');
+                } else if (url.includes('vimeo.com/')) {
+                    const vimeoIdMatch = url.match(/(?:videos?\/|channels\/(?:\w+\/)+|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)\d+/);
+                    if (vimeoIdMatch) {
+                        const vimeoId = vimeoIdMatch[0].allReplace ? vimeoIdMatch[0] : vimeoIdMatch[0].split('/').pop();
+                        embedUrl = `https://player.vimeo.com/video/${vimeoId}?autoplay=1`;
+                    }
                 }
 
                 player.src = embedUrl;
@@ -847,13 +862,13 @@ ${item.date || '—'}
                         });
                     }
                 } else {
-                    document.getElementById('modal-title').innerText = "";
-                    document.getElementById('modal-company').innerText = "";
-                    document.getElementById('modal-position').innerText = "";
-                    document.getElementById('modal-date').innerText = "";
-                    document.getElementById('modal-desc').innerText = "";
-                    document.getElementById('modal-awards-container').classList.add('hidden');
-                    document.getElementById('modal-tags').innerHTML = "";
+                    document.getElementById('modal-title').innerText = ""; // Column A
+                    document.getElementById('modal-company').innerText = ""; // Column D
+                    document.getElementById('modal-position').innerText = ""; // Column E
+                    document.getElementById('modal-date').innerText = ""; // Column B
+                    document.getElementById('modal-desc').innerText = ""; // Column F
+                    document.getElementById('modal-awards-container').classList.add('hidden'); // Column H
+                    document.getElementById('modal-tags').innerHTML = ""; // Column I
                 }
 
                 modal.classList.remove('hidden');
