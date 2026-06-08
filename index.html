@@ -441,6 +441,7 @@
 
                     rawVideoData = rows.map(row => {
                         let tagsArray = [];
+                        let jobArray = [];
                         if (row[8]) {
                             try {
                                 tagsArray = JSON.parse(row[8].replace(/""/g, '"'));
@@ -459,7 +460,7 @@
                             title: row[0] || 'Untitled Project', // Column A
                             longDate: row[1] || '', // Column B
                             company: row[3] || 'Independent', // Column D
-                            position: jobArray, // Column E
+                            position: row[4], // Column E
                             videoUrl: row[6] || '', // Column G
                             tags: tagsArray, // Column I
                             customThumbnail: row[9] || '', // Column J
