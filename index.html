@@ -485,7 +485,9 @@
 
                 rawVideoData.forEach(item => {
                     if (item.company) companies.add(item.company.trim());
-                    if (item.position) positions.add(item.position.trim());
+                    if (item.position) {
+                        item.positions.forEach(t => positions.add(t.trim()));
+                    }
                     if (item.tags) {
                         item.tags.forEach(t => tags.add(t.trim()));
                     }
@@ -523,7 +525,7 @@
 
                 filteredVideoData = rawVideoData.filter(item => {
                     const matchComp = (comp === 'All Companies' || item.company === comp);
-                    const matchPos = (pos === 'All Positions' || item.position === pos);
+                    const matchPos = (pos === 'All Positions' || item.positions.includes(pos));
                     const matchTag = (tag === 'All Tags' || item.tags.includes(tag));
                     const matchSearch = (item.title.toLowerCase().includes(search));
                     return matchComp && matchPos && matchTag && matchSearch;
@@ -555,7 +557,7 @@
 
                 viewableItems.forEach((video) => {
                     const card = document.createElement('div');
-                    // FIXED: Removed hard aspect-ratio crop from the card container wrapper
+
                     card.className = 'video-card bg-gray-900 border border-gray-800/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col cursor-pointer group';
 
                     card.setAttribute('onclick', `openModal('${video.videoUrl}')`);
@@ -578,7 +580,7 @@
                             <div>
                                 <div class="flex items-center gap-2 mb-2 flex-wrap">
                                     <span class="text-[10px] font-bold text-blue-500 uppercase tracking-wider">${video.company}</span>
-                                    <span class="text-[9px] text-gray-500 font-medium bg-gray-950 px-1.5 py-0.5 rounded border border-gray-800/50">${video.position}</span>
+                                    <span class="text-[9px] text-gray-500 font-medium bg-gray-950 px-1.5 py-0.5 rounded border border-gray-800/50">${video.positions.map().join('')}</span>
                                 </div>
                                 <h3 class="text-base font-bold text-white line-clamp-2 leading-snug group-hover:text-blue-400 transition mb-1">${video.title}</h3>
                                 <p class="text-xs text-gray-400 font-medium tracking-wide mb-3">${video.longDate || ''}</p>
@@ -834,7 +836,19 @@ ${item.date || '—'}
                 if (videoItem) {
                     document.getElementById('modal-title').innerText = videoItem.title || ''; // Column A
                     document.getElementById('modal-company').innerText = videoItem.company || ''; // Column D
-                    document.getElementById('modal-position').innerText = videoItem.position || ''; // Column E
+
+                    const posContainer = document.getElementById('modal-position');
+                    posContainer.innerHTML = '';
+                    if (videoItem.positions && videoItem.positions.length > 0) {
+                        videoItem.positions.forEach(t => {
+                            if (t && t.trim()) {
+                                const chip = document.createElement('span');
+                                chip.className = 'font-medium text-gray-400 border border-gray-800 rounded-md';
+                                tagContainer.appendChild(chip);
+                            }
+                        });
+                    }
+                    
                     document.getElementById('modal-date').innerText = videoItem.longDate || ''; // Column B
                     document.getElementById('modal-desc').innerText = videoItem.description || ''; // Column F
 
@@ -908,7 +922,19 @@ ${item.date || '—'}
                 player.src = embedUrl;
                 document.getElementById('modal-title').innerText = videoItem.title || 'Insert Project Name';
                 document.getElementById('modal-company').innerText = videoItem.company || 'Production Company';
-                document.getElementById('modal-position').innerText = videoItem.position || 'Production Position';
+
+                const posContainer = document.getElementById('modal-position');
+                posContainer.innerHTML = '';
+                if (videoItem.positions && videoItem.positions.length > 0) {
+                    videoItem.positions.forEach(t => {
+                        if (t && t.trim()) {
+                            const chip = document.createElement('span');
+                            chip.className = 'font-semibold text-gray-500 border border-gray-800/40 rounded-md';
+                            tagContainer.appendChild(chip);
+                        }
+                    });
+                }
+                
                 document.getElementById('modal-desc').innerText = videoItem.description || 'Project Description';
 
                 const tagContainer = document.getElementById('modal-tags');
