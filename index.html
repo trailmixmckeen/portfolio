@@ -204,8 +204,8 @@
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
 
-                <div class="w-full lg:w-[62%] bg-black flex items-center justify-center aspect-video lg:aspect-auto">
-                    <iframe id="modal-player" class="w-full h-full min-h-[260px] md:min-h-[380px] lg:min-h-[520px]" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <div class="w-full lg:w-[62%] bg-black flex items-center justify-center aspect-video lg:aspect-video">
+                    <iframe id="modal-player" class="w-full h-full" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
                 </div>
 
                 <div class="w-full lg:w-[38%] p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-gray-800/80 overflow-y-auto flex flex-col justify-between max-h-[45vh] lg:max-h-[520px] no-scrollbar">
@@ -550,8 +550,8 @@
 
                 viewableItems.forEach((video) => {
                     const card = document.createElement('div');
-
-                    card.className = 'video-card bg-gray-900 border border-gray-800/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col cursor-pointer group aspect-[16/10.5]';
+                    // FIXED: Removed hard aspect-ratio crop from the card container wrapper
+                    card.className = 'video-card bg-gray-900 border border-gray-800/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col cursor-pointer group';
 
                     card.setAttribute('onclick', `openModal('${video.videoUrl}')`);
 
@@ -569,17 +569,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-4 flex flex-col flex-grow justify-between min-h-0">
-                            <div class="min-h-0 flex flex-col">
-                                <div class="flex items-center gap-2 mb-1 flex-wrap shrink-0">
+                        <div class="p-5 flex flex-col flex-grow justify-between">
+                            <div>
+                                <div class="flex items-center gap-2 mb-2 flex-wrap">
                                     <span class="text-[10px] font-bold text-blue-500 uppercase tracking-wider">${video.company}</span>
                                     <span class="text-[9px] text-gray-500 font-medium bg-gray-950 px-1.5 py-0.5 rounded border border-gray-800/50">${video.position}</span>
                                 </div>
-                                <h3 class="text-sm font-bold text-white line-clamp-1 leading-snug group-hover:text-blue-400 transition mb-1 shrink-0">${video.title}</h3>
-                                <p class="text-[11px] text-gray-400 font-medium tracking-wide mb-2 shrink-0">${video.longDate || ''}</p>
+                                <h3 class="text-base font-bold text-white line-clamp-2 leading-snug group-hover:text-blue-400 transition mb-1">${video.title}</h3>
+                                <p class="text-xs text-gray-400 font-medium tracking-wide mb-3">${video.longDate || ''}</p>
                             </div>
-                            <div class="flex flex-wrap gap-1 mt-auto pt-1 overflow-hidden h-[22px]">
-                                ${video.tags.slice(0, 3).map(t => `<span class="text-[9px] bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full font-medium whitespace-nowrap">#${t}</span>`).join('')}
+                            <div class="flex flex-wrap gap-1 mt-auto pt-2 border-t border-gray-800/40">
+                                ${video.tags.map(t => `<span class="text-[9px] bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full font-medium">#${t}</span>`).join('')}
                             </div>
                         </div>
                     `;
@@ -596,6 +596,10 @@
                     document.getElementById('btn-last').disabled = (currentPage === pagesTotal);
                 } else {
                     document.getElementById('pagination-controls').classList.add('hidden');
+                }
+                
+                if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                    lucide.createIcons();
                 }
             }
 
