@@ -485,9 +485,13 @@
 
                 rawVideoData.forEach(item => {
                     if (item.company) companies.add(item.company.trim());
-                    if (item.positions) {
-                        item.positions.forEach(t => positions.add(t.trim()));
+                
+                    if (item.position && Array.isArray(item.position)) {
+                        item.position.forEach(p => {
+                            if (p && p.trim()) positions.add(p.trim());
+                        });
                     }
+                
                     if (item.tags) {
                         item.tags.forEach(t => tags.add(t.trim()));
                     }
@@ -517,18 +521,24 @@
                 });
             }
 
-            function applyFilters() {
-                const comp = document.getElementById('filter-company').value;
-                const pos = document.getElementById('filter-position').value;
-                const tag = document.getElementById('filter-tag').value;
-                const search = document.getElementById('search-input').value.toLowerCase().trim();
+            function filterVideos() {
+                const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+                const selectedCompany = document.getElementById('filter-company').value;
+                const selectedPosition = document.getElementById('filter-position').value;
+                const selectedTag = document.getElementById('filter-tag').value;
 
                 filteredVideoData = rawVideoData.filter(item => {
-                    const matchComp = (comp === 'All Companies' || item.company === comp);
-                    const matchPos = (pos === 'All Positions' || item.positions.includes(pos));
-                    const matchTag = (tag === 'All Tags' || item.tags.includes(tag));
-                    const matchSearch = (item.title.toLowerCase().includes(search));
-                    return matchComp && matchPos && matchTag && matchSearch;
+                    const matchesSearch = item.title.toLowerCase().includes(searchVal) || 
+                                         (item.description && item.description.toLowerCase().includes(searchVal));
+                
+                    const matchesCompany = (selectedCompany === 'All Companies' || item.company === selectedCompany);
+                
+                    const matchesPosition = (selectedPosition === 'All Positions' || 
+                                             (Array.isArray(item.position) && item.position.includes(selectedPosition)));
+                
+                    const matchesTag = (selectedTag === 'All Tags' || item.tags.includes(selectedTag));
+
+                    return matchesSearch && matchesCompany && matchesPosition && matchesTag;
                 });
 
                 displayVideoPage(1);
@@ -580,7 +590,9 @@
                             <div>
                                 <div class="flex items-center gap-2 mb-2 flex-wrap">
                                     <span class="text-[10px] font-bold text-blue-500 uppercase tracking-wider">${video.company}</span>
-                                    <span class="text-[9px] text-gray-500 font-medium bg-gray-950 px-1.5 py-0.5 rounded border border-gray-800/50">${video.positions.map(t => `<span class="rounded-full font-medium">${t}</span>`).join('')}</span>
+                                    <span class="text-[9px] text-gray-400 font-medium bg-gray-950 px-1.5 py-0.5 rounded border border-gray-800/50">
+                                        ${Array.isArray(video.position) ? video.position.join(' / ') : video.position}
+                                    </span>
                                 </div>
                                 <h3 class="text-base font-bold text-white line-clamp-2 leading-snug group-hover:text-blue-400 transition mb-1">${video.title}</h3>
                                 <p class="text-xs text-gray-400 font-medium tracking-wide mb-3">${video.longDate || ''}</p>
@@ -834,21 +846,13 @@ ${item.date || '—'}
                 );
 
                 if (videoItem) {
-                    document.getElementById('modal-title').innerText = videoItem.title || ''; // Column A
-                    document.getElementById('modal-company').innerText = videoItem.company || ''; // Column D
-
-                    const posContainer = document.getElementById('modal-position');
-                    posContainer.innerHTML = '';
-                    if (videoItem.positions && videoItem.positions.length > 0) {
-                        videoItem.positions.forEach(t => {
-                            if (t && t.trim()) {
-                                const chip = document.createElement('span');
-                                chip.className = 'font-medium text-gray-400 border border-gray-800 rounded-md';
-                                tagContainer.appendChild(chip);
-                            }
-                        });
-                    }
+                    document.getElementById('modal-title').innerText = videoItem.title || '';
+                    document.getElementById('modal-company').innerText = videoItem.company || '';
                     
+                    document.getElementById('modal-position').innerText = Array.isArray(videoItem.position) 
+                        ? videoItem.position.join(' / ') 
+                        : (videoItem.position || '');
+                        
                     document.getElementById('modal-date').innerText = videoItem.longDate || ''; // Column B
                     document.getElementById('modal-desc').innerText = videoItem.description || ''; // Column F
 
