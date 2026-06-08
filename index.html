@@ -485,7 +485,7 @@
 
                 rawVideoData.forEach(item => {
                     if (item.company) companies.add(item.company.trim());
-                    if (item.position) {
+                    if (item.positions) {
                         item.positions.forEach(t => positions.add(t.trim()));
                     }
                     if (item.tags) {
