@@ -29,7 +29,7 @@
                     <a href="#resume" class="hover:text-white transition">Resume</a>
                     <a href="#videos" class="hover:text-white transition">Videos</a>
                     <a href="#employers" class="hover:text-white transition">Employers</a>
-                    <a href="https://www.linkedin.com/in/alexmckeen/" class="hover:text-white transition">Contact</a>
+                    <a href="https://www.linkedin.com/in/alexmckeen/" class="hover:text-white transition">LinkedIn</a>
                 </div>
             </div>
         </nav>
@@ -245,13 +245,13 @@
 
         <script>
             
-            // DATA INGESTION LINKS
+            // --- DATA INGESTION LINKS ---
             const VIDEO_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=1842671833&single=true&output=csv';
             const EMPLOYER_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=2101605290&single=true&output=csv';
             const RESUME_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=10390491&single=true&output=csv';
             const AWARDS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5QqjKarvnE4EoL1tZFc0gx2Ps2C3adRo2y2MDN0u_mlDDh7dO7y_mhYdaFLkTDt8wW8WIrnlF3h1Q/pub?gid=829253189&single=true&output=csv';
 
-            // MASTER APP INITIALIZER
+            // --- MASTER APP INITIALIZER ---
             async function initApplication() {
                 try {
                     await Promise.all([
@@ -265,7 +265,7 @@
                 }
             }
 
-            // CSV PARSE
+            // --- CSV PARSE ---
             function parseCSVLines(text) {
                 const lines = [];
                 let row = [];
@@ -303,7 +303,7 @@
                 return lines;
             }
 
-            // RESUME CONSTANTS
+            // --- RESUME CONSTANTS ---
             let currentCarouselIndexResume = 0;
             let currentPageResume = 1;
             const itemsPerPageResume = 25;
@@ -311,7 +311,7 @@
             let currentResumeSlideIndex = 0;
             let totalResumeSlidesMax = 0;
 
-            // RESUME DATA ENGINE
+            // --- RESUME DATA ENGINE ---
             async function fetchResumeCMS() {
                 try {
                     const resumeResponse = await fetch(RESUME_CSV_URL);
@@ -340,50 +340,51 @@
                 }
             }
 
-            // RESUME ITEM GENERATOR
-            function renderIsolatedResumeCarousel(targetResumeItems) {
-                const resumeTrackDOM = document.getElementById('resume-track');
-                const controlsContainer = document.getElementById('resume-controls');
-                if (!resumeTrackDOM) return;
+            // --- RESUME ITEM GENERATOR ---
+            function renderIsolatedResumeCarousel(resumeItems) {
+                const track = document.getElementById('carousel-track');
+                if (!track) return;
+                track.innerHTML = '';
 
-                resumeTrackDOM.innerHTML = '';
-                currentResumeSlideIndex = 0;
-                resumeTrackDOM.style.transform = 'translateX(0px)';
-
-                if (targetResumeItems.length === 0) {
-                    resumeTrackDOM.innerHTML = `<p class="w-full text-center text-gray-500 py-6">No experience items currently listed.</p>`;
-                    if (controlsContainer) controlsContainer.classList.add('hidden');
+                if (!resumeItems || resumeItems.length === 0) {
+                    track.innerHTML = `<div class="w-full shrink-0 p-8 text-center text-gray-500 italic">No job descriptions indexed.</div>`;
                     return;
                 }
 
-                targetResumeItems.forEach(singleResumeItem => {
-                    const resumeCardElement = document.createElement('div');
-                    resumeCardElement.className = 'w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shrink-0 bg-gray-900/60 border border-gray-800 p-6 rounded-xl flex flex-col justify-between transition duration-300 hover:border-gray-700/60';
+                resumeItems.forEach((item, index) => {
+                    const slide = document.createElement('div');
+                    slide.className = 'w-full shrink-0 px-1';
 
-                    const locationLabelMarkup = singleResumeItem.resumeCity ? ` &bull; ${singleResumeItem.resumeCity}` : '';
+                    const borderClass = index === 0 
+                        ? 'border-blue-500/80 shadow-[0_0_15px_rgba(59,130,246,0.15)] bg-blue-950/10' 
+                        : 'border-gray-800/60 bg-gray-900/20';
 
-                    resumeCardElement.innerHTML = `
-<div>
-<span class="text-xs font-semibold text-blue-500 uppercase tracking-widest block mb-2">${singleResumeItem.resumeDates}</span>
-<h3 class="text-xl font-bold text-white mb-1">${singleResumeItem.resumeTitle}</h3>
-<p class="text-gray-400 text-sm font-medium mb-4">${singleResumeItem.resumeCompany}${locationLabelMarkup}</p>
-<p class="text-sm text-gray-400 leading-relaxed">${singleResumeItem.resumeDesc}</p>
-            </div>
-`;
-                    resumeTrackDOM.appendChild(resumeCardElement);
+                    const currentBadge = index === 0 
+                        ? `<span class="text-[10px] bg-blue-500/20 text-blue-400 font-bold px-2 py-0.5 rounded-md border border-blue-500/30 uppercase tracking-wider ml-2">Current</span>` 
+                        : '';
+
+                    slide.innerHTML = `
+                        <div class="p-6 lg:p-8 rounded-2xl border ${borderClass} transition duration-300 backdrop-blur-sm">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                                <div>
+                                    <div class="flex items-center flex-wrap gap-1">
+                                        <h3 class="text-lg font-bold text-white tracking-tight">${item.company || 'Company'}</h3>
+                                        ${currentBadge}
+                                    </div>
+                                    <p class="text-sm font-semibold text-blue-400 mt-0.5">${item.role || 'Position'}</p>
+                                </div>
+                                <div class="text-xs font-mono text-gray-500 bg-gray-950/40 px-2.5 py-1 rounded-md border border-gray-900 self-start sm:self-center">
+                                    ${item.duration || 'Timeline'}
+                                </div>
+                            </div>
+                            <p class="text-[13px] text-gray-400 leading-relaxed font-normal">${item.summary || 'Job Details'}</p>
+                        </div>
+                    `;
+                    track.appendChild(slide);
                 });
-
-                totalResumeSlidesMax = targetResumeItems.length;
-                if (totalResumeSlidesMax > 1) {
-                    if (controlsContainer) controlsContainer.classList.remove('hidden');
-                }
-
-                if (window.lucide && typeof window.lucide.createIcons === 'function') {
-                    lucide.createIcons();
-                }
             }
 
-            // RESUME NAVIGATION 
+            // --- RESUME NAVIGATION --- 
             function moveResumeCarousel(direction) {
                 const track = document.getElementById('resume-track');
                 if (!track || totalResumeSlidesMax === 0) return;
@@ -412,7 +413,7 @@
                 track.style.transform = `translateX(-${currentResumeSlideIndex * cardWidthWithGap}px)`;
             }
 
-            // VIDEO CONSTANTS
+            // --- VIDEOS CONSTANTS ---
             let rawVideoData = [];
             let filteredVideoData = [];
             let currentCarouselIndex = 0;
@@ -449,7 +450,7 @@
                             title: row[0] || 'Untitled Project', // Column A
                             longDate: row[1] || '', // Column B
                             company: row[3] || 'Independent', // Column D
-                            position: jobArray, // Column E (FIXED: Saved as parsed array!)
+                            position: jobArray, // Column E
                             videoUrl: row[6] || '', // Column G
                             tags: tagsArray, // Column I
                             customThumbnail: row[9] || '', // Column J
@@ -460,7 +461,6 @@
 
                     filteredVideoData = [...rawVideoData];
                     
-                    // FIXED: We now build filter options conditionally depending on selection states
                     buildVideoFilterDropdowns(); 
                     displayVideoPage(1);
                 } catch (err) {
@@ -469,7 +469,7 @@
                 }
             }
 
-            // MULTI-PLATFORM THUMBNAIL ENGINE
+            // --- MULTI-PLATFORM THUMBNAIL ENGINE ---
             function getMediaThumbnail(url) {
                 if (!url) return null;
                 
@@ -490,36 +490,31 @@
                 return null;
             }
 
-            // BUILD INTERCONNECTED CROSS-DEPENDENT FILTER DROPDOWNS
+            // --- CROSS-DEPENDENT FILTER DROPDOWNS ---
             function buildVideoFilterDropdowns() {
                 const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
                 const selectedCompany = document.getElementById('filter-company')?.value || 'All Companies';
                 const selectedPosition = document.getElementById('filter-position')?.value || 'All Positions';
                 const selectedTag = document.getElementById('filter-tag')?.value || 'All Tags';
 
-                // Helper to evaluate item match condition against individual filter vectors
                 const matchSearch = item => item.title.toLowerCase().includes(searchVal) || (item.description && item.description.toLowerCase().includes(searchVal));
                 const matchCompany = item => selectedCompany === 'All Companies' || item.company === selectedCompany;
                 const matchPosition = item => selectedPosition === 'All Positions' || (Array.isArray(item.position) && item.position.includes(selectedPosition));
                 const matchTag = item => selectedTag === 'All Tags' || item.tags.includes(selectedTag);
 
-                // Isolate unique options available for each dropdown based on the OTHER filters' criteria
                 const availableCompanies = new Set();
                 const availablePositions = new Set();
                 const availableTags = new Set();
 
-                rawVideoData.forEach(item => {
-                    // For Company list: check if item matches search + current position selection + current tag selection
+                rawVideoData.forEach(item => { 
                     if (matchSearch(item) && matchPosition(item) && matchTag(item)) {
                         if (item.company) availableCompanies.add(item.company.trim());
                     }
-                    // For Position list: check if item matches search + company selection + tag selection
                     if (matchSearch(item) && matchCompany(item) && matchTag(item)) {
                         if (item.position && Array.isArray(item.position)) {
                             item.position.forEach(p => p && p.trim() && availablePositions.add(p.trim()));
                         }
                     }
-                    // For Tag list: check if item matches search + company selection + position selection
                     if (matchSearch(item) && matchCompany(item) && matchPosition(item)) {
                         if (item.tags) {
                             item.tags.forEach(t => t && t.trim() && availableTags.add(t.trim()));
@@ -527,7 +522,6 @@
                     }
                 });
 
-                // Sort lists alphabetically
                 const sortedCompanies = Array.from(availableCompanies).sort();
                 const sortedPositions = Array.from(availablePositions).sort();
                 const sortedTags = Array.from(availableTags).sort();
@@ -536,13 +530,12 @@
                 sortedPositions.unshift('All Positions');
                 sortedTags.unshift('All Tags');
 
-                // Populate with lock preservation so choices don't disappear while clicked
                 populateDropdownPreservingSelection('filter-company', sortedCompanies, selectedCompany);
                 populateDropdownPreservingSelection('filter-position', sortedPositions, selectedPosition);
                 populateDropdownPreservingSelection('filter-tag', sortedTags, selectedTag);
             }
 
-            // HELPER: Rebuilds options array but locks onto previous choice if it's still available
+            // --- LOCK DROPDOWN OPTION ARRAYS ---
             function populateDropdownPreservingSelection(id, optionArray, previouslySelectedValue) {
                 const dropdown = document.getElementById(id);
                 if (!dropdown) return;
@@ -555,7 +548,6 @@
                     dropdown.appendChild(el);
                 });
 
-                // If the selected choice remains a valid cross-filter match option, keep it locked on screen
                 if (optionArray.includes(previouslySelectedValue)) {
                     dropdown.value = previouslySelectedValue;
                 } else {
@@ -563,7 +555,7 @@
                 }
             }
 
-            // FILTER VIDEO AND RECALCULATE LOGICAL SLICES
+            // --- FILTER VIDEOS ---
             function filterVideos() {
                 const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
                 const selectedCompany = document.getElementById('filter-company').value;
@@ -584,12 +576,11 @@
                     return matchesSearch && matchesCompany && matchesPosition && matchesTag;
                 });
 
-                // FIXED: Recalculate which options are left based on this choice matrix!
                 buildVideoFilterDropdowns(); 
-                displayVideoPage(1);
+                displayVideoPage(1);            
             }
 
-            // VIDEO GRID CARD GENERATION ENGINE
+            // --- VIDEOS GENERATION ENGINE ---
             function displayVideoPage(page) {
                 currentPage = page;
                 const grid = document.getElementById('video-grid');
@@ -680,7 +671,7 @@
                 }
             }
 
-            // VIDEO PAGE NAVIGATION
+            // --- VIDEO PAGE NAVIGATION - PAGE CHANGE ---
             function changePage(dir) {
                 const target = currentPage + dir;
                 const maxPages = Math.ceil(filteredVideoData.length / itemsPerPage);
@@ -689,13 +680,13 @@
                 }
             }
 
-            // VIDEO PAGE NAVIGATION
+            // --- VIDEO PAGE NAVIGATION - GO TO PAGE ---
             function goToPage(pageTarget) {
                 displayVideoPage(pageTarget);
                 document.getElementById('videos').scrollIntoView({ behavior: 'smooth' });
             }
 
-            // VIDEO PAGE NAVIGATION
+            // --- VIDEO PAGE NAVIGATION - FIRST AND LAST ---
             function goToBoundaryLast() {
                 const maxPages = Math.ceil(filteredVideoData.length / itemsPerPage) || 1;
                 goToPage(maxPages);
@@ -733,7 +724,7 @@
                 }
             }
 
-            // EMPLOYER ITEM GENERATOR
+            // --- EMPLOYER ITEM GENERATOR ---
             function renderEmployersGrid(items) {
                 const grid = document.getElementById('employers-grid');
                 if (!grid) return;
@@ -811,7 +802,7 @@ ${socialHTML}
                 }
             }
             
-            // ACCOLADE ITEM GENERATOR
+            // --- ACCOLADE ITEM GENERATOR ---
             function renderAwardsList(awardsItems) {
                 const container = document.getElementById('awards-list');
                 if (!container) return;
@@ -850,7 +841,7 @@ ${item.date || '—'}
                 });
             }
 
-            // POP-OUT VIDEO MODAL - OPEN (YOUTUBE & VIMEO HYBRID)
+            // --- POP-OUT VIDEO MODAL - OPEN ---
             function openModal(url) {
                 const modal = document.getElementById('video-modal');
                 const player = document.getElementById('modal-player');
@@ -924,7 +915,7 @@ ${item.date || '—'}
                 }
             }
 
-            // POP-OUT VIDEO MODAL - CLOSE
+            // --- POP-OUT VIDEO MODAL - CLOSE ---
             function closeModal() {
                 const modal = document.getElementById('video-modal');
                 const player = document.getElementById('modal-player');
