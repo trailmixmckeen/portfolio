@@ -449,7 +449,7 @@
                             title: row[0] || 'Untitled Project', // Column A
                             longDate: row[1] || '', // Column B
                             company: row[3] || 'Independent', // Column D
-                            position: jobArray, // Column E
+                            position: jobArray, // Column E (FIXED: Saved as parsed array!)
                             videoUrl: row[6] || '', // Column G
                             tags: tagsArray, // Column I
                             customThumbnail: row[9] || '', // Column J
@@ -459,7 +459,9 @@
                     }).filter(v => v.title !== 'Untitled Project' || v.videoUrl !== '');
 
                     filteredVideoData = [...rawVideoData];
-                    buildVideoFilterDropdowns();
+                    
+                    // FIXED: We now build filter options conditionally depending on selection states
+                    buildVideoFilterDropdowns(); 
                     displayVideoPage(1);
                 } catch (err) {
                     console.error("Video processing thread fault:", err);
@@ -467,7 +469,7 @@
                 }
             }
 
-            // MULTI-PLATFORM THUMBNAIL EXTRACT
+            // MULTI-PLATFORM THUMBNAIL ENGINE
             function getMediaThumbnail(url) {
                 if (!url) return null;
                 
@@ -488,42 +490,63 @@
                 return null;
             }
 
-            // BUILD VIDEO FILTER DROPDOWNS
+            // BUILD INTERCONNECTED CROSS-DEPENDENT FILTER DROPDOWNS
             function buildVideoFilterDropdowns() {
-                const companies = new Set();
-                const positions = new Set();
-                const tags = new Set();
+                const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+                const selectedCompany = document.getElementById('filter-company')?.value || 'All Companies';
+                const selectedPosition = document.getElementById('filter-position')?.value || 'All Positions';
+                const selectedTag = document.getElementById('filter-tag')?.value || 'All Tags';
+
+                // Helper to evaluate item match condition against individual filter vectors
+                const matchSearch = item => item.title.toLowerCase().includes(searchVal) || (item.description && item.description.toLowerCase().includes(searchVal));
+                const matchCompany = item => selectedCompany === 'All Companies' || item.company === selectedCompany;
+                const matchPosition = item => selectedPosition === 'All Positions' || (Array.isArray(item.position) && item.position.includes(selectedPosition));
+                const matchTag = item => selectedTag === 'All Tags' || item.tags.includes(selectedTag);
+
+                // Isolate unique options available for each dropdown based on the OTHER filters' criteria
+                const availableCompanies = new Set();
+                const availablePositions = new Set();
+                const availableTags = new Set();
 
                 rawVideoData.forEach(item => {
-                    if (item.company) companies.add(item.company.trim());
-                
-                    if (item.position && Array.isArray(item.position)) {
-                        item.position.forEach(p => {
-                            if (p && p.trim()) positions.add(p.trim());
-                        });
+                    // For Company list: check if item matches search + current position selection + current tag selection
+                    if (matchSearch(item) && matchPosition(item) && matchTag(item)) {
+                        if (item.company) availableCompanies.add(item.company.trim());
                     }
-                
-                    if (item.tags) {
-                        item.tags.forEach(t => tags.add(t.trim()));
+                    // For Position list: check if item matches search + company selection + tag selection
+                    if (matchSearch(item) && matchCompany(item) && matchTag(item)) {
+                        if (item.position && Array.isArray(item.position)) {
+                            item.position.forEach(p => p && p.trim() && availablePositions.add(p.trim()));
+                        }
+                    }
+                    // For Tag list: check if item matches search + company selection + position selection
+                    if (matchSearch(item) && matchCompany(item) && matchPosition(item)) {
+                        if (item.tags) {
+                            item.tags.forEach(t => t && t.trim() && availableTags.add(t.trim()));
+                        }
                     }
                 });
 
-                const sortedCompanies = Array.from(companies).sort();
-                const sortedPositions = Array.from(positions).sort();
-                const sortedTags = Array.from(tags).sort();
+                // Sort lists alphabetically
+                const sortedCompanies = Array.from(availableCompanies).sort();
+                const sortedPositions = Array.from(availablePositions).sort();
+                const sortedTags = Array.from(availableTags).sort();
 
                 sortedCompanies.unshift('All Companies');
                 sortedPositions.unshift('All Positions');
                 sortedTags.unshift('All Tags');
 
-                populateDropdown('filter-company', sortedCompanies);
-                populateDropdown('filter-position', sortedPositions);
-                populateDropdown('filter-tag', sortedTags);
+                // Populate with lock preservation so choices don't disappear while clicked
+                populateDropdownPreservingSelection('filter-company', sortedCompanies, selectedCompany);
+                populateDropdownPreservingSelection('filter-position', sortedPositions, selectedPosition);
+                populateDropdownPreservingSelection('filter-tag', sortedTags, selectedTag);
             }
 
-            // POPULATE VIDEO DROPDOWNS
-            function populateDropdown(id, optionArray) {
+            // HELPER: Rebuilds options array but locks onto previous choice if it's still available
+            function populateDropdownPreservingSelection(id, optionArray, previouslySelectedValue) {
                 const dropdown = document.getElementById(id);
+                if (!dropdown) return;
+                
                 dropdown.innerHTML = '';
                 optionArray.forEach(val => {
                     const el = document.createElement('option');
@@ -531,9 +554,16 @@
                     el.textContent = val;
                     dropdown.appendChild(el);
                 });
+
+                // If the selected choice remains a valid cross-filter match option, keep it locked on screen
+                if (optionArray.includes(previouslySelectedValue)) {
+                    dropdown.value = previouslySelectedValue;
+                } else {
+                    dropdown.value = optionArray[0]; // Otherwise fallback smoothly to "All"
+                }
             }
 
-            // FILTER VIDEO BASED ON DROPDOWNS
+            // FILTER VIDEO AND RECALCULATE LOGICAL SLICES
             function filterVideos() {
                 const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
                 const selectedCompany = document.getElementById('filter-company').value;
@@ -554,10 +584,12 @@
                     return matchesSearch && matchesCompany && matchesPosition && matchesTag;
                 });
 
+                // FIXED: Recalculate which options are left based on this choice matrix!
+                buildVideoFilterDropdowns(); 
                 displayVideoPage(1);
             }
 
-            // VIDEO ITEM GENERATOR
+            // VIDEO GRID CARD GENERATION ENGINE
             function displayVideoPage(page) {
                 currentPage = page;
                 const grid = document.getElementById('video-grid');
@@ -583,7 +615,6 @@
 
                     const ytThumbnail = getMediaThumbnail(video.videoUrl);
                     const hasCustomImg = video.customThumbnail && video.customThumbnail.trim() !== '';
-                    
                     const finalSrc = hasCustomImg ? video.customThumbnail.trim() : ytThumbnail;
 
                     let thumbnailHTML = '';
@@ -618,7 +649,7 @@
                                 <div class="flex items-center gap-2 mb-2 flex-wrap">
                                     <span class="text-[10px] font-bold text-blue-500 uppercase tracking-wider">${video.company}</span>
                                     <span class="text-[9px] text-gray-500 font-medium bg-gray-950 px-1.5 py-0.5 rounded border border-gray-800/50">
-                                        ${Array.isArray(video.position) ? video.position.join(' / ') : video.position}
+                                        ${Array.isArray(video.position) ? video.position.join(' / ') : video.position.join(' / ')}
                                     </span>
                                 </div>
                                 <h3 class="text-base font-bold text-white line-clamp-2 leading-snug group-hover:text-blue-400 transition mb-1">${video.title}</h3>
@@ -832,14 +863,14 @@ ${item.date || '—'}
                 } else if (url.includes('vimeo.com/')) {
                     const vimeoIdMatch = url.match(/(?:videos?\/|channels\/(?:\w+\/)+|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)\d+/);
                     if (vimeoIdMatch) {
-                        const vimeoId = vimeoIdMatch[0].allReplace ? vimeoIdMatch[0] : vimeoIdMatch[0].split('/').pop();
+                        const vimeoId = vimeoIdMatch[0].split('/').pop();
                         embedUrl = `https://player.vimeo.com/video/${vimeoId}?autoplay=1`;
                     }
                 }
 
                 player.src = embedUrl;
 
-                const videoItem = (typeof filteredVideoData !== 'undefined' ? filteredVideoData : []).find(
+                const videoItem = (typeof rawVideoData !== 'undefined' ? rawVideoData : []).find(
                     item => item.videoUrl === url
                 );
 
@@ -876,13 +907,13 @@ ${item.date || '—'}
                         });
                     }
                 } else {
-                    document.getElementById('modal-title').innerText = ""; // Column A
-                    document.getElementById('modal-company').innerText = ""; // Column D
-                    document.getElementById('modal-position').innerText = ""; // Column E
-                    document.getElementById('modal-date').innerText = ""; // Column B
-                    document.getElementById('modal-desc').innerText = ""; // Column F
-                    document.getElementById('modal-awards-container').classList.add('hidden'); // Column H
-                    document.getElementById('modal-tags').innerHTML = ""; // Column I
+                    document.getElementById('modal-title').innerText = "";
+                    document.getElementById('modal-company').innerText = "";
+                    document.getElementById('modal-position').innerText = "";
+                    document.getElementById('modal-date').innerText = "";
+                    document.getElementById('modal-desc').innerText = "";
+                    document.getElementById('modal-awards-container').classList.add('hidden');
+                    document.getElementById('modal-tags').innerHTML = "";
                 }
 
                 modal.classList.remove('hidden');
