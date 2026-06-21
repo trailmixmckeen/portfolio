@@ -76,33 +76,27 @@
         </header>
 
         <!-- RESUME SECTION -->
-        <section id="resume" class="max-w-6xl mx-auto px-4 py-16 w-full border-t border-gray-800">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
-                <div>
-                    <h2 class="text-3xl font-bold text-white tracking-tight">Experience</h2>
-                    <p class="text-gray-400 text-sm">Professional employment history</p>
-                </div>
-                <div class="flex items-center gap-3 self-stretch md:self-auto justify-between md:justify-end">
+        <section id="resume" class="py-20 border-b border-gray-900 relative">
+            <div class="max-w-6xl mx-auto px-4 relative z-10">
+                <div class="flex items-center justify-between mb-10">
+                    <div>
+                        <h2 class="text-3xl font-black text-white tracking-tight">Professional History</h2>
+                        <p class="text-gray-400 text-sm mt-1">Timeline of production operations and management roles.</p>
+                    </div>
 
-                    <!-- RESUME NAVIGATION CONTROLS -->
-                    <div id="resume-controls" class="flex items-center space-x-2 hidden">
-                        <button onclick="moveResumeCarousel(-1)" class="p-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-white transition">
+                    <div class="flex gap-2">
+                        <button onclick="moveResumeCarousel(-1)" class="resume-carousel-btn bg-gray-900 hover:bg-gray-800 text-white p-2.5 rounded-lg border border-gray-800 transition">
                             <i data-lucide="chevron-left" class="w-5 h-5"></i>
                         </button>
-                        <button onclick="moveResumeCarousel(1)" class="p-2 border border-gray-800 rounded-lg hover:bg-gray-800 text-white transition">
+                        <button onclick="moveResumeCarousel(1)" class="resume-carousel-btn bg-gray-900 hover:bg-gray-800 text-white p-2.5 rounded-lg border border-gray-800 transition">
                             <i data-lucide="chevron-right" class="w-5 h-5"></i>
                         </button>
                     </div>
-                    <a href="McKeen_Resume.pdf" download="McKeen_Resume.pdf" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition shadow-md">
-                        Download PDF <i data-lucide="download" class="w-4 h-4"></i>
-                    </a>
                 </div>
-            </div>
 
-            <!-- OUTSIDE RESUME WRAPPER -->
-            <div class="relative w-full overflow-hidden">
-                <div id="resume-track" class="flex gap-6 transition-transform duration-500 ease-in-out w-full">
-                    <div class="w-full text-center py-12 text-gray-500 shrink-0">Connecting to experience database...</div>
+                <div id="resume-carousel-container" class="overflow-hidden relative w-full">
+                    <div id="resume-carousel-track" class="flex transition-transform duration-500 ease-out w-full">
+                    </div>
                 </div>
             </div>
         </section>
@@ -340,9 +334,13 @@
                 }
             }
 
+            // --- RESUME CONSTANTS ---
+            let currentResumeIndex = 0;
+            let totalResumeItems = 0;
+
             // --- RESUME ITEM GENERATOR ---
             function renderIsolatedResumeCarousel(resumeItems) {
-                const track = document.getElementById('carousel-track');
+                const track = document.getElementById('resume-carousel-track');
                 if (!track) return;
                 track.innerHTML = '';
 
@@ -350,6 +348,10 @@
                     track.innerHTML = `<div class="w-full shrink-0 p-8 text-center text-gray-500 italic">No job descriptions indexed.</div>`;
                     return;
                 }
+
+                totalResumeItems = resumeItems.length;
+                currentResumeIndex = 0; // Reset index on load
+                track.style.transform = `translateX(0%)`;
 
                 resumeItems.forEach((item, index) => {
                     const slide = document.createElement('div');
@@ -382,35 +384,27 @@
                     `;
                     track.appendChild(slide);
                 });
+                
+                if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                    lucide.createIcons();
+                }
             }
 
-            // --- RESUME NAVIGATION --- 
+            // --- RESUME NAVIGATION ---
             function moveResumeCarousel(direction) {
-                const track = document.getElementById('resume-track');
-                if (!track || totalResumeSlidesMax === 0) return;
+                const track = document.getElementById('resume-carousel-track');
+                if (!track || totalResumeItems === 0) return;
 
-                let visibleCards = 1;
-                if (window.innerWidth >= 1024) {
-                    visibleCards = 3;
-                } else if (window.innerWidth >= 768) {
-                    visibleCards = 2;
+                currentResumeIndex += direction;
+
+                if (currentResumeIndex < 0) {
+                    currentResumeIndex = totalResumeItems - 1;
+                } else if (currentResumeIndex >= totalResumeItems) {
+                    currentResumeIndex = 0;
                 }
 
-                const maxAvailableScrolls = totalResumeSlidesMax - visibleCards;
-                if (maxAvailableScrolls <= 0) return;
-
-                currentResumeSlideIndex += direction;
-
-                if (currentResumeSlideIndex < 0) {
-                    currentResumeSlideIndex = maxAvailableScrolls;
-                } else if (currentResumeSlideIndex > maxAvailableScrolls) {
-                    currentResumeSlideIndex = 0;
-                }
-
-                const firstCard = track.children[0];
-                const cardWidthWithGap = firstCard.getBoundingClientRect().width + 24;
-
-                track.style.transform = `translateX(-${currentResumeSlideIndex * cardWidthWithGap}px)`;
+                const amountToTranslate = -(currentResumeIndex * 100);
+                track.style.transform = `translateX(${amountToTranslate}%)`;
             }
 
             // --- VIDEOS CONSTANTS ---
@@ -580,7 +574,7 @@
                 displayVideoPage(1);            
             }
 
-            // --- VIDEOS GENERATION ENGINE ---
+            // --- VIDEOS ITEM GENERATOR ---
             function displayVideoPage(page) {
                 currentPage = page;
                 const grid = document.getElementById('video-grid');
@@ -773,7 +767,7 @@ ${socialHTML}
                 });
             }
 
-            // --- ACCOLADE ENGINE ---
+            // --- ACCOLADE DATA ENGINE ---
             async function fetchAwardsCMS() {
                 try {
                     const awardsResponse = await fetch(AWARDS_CSV_URL);
