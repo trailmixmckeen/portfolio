@@ -329,7 +329,7 @@
                     renderIsolatedResumeCarousel(mappedResumeObjects);
                 } catch (resumeError) {
                     console.error("Resume system scope pipeline fault:", resumeError);
-                    document.getElementById('resume-track').innerHTML = 
+                    document.getElementById('resume-carousel-track').innerHTML = 
                         `<p class="w-full text-center text-red-400 py-6">Failed to sync live resume data.</p>`;
                 }
             }
@@ -365,10 +365,10 @@
                         ? `<span class="text-[10px] bg-blue-500/20 text-blue-400 font-bold px-2 py-0.5 rounded-md border border-blue-500/30 uppercase tracking-wider ml-2">Current</span>` 
                         : '';
 
-                    const companyName = item.company || item.companyName || 'Independent';
-                    const jobTitle = item.role || item.position || item.title || 'Production Management';
-                    const timeDuration = item.duration || item.longDate || item.date || '';
-                    const jobDetails = item.summary || item.description || '';
+                    const companyName = item.resumeCompany || 'Independent';
+                    const jobTitle = item.resumeTitle || 'Production Management';
+                    const timeDuration = item.resumeDates || '';
+                    const jobDetails = item.resumeDesc || '';
 
                     slide.innerHTML = `
                         <div class="p-6 lg:p-8 rounded-2xl border ${borderClass} transition duration-300 backdrop-blur-sm flex flex-col flex-grow justify-between">
